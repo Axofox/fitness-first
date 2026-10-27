@@ -319,7 +319,7 @@ def render_slide(s, idx, main_total, ui, first_main, last_main):
         items += [""] * 3
         return (f'<section class="slide title" data-kind="title" data-label="{esc(label)}">'
                 f'<div class="tbody"><h1>{inline(items[0])}</h1><p class="tag">{inline(items[1])}</p>'
-                f'<p class="by">{inline(items[2])}</p></div></section>')
+                + (f'<p class="by">{inline(items[2])}</p>' if items[2] else '') + '</div></section>')
 
     if num == "4" and not s["backup"]:
         paras = [n for n in nodes if n["type"] == "para"]

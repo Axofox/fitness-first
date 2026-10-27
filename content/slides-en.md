@@ -10,7 +10,6 @@ Target: about 30 minutes. Shorten slides 7, 8 and 16 first if the practice run i
 **Slide**
 - Quality for fitnessfirst.de
 - Find the expensive mistakes first, and find them early.
-- Christine (Tina) Harnut, QA Engineer
 
 **Notes**
 Thank you for the invitation. My presentation has one idea. I want to find the mistakes that cost the most money and trust first. And I want to find them as early as possible, when they are still cheap to fix. Everything I show today comes back to this idea.
