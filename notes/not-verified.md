@@ -8,7 +8,6 @@ Nothing on this list goes on a slide until it is checked. When something is chec
 - [ ] Which payment provider the membership shop uses. (Payment step not opened.)
 - [ ] Which booking system or CRM receives trial training bookings. (No separate booking host seen.)
 - [ ] How Acquia names its environments (assumption: Dev, Stage, Prod).
-- [ ] Page speed numbers for the trial page (homepage and membership done, see site-analysis.md).
 - [ ] Content of the click-to-open panels on qama.netlify.app.
 
 ## Verified
@@ -16,3 +15,4 @@ Nothing on this list goes on a slide until it is checked. When something is chec
 - The website runs on Drupal 10 (page metadata, checked 2026-10-27). Hosting on Acquia was stated by Fitness First in the case study.
 - Cookie consent tool is Usercentrics (hosts `*.usercentrics.eu` loaded on /probetraining, checked 2026-10-27 in Chrome).
 - Other services loaded: VWO (A/B testing), Google Tag Manager, many ad trackers. Likely: Baqend Speed Kit, Cloudflare. Details in `notes/site-analysis.md`.
+- Page speed for homepage, membership and trial pages measured with PageSpeed Insights, mobile, 2026-10-27 (see site-analysis.md).

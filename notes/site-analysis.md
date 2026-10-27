@@ -108,7 +108,41 @@ Report from 2026-10-27, 9:00 PM. Link: https://pagespeed.web.dev/analysis/https-
 
 **Pattern across both pages:** loading is fine for real users, but reacting to taps (INP) is too slow on both, and worse on the membership page, which is the main sales page. High Total Blocking Time in the lab (970 ms) points the same way: the phone is busy running scripts. A possible cause, not verified: the many tracking and ad scripts listed above.
 
-Trial page: not measured.
+### Trial training page (`/probetraining`), mobile
+
+Report from 2026-10-27, 9:04 PM. Link: https://pagespeed.web.dev/analysis/https-www-fitnessfirst-de-probetraining/3xzcxxuaht?form_factor=mobile
+
+**Real users** (this URL, last 28 days). Assessment: **Failed**.
+
+| Metric | Value | Limit for "good" | Result |
+|---|---|---|---|
+| LCP | 1.3 s | 2.5 s | Good |
+| INP | 361 ms | 200 ms | Clearly too slow (close to "poor" at 500 ms) |
+| CLS | 0.05 | 0.1 | Good |
+| FCP | 1.2 s | | |
+| TTFB | 0.8 s | | |
+
+**Lab test.** Scores: Performance 69, Accessibility 100, Best Practices 96, SEO 85.
+
+| Metric | Value |
+|---|---|
+| FCP | 3.1 s |
+| LCP | 4.8 s |
+| Total Blocking Time | 130 ms |
+| CLS | 0 |
+| Speed Index | 6.9 s |
+
+**Why lab and field disagree here:** the lab says this is the best of the three pages (score 69, little blocking). Real users say it reacts the worst (361 ms). The lab only measures the first page load and never taps anything. The slow reactions probably happen later, when people use the club search, map, calendar and time slots. Not verified, but it is a strong example of why a flow-based measurement (for example Playwright clicking through the booking steps) adds something a page-load test cannot see.
+
+## Page speed summary
+
+| Page | Real users: LCP | Real users: INP | Real users: CLS | Lab score |
+|---|---|---|---|---|
+| Homepage | 2 s | 208 ms | 0.03 | 43 |
+| Membership | 1.1 s | 227 ms | 0.04 | 36 |
+| Trial training | 1.3 s | 361 ms | 0.05 | 69 |
+
+All three load fast for real users and all three fail on reaction time (INP). Single lab runs, numbers will vary on a re-run.
 
 ## Not seen
 - Prices on the plan step, extras, the data form, the payment step
