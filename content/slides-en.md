@@ -337,18 +337,6 @@ Where does AI fit? I use it in three places. First, requirements. In my last job
 
 ---
 
-## 18. Thank you (0.5 min)
-
-**Slide**
-- Find the expensive mistakes first, and find them early.
-- The whole team owns quality. QA keeps the gate and helps everyone get through it.
-- Questions?
-
-**Notes**
-To sum up: I start with the risks that cost the most, I test as early as possible, and I make quality the team's job, with QA as the gate keeper and as a helper. Thank you. I'm happy to answer your questions.
-
----
-
 # Backup slides
 
 ## B1. Page speed details

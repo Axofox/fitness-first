@@ -358,7 +358,7 @@ def render_slide(s, idx, main_total, ui, first_main, last_main):
             kind = "loop"
         if num == "12" and not s["backup"]:
             kind = "cycle"
-        if idx == last_main and not s["backup"]:
+        if num == "18" and not s["backup"]:
             kind, fs = "closing", 30
         if s["backup"]:
             fs = 22
