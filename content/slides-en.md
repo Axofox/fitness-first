@@ -36,23 +36,7 @@ Before I start, I want to be open about what I did and what I assumed. First I e
 
 ---
 
-## 3. How I work (1.5 min)
-
-**Slide**
-Six phases, one question: what could go wrong, and how do we prevent it?
-1. Requirements: understand the why
-2. Risk: decide together what matters most
-3. Development: explore and pair early
-4. Automation: automate the right things
-5. Release: done is a criterion, not a feeling
-6. After release: learn from what got through
-
-**Notes**
-This is how I think about quality across the whole process. It is the same question in every phase: what could go wrong, and how do we prevent it, not only catch it? In requirements I ask why we build something and for whom. In the risk phase we decide as a team what matters most. During development I test early and pair with developers. Then I automate what is worth it. At release, "done" has clear criteria. And after the release I look at what we missed, because that is the most honest feedback we get. The rest of my talk follows these phases.
-
----
-
-## 4. Where the money is (2 min)
+## 3. Where the money is (2 min)
 
 **Slide**
 Risk = how bad if it breaks x how likely it breaks
@@ -72,6 +56,22 @@ The 9 parts appear one by one in random order, then slide into the ranked order.
 
 **Notes**
 I started with a simple question: which part of the website hurts most if it breaks? I looked at two things. First, how bad is it: money, legal problems, many users. Second, how likely is it: complex rules, outside systems, frequent changes. The membership checkout is clearly number one. It sells contracts, and the prices depend on many rules. Cookie consent is number two, because it is a legal topic and about fifteen tracking services load on your pages. Pause and cancel are legal flows too. The trial booking brings new members. The magazine is at the bottom. A mistake there is visible, but cheap. I chose the two conversion flows for the next slides: membership and trial training.
+
+---
+
+## 4. How I work (1.5 min)
+
+**Slide**
+Six phases, one question: what could go wrong, and how do we prevent it?
+1. Requirements: understand the why
+2. Risk: decide together what matters most
+3. Development: explore and pair early
+4. Automation: automate the right things
+5. Release: done is a criterion, not a feeling
+6. After release: learn from what got through
+
+**Notes**
+This is how I think about quality across the whole process. It is the same question in every phase: what could go wrong, and how do we prevent it, not only catch it? In requirements I ask why we build something and for whom. In the risk phase we decide as a team what matters most. During development I test early and pair with developers. Then I automate what is worth it. At release, "done" has clear criteria. And after the release I look at what we missed, because that is the most honest feedback we get. The rest of my talk follows these phases.
 
 ---
 
