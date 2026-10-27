@@ -20,18 +20,19 @@ Thank you for the invitation. My presentation has one idea. I want to find the m
 
 **Slide**
 How I prepared:
-- Visited the website as a normal visitor, read-only
-- Measured page speed with PageSpeed Insights (mobile, 27 October)
+- Explored the website as a visitor to understand the flows
+- Checked if it feels slow as a user, or unusually slow (PageSpeed Insights, mobile)
+- Looked at whether the site is responsive and ready for mobile
+- Looked at accessibility (automatic scores only, no full audit)
 - Nothing submitted, no login, no tests on your live site
 
 What I assumed:
-- Acquia environments: Dev, Stage, Prod
-- A small team, one QA person
-- Payment provider and booking system: unknown to me
-- Most visitors use a phone (to check in your analytics)
+- You have test environments next to production
+- Payment providers are third parties, so they cannot be tested on production
+- Most users use a phone, not a laptop
 
 **Notes**
-Before I start, I want to be open about what I know and what I don't. I looked at your website like a normal visitor. I did not submit any form and I did not log in, because it is your live system. I also measured page speed with Google's tool. Some things I could not see. I don't know your payment provider, your booking system or your team setup. So I made assumptions. For example, I assume three environments on Acquia: development, staging and production. If an assumption is wrong, please tell me. I am happy to adapt.
+Before I start, I want to be open about what I did and what I assumed. First I explored your website like a normal visitor, to understand the flows. I did not submit any form and I did not log in, because it is your live system. Then I asked myself: does the site feel slow for a user, or is it unusually slow? I measured it with Google's PageSpeed tool on mobile. I also looked at whether the site is responsive and ready for mobile. And I looked at accessibility, because the rules for accessible online services are getting more important. Here I only used the automatic scores. That is not a full audit. I also made three assumptions. First, you have test environments next to production. Second, payment providers are third parties, so we cannot test payments on the live system. Third, most of your users use a phone and not a laptop. If an assumption is wrong, please tell me. I am happy to adapt.
 
 ---
 
