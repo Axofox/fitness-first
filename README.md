@@ -29,6 +29,17 @@ Private repo.
 
 Not checked yet: whether a helper can use the Chrome browser. If it can't, the main conversation reads the website and the helpers do the rest.
 
+## Build the presentation
+
+The slides are generated from the markdown text, so the wording is never retyped. Do not edit the HTML by hand.
+
+```
+python3 tools/build_slides.py content/slides-en.md slides/presentation-en.html --lang en
+```
+
+Keys in the presentation: arrows or click = next and back, F = full screen, P = presenter window (notes and timer), N = notes panel, B = points appear one by one, R = replay animation, H = help.
+For Teams: share only the slides window, never the whole screen, and keep the notes in the presenter window (P).
+
 ## Timeline
 
 | When | What | Model |
