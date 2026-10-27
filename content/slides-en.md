@@ -291,10 +291,9 @@ Here is the release path from a feature to the live website. On Acquia I assume 
 
 **Unreliable tests:** run once more. If it passes, it goes to quarantine with an owner and a deadline. Never just ignored.
 
-**Go / no-go:** one page: what changed, what we tested, what we did not, open bugs, rollback plan. QA recommends, the team decides.
 
 **Notes**
-When do we stop a release? Some things always stop it: a wrong price, a broken checkout or booking, a broken cancel button, a cookie banner where "decline" does not work, any security problem, or a main flow that a keyboard user cannot finish. Other bugs can go live if we agree on conditions. For example a small bug with an easy workaround, if there is a ticket and a fix date. What about unreliable tests? I run a failed test once more. If it passes the second time, it is probably flaky. Then it goes into quarantine. That means it does not block the pipeline anymore, but it has an owner and a deadline to fix it. It is never just ignored. Very long tests run at night, not on every change. And when a release is urgent, I prepare one page for the decision: what changed, what we tested, what we did not test, which bugs are open, and how we roll back. I give a clear recommendation. But the decision is made by the team, with open eyes.
+When do we stop a release? Some things always stop it: a wrong price, a broken checkout or booking, a broken cancel button, a cookie banner where "decline" does not work, any security problem, or a main flow that a keyboard user cannot finish. Other bugs can go live if we agree on conditions. For example a small bug with an easy workaround, if there is a ticket and a fix date. What about unreliable tests? I run a failed test once more. If it passes the second time, it is probably flaky. Then it goes into quarantine. That means it does not block the pipeline anymore, but it has an owner and a deadline to fix it. It is never just ignored. Very long tests run at night, not on every change. I give a clear recommendation when a release is urgent, for example if we should go live or wait. But the decision is made by the team, with open eyes.
 
 ---
 
@@ -402,7 +401,7 @@ If I join, I would not change everything on day one. First I learn how you work 
 - **Planning:** Three Amigos on new stories, risks agreed
 - **Every day:** pairing, merge request checks, quick questions
 - **During the sprint:** exploratory sessions on new features
-- **Before release:** regression on Stage, acceptance with business, go / no-go page
+- **Before release:** regression on Stage, acceptance with business
 - **Release day:** smoke test, monitoring
 - **After release:** look at what got through, add a test for it
 
