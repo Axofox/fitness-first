@@ -152,10 +152,8 @@ Outside systems I saw:
 - Probably Baqend and Cloudflare (speed and caching)
 - Unknown to me: payment, booking, member system
 
-I do not test the outside services themselves. I test how our site works with them.
-
 **Notes**
-Which devices? I assume most of your visitors use a phone. I check that in your analytics. I build the end-to-end tests in a desktop browser first, because that is the fastest place to build and fix them. Then I run the same tests in the mobile browser view, on a phone-sized screen. Before big releases I also check on real phones. I also think in user groups, not only devices. A student sees a different price. Someone from Austria sees different rules. Someone who declines cookies must still be able to buy. And people who use a keyboard or a screen reader must get through the checkout too. I also looked at which outside services your pages load. Two are important for testing. First, VWO, an A/B testing tool. It means different visitors can see different versions of a page. So every bug report must say which version was shown. Second, caching services. They make the site fast, but they can also show an old offer after it has ended. One more point: I do not test the outside services themselves. We cannot test the payment provider or the cookie tool. Their own teams do that. I test our side: that our site sends the right data, that it shows a clear message when the service fails, and that nothing breaks when the service is slow or down. For payments I use the provider's test mode on a test environment, never the live system.
+Which devices? I assume most of your visitors use a phone. I check that in your analytics. I build the end-to-end tests in a desktop browser first, because that is the fastest place to build and fix them. Then I run the same tests in the mobile browser view, on a phone-sized screen. Before big releases I also check on real phones. I also think in user groups, not only devices. A student sees a different price. Someone from Austria sees different rules. Someone who declines cookies must still be able to buy. And people who use a keyboard or a screen reader must get through the checkout too. I also looked at which outside services your pages load. Two are important for testing. First, VWO, an A/B testing tool. It means different visitors can see different versions of a page. So every bug report must say which version was shown. Second, caching services. They make the site fast, but they can also show an old offer after it has ended.
 
 ---
 
@@ -200,18 +198,20 @@ Here is what I would automate for the membership checkout. Think of it as a pyra
 Automate when:
 - it runs often, matters a lot, and the expected result is clear
 - it is stable and cheap to maintain
+- Example: price rules (unit tests)
 
 Keep manual when:
 - it is new or still changing
 - it needs human judgement: look, wording, screen reader
+- Examples: a new campaign page, the screen reader on checkout
 
-Examples:
-- Price rules: automate (unit tests)
-- New campaign page: explore first, then a visual check
-- Screen reader on checkout: manual, every release
+What I would not test:
+- Outside services themselves: payment provider, cookie tool, ad services. I test only our side.
+- Load and security attacks on the live site
+- Low-risk areas in depth, like the magazine: a quick look is enough
 
 **Notes**
-How do I decide what to automate? I ask three questions. Will this test run often? Is it important? And do we know exactly what the right result is? If yes, I automate it. If a feature is new and still changing, I test it by hand first. Otherwise we spend more time fixing tests than finding bugs. A flaky test, meaning a test that sometimes passes and sometimes fails for no real reason, costs more than the manual check it replaced. Some things always need a human. How does a page look? Is the wording clear? Does a screen reader make sense? Those stay manual.
+How do I decide what to automate? I ask three questions. Will this test run often? Is it important? And do we know exactly what the right result is? If yes, I automate it. If a feature is new and still changing, I test it by hand first. Otherwise we spend more time fixing tests than finding bugs. A flaky test, meaning a test that sometimes passes and sometimes fails for no real reason, costs more than the manual check it replaced. Some things always need a human. How does a page look? Is the wording clear? Does a screen reader make sense? Those stay manual. I also say clearly what I would not test. First, the outside services themselves. We cannot test the payment provider or the cookie tool. Their own teams do that. I test our side: that our site sends the right data, that it shows a clear message when the service fails, and that nothing breaks when the service is slow or down. For payments I assume a test mode on a test environment, never the live system. Second, I do not run load or security attacks on the live site. It is production, so that needs a test environment and an agreement first. Third, low-risk areas like the magazine get only a quick look. A mistake there is visible, but cheap. Saying what I skip is part of the plan, because then everybody knows where the gaps are.
 
 ---
 
