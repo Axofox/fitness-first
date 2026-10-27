@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Qualität für fitnessfirst.de</title>
+<style>
+:root{--teal:#0f766e;--teal-d:#0b4f4a;--tint:#e8f4f2;--tint2:#d3ebe7;--ink:#1c2b33;--muted:#5d6d75;--line:#d5e0e2;--ok:#1f9d6b;--bad:#c0392b}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{display:flex;background:#e9eff0;color:var(--ink);overflow:hidden;
+ font-family:"Avenir Next","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif}
+#area{flex:1;position:relative;overflow:hidden;min-width:0}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;
+ background:#fff;box-shadow:0 8px 40px rgba(0,0,0,.12);overflow:hidden}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .35s ease;overflow:hidden;background:#fff}
+.slide.active{opacity:1;visibility:visible}
+.slide::before{content:"";position:absolute;left:80px;top:38px;width:56px;height:5px;border-radius:3px;background:var(--teal)}
+.slide h2{position:absolute;left:80px;right:80px;top:54px;margin:0;font-size:40px;line-height:1.15;font-weight:700;color:var(--teal-d)}
+.body{position:absolute;left:80px;right:80px;top:132px;bottom:60px;font-size:24px;line-height:1.35}
+.count{position:absolute;right:40px;bottom:20px;font-size:14px;color:var(--muted)}
+/* title and divider */
+.slide.title::before,.slide.divider::before{left:0;top:0;width:16px;height:100%;border-radius:0}
+.tbody{position:absolute;left:110px;right:110px;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center}
+.tbody h1{margin:0 0 .4em;font-size:64px;line-height:1.1;color:var(--teal-d)}
+.tbody .tag{margin:0;font-size:32px;line-height:1.3;color:var(--ink)}
+.tbody .by{margin:0;font-size:22px;color:var(--muted);padding-top:.9em;border-top:3px solid var(--teal);align-self:flex-start;min-width:360px}
+.divider .tbody h1{margin:0}
+/* text blocks */
+.lead{font-size:1.1em;font-weight:500;margin:0 0 .7em}
+p.plain{margin:.5em 0}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:0 .9em;margin:.4em 0;padding:.45em .85em;background:var(--tint);border-radius:10px}
+.kv .k{font-weight:700;color:var(--teal-d)}
+.cols{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:1.1em;margin:.3em 0 .6em}
+.gbox{background:#fff;border:1px solid var(--line);border-radius:14px;padding:.65em 1em .5em}
+.group{margin:.3em 0 .6em}
+h3{margin:0 0 .4em;font-size:.78em;letter-spacing:.07em;text-transform:uppercase;color:var(--teal)}
+ul.b,ol.b{margin:0;padding:0;list-style:none;counter-reset:n}
+ul.b li,ol.b li{position:relative;padding-left:1.15em;margin:.28em 0}
+ul.b li::before{content:"";position:absolute;left:0;top:.6em;width:.42em;height:.42em;border-radius:50%;background:var(--teal)}
+ol.b li{padding-left:1.6em;counter-increment:n}
+ol.b li::before{content:counter(n);position:absolute;left:0;top:.12em;width:1.25em;height:1.25em;border-radius:50%;background:var(--teal);color:#fff;font-size:.72em;font-weight:700;display:grid;place-items:center}
+ul.b.two{column-count:2;column-gap:2em}
+ul.b.two li{break-inside:avoid}
+ul.sub{list-style:none;margin:.2em 0 0;padding:0;font-size:.92em}
+ul.sub li{position:relative;padding-left:1em;margin:.12em 0}
+ul.sub li::before{content:"";position:absolute;left:0;top:.62em;width:.32em;height:.32em;border-radius:50%;background:var(--teal-d)}
+strong{color:var(--teal-d)}
+/* labelled rows and cards */
+.rows{display:grid;gap:.5em}
+.row{display:grid;grid-template-columns:10em 1fr;gap:1em;padding:.55em .9em;border-left:4px solid var(--teal);background:var(--tint);border-radius:0 10px 10px 0}
+.row .l{font-weight:700;color:var(--teal-d)}
+.cards{display:grid;grid-template-columns:repeat(var(--c),1fr);gap:.8em}
+.card{background:var(--tint);border-radius:14px;padding:.75em 1em}
+.card .n{width:1.7em;height:1.7em;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-weight:700;font-size:.8em;margin-bottom:.35em}
+.card .l{font-weight:700;color:var(--teal-d)}
+/* chevrons */
+.chev-label{font-size:.72em;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:.1em 0 .25em}
+.chev{display:flex;margin:0 0 .8em}
+.chev span{flex:1;background:var(--tint2);color:var(--teal-d);font-weight:600;text-align:center;padding:.5em 1.2em;margin-left:-.5em;
+ clip-path:polygon(0 0,calc(100% - .8em) 0,100% 50%,calc(100% - .8em) 100%,0 100%,.8em 50%)}
+.chev span:first-child{margin-left:0;clip-path:polygon(0 0,calc(100% - .8em) 0,100% 50%,calc(100% - .8em) 100%,0 100%)}
+/* table */
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:.78em;line-height:1.3;margin:.2em 0 .7em}
+th{background:var(--teal);color:#fff;text-align:left;padding:.5em .7em;font-weight:600}
+th:first-child{border-radius:10px 0 0 0} th:last-child{border-radius:0 10px 0 0}
+td{padding:.5em .7em;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{font-weight:700;color:var(--teal-d)}
+tbody tr:nth-child(even) td{background:var(--tint)}
+/* pyramid */
+.pyr{display:flex;flex-direction:column;align-items:center;gap:.35em;margin:.2em 0 .6em}
+.layer{width:var(--w);padding:.45em .9em;border-radius:10px;background:rgba(15,118,110,var(--a));font-size:.82em;line-height:1.3}
+/* rank animation */
+.rankwrap{display:grid;grid-template-columns:36% 1fr;gap:2em;align-items:start}
+.formula{padding:1em 1.2em;border-radius:14px;background:var(--tint);color:var(--teal-d);font-weight:600;font-size:1.15em;line-height:1.4}
+.rank{position:relative}
+.rrow{position:absolute;left:0;right:0;height:2.2em;display:flex;align-items:center;gap:.7em;padding:0 .8em;border-radius:10px;
+ background:#f3f6f7;border:1px solid var(--line);transition:top .9s cubic-bezier(.4,0,.2,1),background .5s,color .5s,border-color .5s,opacity .35s}
+.rrow.notrans{transition:none}
+.rrow .rn{font-weight:700;color:var(--muted);width:1.3em}
+.rrow.top{background:var(--teal);border-color:var(--teal);color:#fff}
+.rrow.top .rn{color:#fff}
+/* release path */
+.pipe{position:relative;margin:.2em 0 .8em}
+.pgrid{display:grid;grid-template-columns:repeat(var(--c),1fr)}
+.pnode{height:2.5em;display:flex;align-items:flex-end;justify-content:center;text-align:center;font-weight:700;color:var(--teal-d);font-size:1em;line-height:1.15;padding:0 .3em .3em}
+.lcell{position:relative;height:2.2em;display:grid;place-items:center}
+.lcell::before{content:"";position:absolute;left:0;right:0;top:50%;height:3px;margin-top:-1.5px;background:var(--line)}
+.lcell:first-child::before{left:50%} .lcell:last-child::before{right:50%}
+.light{position:relative;z-index:1;width:1.1em;height:1.1em;border-radius:50%;background:#fff;border:3px solid var(--line);transition:background .3s,border-color .3s}
+.light.ok{background:var(--ok);border-color:var(--ok)}
+.light.bad{background:var(--bad);border-color:var(--bad)}
+.pdetail{font-size:.82em;line-height:1.35;text-align:center;padding:.3em .45em 0}
+.mover{position:absolute;width:1.9em;height:1.9em;border-radius:50%;border:3px solid var(--teal);transform:translate(-50%,-50%);
+ transition:left .7s ease,top .7s ease,border-color .3s;z-index:2;opacity:0;pointer-events:none}
+.mover.stuck{border-color:var(--bad)}
+/* AI loop */
+.loop{display:block;width:76%;margin:.5em auto 0}
+.lnode{fill:#fff;stroke:var(--line);stroke-width:2}
+.lnode.person{fill:var(--tint);stroke:var(--teal);stroke-width:5}
+.ltxt{font-size:21px;fill:var(--ink)} .ltxt.pb{font-weight:700;fill:var(--teal-d)}
+.larrow{fill:none;stroke:var(--muted);stroke-width:2.5} .ltip{fill:var(--muted)}
+.ldot{fill:var(--teal)}
+/* quality cycle */
+[data-kind=cycle] .card{transition:background .4s,transform .4s,box-shadow .4s}
+[data-kind=cycle] .card.hot{background:var(--teal);color:#fff;transform:scale(1.04);box-shadow:0 6px 18px rgba(15,118,110,.3)}
+[data-kind=cycle] .card.hot .l{color:#fff}
+[data-kind=cycle] .card.hot .n{background:#fff;color:var(--teal-d)}
+/* closing */
+.closing ul.b li{margin:.6em 0}
+/* build mode */
+.step{transition:opacity .3s ease}
+.step.pending{opacity:0}
+/* notes panel, help, toast */
+#notes{display:none;width:380px;flex:none;background:#fff;border-left:1px solid var(--line);padding:18px 20px;overflow:auto;font-size:18px;line-height:1.5}
+#notes.on{display:block}
+.h{font-weight:700;color:var(--teal-d);margin-bottom:.4em}
+.meta{color:var(--muted);font-size:.85em;margin-bottom:.8em}
+.tm{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink);margin-right:.8em}
+.nx{margin-top:1em;color:var(--muted);font-size:.85em}
+#help{display:none;position:fixed;inset:0;background:rgba(10,30,32,.55);place-items:center;z-index:20}
+#help.on{display:grid}
+#help .card2{background:#fff;border-radius:16px;padding:22px 28px;max-width:640px;font-size:17px}
+#help h4{margin:0 0 .6em;color:var(--teal-d);font-size:20px}
+#help div div{display:grid;grid-template-columns:12em 1fr;gap:1em;margin:.35em 0}
+kbd{font-family:inherit;font-weight:700;color:var(--teal-d)}
+#nav{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:999px;
+ background:rgba(255,255,255,.95);box-shadow:0 4px 18px rgba(0,0,0,.18);z-index:25;opacity:0;pointer-events:none;transition:opacity .25s}
+body.moving #nav,#nav:hover,#nav:focus-within{opacity:1;pointer-events:auto}
+#nav button{width:40px;height:40px;border-radius:50%;border:0;background:var(--tint);color:var(--teal-d);font-size:18px;cursor:pointer;font-family:inherit}
+#nav button:hover{background:var(--tint2)}
+#nav select{height:40px;max-width:300px;border:1px solid var(--line);border-radius:999px;padding:0 14px;font:inherit;font-size:15px;color:var(--ink);background:#fff;cursor:pointer}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.5em 1em;border-radius:10px;font-size:16px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:30}
+#toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){.slide,.step,.rrow,.light,.mover{transition:none}}
+/* print / PDF: one slide per page, final state, no notes */
+@page{size:1280px 720px;margin:0}
+@media print{
+ html,body{height:auto;overflow:visible;background:#fff;display:block}
+ #area{position:static;overflow:visible}
+ #stage{position:static;transform:none!important;width:1280px;height:auto;box-shadow:none;overflow:visible}
+ .slide{position:relative;width:1280px;height:720px;opacity:1!important;visibility:visible!important;
+  break-after:page;page-break-after:always;transition:none}
+ #notes,#help,#toast,#nav{display:none!important}
+ .step.pending{opacity:1!important}
+ .rrow,.light,.mover{transition:none}
+}
+</style>
+</head>
+<body>
+<div id="area"><div id="stage">
+<section class="slide title" data-kind="title" data-label="1 / 17"><div class="tbody"><h1>Qualität für fitnessfirst.de</h1><p class="tag">Die teuren Fehler zuerst finden, und zwar früh.</p></div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="2 / 17"><h2>Mein Ausgangspunkt</h2><div class="body"><div class="cols" style="--n:2"><div class="gbox"><h3>So habe ich mich vorbereitet</h3><ul class="b "><li class="step">Die Website als Besucherin erkundet, um die Abläufe zu verstehen</li><li class="step">Geprüft, ob sie sich für Nutzer langsam anfühlt oder ungewöhnlich langsam ist (PageSpeed Insights, mobil)</li><li class="step">Geprüft, ob die Seite sich anpasst und für Handys geeignet ist</li><li class="step">Barrierefreiheit angeschaut (nur automatische Werte, kein vollständiger Test)</li><li class="step">Nichts abgeschickt, kein Login, keine Tests auf Ihrer Live-Seite</li></ul></div><div class="gbox"><h3>Das habe ich angenommen</h3><ul class="b "><li class="step">Sie haben Testumgebungen neben der Produktion</li><li class="step">Zahlungsanbieter sind Dritte, darum kann man sie nicht auf der Produktion testen</li><li class="step">Die meisten Nutzer haben ein Handy, keinen Laptop</li></ul></div></div></div><div class="count">2 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="3 / 17"><h2>So erkunde ich</h2><div class="body"><p class="lead">Exploratives Testen: kurze Runden mit einem klaren Ziel.</p><div class="kv step"><div class="k">Beispiel für ein Ziel</div><div class="v">"Den Checkout erkunden und oft die Meinung ändern, um falsche Summen zu finden."</div></div><div class="group"><h3>Das schreibe ich jedes Mal auf</h3><ul class="b "><li class="step">Ziel und Aufbau (Gerät, Browser, Version der Seite)</li><li class="step">Was ich abgedeckt habe</li><li class="step">Fehler, mit Schritten und Screenshots</li><li class="step">Offene Fragen</li><li class="step">Was ich NICHT getestet habe</li></ul></div><p class="plain step">Gespeichert beim Ticket, damit das Team es sieht.</p></div><div class="count">3 / 17</div></section>
+<section class="slide" data-kind="rank" data-fs="21" data-label="4 / 17"><h2>Was ich gelernt habe: die wichtigsten Bereiche</h2><div class="body"><div class="rankwrap"><div class="formula">Risiko = wie schlimm, wenn es kaputtgeht x wie wahrscheinlich, dass es kaputtgeht</div><div class="rank nobuild" style="height:22.5em"><div class="rrow top" style="top:0.0em"><span class="rn">1</span><span class="rt">Mitgliedschaft abschließen</span></div><div class="rrow top" style="top:2.5em"><span class="rn">2</span><span class="rt">Cookie-Einwilligung und Tracking</span></div><div class="rrow top" style="top:5.0em"><span class="rn">3</span><span class="rt">Pausieren, kündigen, widerrufen</span></div><div class="rrow top" style="top:7.5em"><span class="rn">4</span><span class="rt">Probetraining buchen</span></div><div class="rrow" style="top:10.0em"><span class="rn">5</span><span class="rt">Aktionen und Angebote</span></div><div class="rrow" style="top:12.5em"><span class="rn">6</span><span class="rt">Clubsuche</span></div><div class="rrow" style="top:15.0em"><span class="rn">7</span><span class="rt">Mitglieder-Login</span></div><div class="rrow" style="top:17.5em"><span class="rn">8</span><span class="rt">Kursplan</span></div><div class="rrow" style="top:20.0em"><span class="rn">9</span><span class="rt">Magazin, Karriere</span></div></div></div></div><div class="count">4 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="5 / 17"><h2>Mein Plan für jedes Risiko</h2><div class="body"><table><thead><tr><th>Bereich</th><th>Hauptrisiko</th><th>Mein Plan</th></tr></thead><tbody><tr class="step"><td>Mitgliedschaft abschließen</td><td>Falscher Preis, oder ein Vertrag kommt nie an</td><td>Tests für die Preisregeln, End-to-End-Tests, alle 15 Minuten eine Prüfung in der Produktion</td></tr><tr class="step"><td>Cookie-Einwilligung und Tracking</td><td>Marketing-Tracker laden nach "Ablehnen"</td><td>Automatische Prüfung nach "Alle ablehnen", Abstimmung mit dem Datenschutzbeauftragten</td></tr><tr class="step"><td>Pausieren, kündigen, widerrufen</td><td>Ein rechtlicher Ablauf funktioniert nicht mehr</td><td>End-to-End-Test bei jedem Release, Texte von Hand prüfen</td></tr><tr class="step"><td>Probetraining buchen</td><td>Termin gibt es nicht, Buchung erreicht den Club nie</td><td>Eine End-to-End-Buchung pro Handytyp, prüfen, dass sie ankommt</td></tr><tr class="step"><td>Aktionen und Angebote</td><td>Ein altes Angebot erscheint noch nach dem Ende</td><td>Tests für die Daten, anschauen, was der Cache zeigt</td></tr></tbody></table><div class="kv step"><div class="k">Die anderen Bereiche</div><div class="v">leichtere Prüfungen, meistens von Hand.</div></div></div><div class="count">5 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="6 / 17"><h2>Ablauf 1: Mitgliedschaft abschließen, die Risiken</h2><div class="body"><div class="chev-label">5 Schritte</div><div class="chev"><span>Club</span><span>Tarif</span><span>Extras</span><span>Ihre Daten</span><span>Zahlung</span></div><div class="group"><h3>Was schiefgehen kann</h3><ul class="b "><li class="step">Falscher Preis: Club, Tarif, Aktion, Alter, Land</li><li class="step">Die Zusammenfassung passt nicht zur Auswahl</li><li class="step">Kunde bleibt hängen und geht</li><li class="step">Vertrag oder Zahlung erreicht Ihre Systeme nicht</li><li class="step">Rechtlicher Text fehlt oder ist falsch</li></ul></div><div class="kv step"><div class="k">Am teuersten</div><div class="v">ein falscher Preis oder ein Vertrag, der nie angelegt wurde.</div></div></div><div class="count">6 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="7 / 17"><h2>Ablauf 2: Probetraining buchen</h2><div class="body"><div class="chev-label">3 Schritte</div><div class="chev"><span>Club</span><span>Datum und Uhrzeit</span><span>Ihre Daten</span></div><div class="group"><h3>Was schiefgehen kann</h3><ul class="b "><li class="step">Der gebuchte Termin existiert im Club nicht</li><li class="step">Die Buchung erreicht den Club nie</li><li class="step">Datumsfehler: heute, Wochenende, Monatswechsel, Feiertage</li><li class="step">Langsame Reaktion: 361 ms pro Tippen bei echten Nutzern (gut: 200 ms)</li></ul></div><div class="kv step"><div class="k">Automatisieren</div><div class="v">Regeln für Termine, Buchung kommt im Club an, eine End-to-End-Buchung pro Handytyp.</div></div></div><div class="count">7 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="8 / 17"><h2>Geräte, Nutzer, fremde Systeme</h2><div class="body"><p class="lead">Geräte: zuerst der Desktop-Browser, dann die mobile Browser-Ansicht. Echte Handys: iPhone Safari, Android Chrome.</p><div class="kv step"><div class="k">Bildschirmbreiten</div><div class="v">360, 390, 768, 1280 Pixel.</div></div><div class="kv step"><div class="k">Nutzer</div><div class="v">neue Besucher, Studenten, Menschen, die das Studio wechseln, Besucher aus Österreich, Menschen mit Tastatur oder Screenreader, langsames mobiles Internet, Menschen, die Cookies ablehnen.</div></div><div class="group"><h3>Fremde Systeme, die ich gesehen habe</h3><ul class="b "><li class="step">Usercentrics (Cookie-Einwilligung)</li><li class="step">VWO (A/B-Tests: nicht alle sehen dieselbe Seite)</li><li class="step">Google Tag Manager und etwa 15 Werbedienste</li><li class="step">Wahrscheinlich Baqend und Cloudflare (Tempo und Cache)</li><li class="step">Mir unbekannt: Zahlung, Buchung, Mitgliedersystem</li></ul></div></div><div class="count">8 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="9 / 17"><h2>Hier fange ich an: End-to-End-Tests nach Priorität</h2><div class="body"><div class="group"><h3>End-to-End-Tests, gebaut in der Reihenfolge der Priorität</h3><ol class="b "><li class="step"><strong>Priorität 1:</strong> Mitgliedschaft abschließen, Probetraining buchen, pausieren und kündigen, Prüfung der Cookie-Einwilligung. Zuerst im Desktop-Browser gebaut.</li><li class="step"><strong>Dieselben Tests, mobile Ansicht:</strong> die Tests der Priorität 1 noch einmal in der mobilen Browser-Ansicht, auf einem Bildschirm in Handygröße.</li><li class="step"><strong>Priorität 2:</strong> Aktionen und Angebote, Clubsuche, Mitglieder-Login.</li><li class="step"><strong>Der Rest:</strong> leichtere Prüfungen, meistens von Hand.</li></ol></div></div><div class="count">9 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="10 / 17"><h2>Ablauf 1: Was ich automatisieren würde</h2><div class="body"><p class="lead">Testpyramide: unten viele kleine, schnelle Tests, oben wenige langsame.</p><div class="pyr"><div class="layer step" style="--w:46%;--a:0.10"><strong>Explorativ (von Hand):</strong> neue Aktionen, ungewöhnliche Kombinationen, Österreich</div><div class="layer step" style="--w:60%;--a:0.15"><strong>End-to-End (wenige):</strong> einen Tarif bis zum Zahlungsschritt buchen, auf iPhone Safari und Android Chrome. Den Club mittendrin wechseln: die Zusammenfassung ändert sich.</div><div class="layer step" style="--w:73%;--a:0.21"><strong>Optik und Barrierefreiheit:</strong> Preiskarten und Zusammenfassung sehen richtig aus, die Tastatur funktioniert, Fehler werden vorgelesen</div><div class="layer step" style="--w:86%;--a:0.27"><strong>API und Integration:</strong> die richtigen Tarife und Preise pro Club. Der Vertrag erreicht das Mitgliedersystem. Zahlungsanbieter im Testmodus.</div><div class="layer step" style="--w:100%;--a:0.32"><strong>Unit (viele):</strong> jede Preisregel. Start- und Enddatum der Aktionen.</div></div><div class="kv step"><div class="k">Dazu in der Produktion</div><div class="v">alle 15 Minuten eine Roboter-Prüfung der Schritte 1 bis 3.</div></div></div><div class="count">10 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="11 / 17"><h2>Was ich automatisiere und was nicht</h2><div class="body"><div class="cols" style="--n:3"><div class="gbox"><h3>Automatisieren, wenn</h3><ul class="b "><li class="step">der Test oft läuft, wichtig ist und das erwartete Ergebnis klar ist</li><li class="step">er stabil ist und wenig Pflege braucht</li><li class="step">Beispiel: Preisregeln (Unit-Tests)</li></ul></div><div class="gbox"><h3>Von Hand lassen, wenn</h3><ul class="b "><li class="step">es neu ist oder sich noch ändert</li><li class="step">menschliches Urteil nötig ist: Aussehen, Wortwahl, Screenreader</li><li class="step">Beispiele: eine neue Aktionsseite, der Screenreader im Checkout</li></ul></div><div class="gbox"><h3>Was ich nicht testen würde</h3><ul class="b "><li class="step">Fremde Dienste selbst: Zahlungsanbieter, Cookie-Werkzeug, Werbedienste. Ich teste nur unsere Seite.</li><li class="step">Lasttests und Sicherheitsangriffe auf die Live-Seite</li><li class="step">Bereiche mit niedrigem Risiko nicht in der Tiefe, zum Beispiel das Magazin: ein kurzer Blick reicht</li></ul></div></div></div><div class="count">11 / 17</div></section>
+<section class="slide" data-kind="cycle" data-fs="24" data-label="12 / 17"><h2>Der Qualitätsprozess, den ich fördern würde</h2><div class="body"><p class="lead">Sechs Phasen, eine Frage: Was kann schiefgehen, und wie verhindern wir es?</p><p class="plain step">Fehler kosten weniger, wenn wir sie früh finden.</p><div class="cards" style="--c:3"><div class="card step"><div class="n">1</div><div class="l">Anforderungen</div><div class="t">verstehen, warum</div></div><div class="card step"><div class="n">2</div><div class="l">Risiko</div><div class="t">gemeinsam entscheiden, was am wichtigsten ist</div></div><div class="card step"><div class="n">3</div><div class="l">Entwicklung</div><div class="t">früh erkunden und zu zweit arbeiten</div></div><div class="card step"><div class="n">4</div><div class="l">Automatisierung</div><div class="t">das Richtige automatisieren</div></div><div class="card step"><div class="n">5</div><div class="l">Release</div><div class="t">"fertig" ist ein Kriterium, kein Gefühl</div></div><div class="card step"><div class="n">6</div><div class="l">Nach dem Release</div><div class="t">aus dem lernen, was durchgerutscht ist</div></div></div></div><div class="count">12 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="13 / 17"><h2>Qualität ist die Aufgabe des Teams</h2><div class="body"><div class="rows"><div class="row step"><div class="l">Produkt</div><div class="t">klare Ziele und Akzeptanzkriterien. Entscheidet gemeinsam mit dem Team über Risiken.</div></div><div class="row step"><div class="l">Entwickler</div><div class="t">Unit- und API-Tests für ihren Code. Reparieren, was die Pipeline stoppt.</div></div><div class="row step"><div class="l">Fachabteilungen</div><div class="t">prüfen, dass es für das Geschäft richtig ist (Abnahme).</div></div><div class="row step"><div class="l">QA</div><div class="t">Torwächter beim Release und Hilfe für alle:<ul class="sub"><li>hilft, Akzeptanzkriterien zu schreiben</li><li>arbeitet mit Entwicklern zu zweit</li><li>hält die Testfälle aktuell</li><li>schult das Team im Testen</li></ul></div></div></div></div><div class="count">13 / 17</div></section>
+<section class="slide" data-kind="pipe" data-fs="24" data-label="14 / 17"><h2>Von der Idee zur Live-Website</h2><div class="body"><div class="pipe nobuild"><div class="mover"></div><div class="pgrid pnames" style="--c:6"><div class="pnode">Feature</div><div class="pnode">Merge Request</div><div class="pnode">Dev</div><div class="pnode">Stage</div><div class="pnode">Produktion</div><div class="pnode">Nach dem Release</div></div><div class="pgrid ptrack" style="--c:6"><div class="lcell"><span class="light ok"></span></div><div class="lcell"><span class="light ok"></span></div><div class="lcell"><span class="light ok"></span></div><div class="lcell"><span class="light ok"></span></div><div class="lcell"><span class="light ok"></span></div><div class="lcell"><span class="light ok"></span></div></div><div class="pgrid pdetails" style="--c:6"><div class="pdetail">Akzeptanzkriterien und Risiken vereinbart</div><div class="pdetail">Code-Review, Unit-Tests, Code-Prüfungen</div><div class="pdetail">API- und Integrationstests, Smoke-Test</div><div class="pdetail">End-to-End-Regression, Optik, Barrierefreiheit, Seitengeschwindigkeit, Prüfung der Einwilligung, Abnahme durch das Geschäft</div><div class="pdetail">Smoke-Test direkt nach dem Deploy</div><div class="pdetail">Überwachung und Seitengeschwindigkeit bei echten Nutzern. Rollback bereit.</div></div></div><div class="kv"><div class="k">Testdaten</div><div class="v">keine echten Kundendaten auf Stage. Kopierte Daten werden anonymisiert.</div></div></div><div class="count">14 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="15 / 17"><h2>Wann stoppen wir ein Release?</h2><div class="body"><div class="cols" style="--n:2"><div class="gbox"><h3>Stoppt das Release</h3><ul class="b "><li class="step">Falscher Preis, Checkout oder Buchung kaputt</li><li class="step">Kündigen oder Pausieren kaputt</li><li class="step">"Ablehnen" bei den Cookies funktioniert nicht</li><li class="step">Sicherheitsproblem, oder jemand sieht die Daten einer anderen Person</li><li class="step">Hauptablauf mit der Tastatur nicht benutzbar</li></ul></div><div class="gbox"><h3>Darf mit Bedingungen live gehen</h3><ul class="b "><li class="step">Kleiner Fehler mit einfacher Umgehung, Ticket und Termin für die Reparatur</li><li class="step">Problem auf einer Seite mit wenig Besuchern</li><li class="step">Neue Funktion mit einem Feature-Flag ausgeschaltet</li></ul></div></div><div class="kv step"><div class="k">Unzuverlässige Tests</div><div class="v">noch einmal laufen lassen. Wenn er besteht, kommt er in Quarantäne, mit Besitzer und Frist. Nie einfach ignoriert.</div></div></div><div class="count">15 / 17</div></section>
+<section class="slide" data-kind="generic" data-fs="24" data-label="16 / 17"><h2>Mehr als "es funktioniert"</h2><div class="body"><table><thead><tr><th>Bereich</th><th>Automatisch</th><th>Von Hand</th><th>Grenze (Gate)</th></tr></thead><tbody><tr class="step"><td>Barrierefreiheit</td><td>Barrierefreiheits-Scan bei jedem Merge Request</td><td>Tastatur und Screenreader in den Hauptabläufen bei jedem Release, Experten-Prüfung einmal im Jahr</td><td>Keine kritischen Probleme im Checkout und bei der Buchung</td></tr><tr class="step"><td>Datenschutz und Einwilligung</td><td>Nach "Alle ablehnen" laden nur erlaubte Dienste</td><td>Texte im Banner mit dem Datenschutzbeauftragten prüfen</td><td>Jeder Marketing-Tracker nach dem Ablehnen stoppt das Release</td></tr><tr class="step"><td>Seitengeschwindigkeit</td><td>Lighthouse in der Pipeline, Messung der Buchungsschritte</td><td>Jede Woche die Daten echter Nutzer ansehen</td><td>Echte Nutzer: LCP 2,5 s, INP 200 ms, CLS 0,1. Pipeline: keine Seite langsamer als heute</td></tr></tbody></table><div class="kv step"><div class="k">Heute, echte Nutzer, mobil</div><div class="v">alle 3 Seiten laden schnell, alle 3 reagieren zu langsam.</div></div><p class="plain step">Mitgliedschaft INP 227 ms, Probetraining 361 ms.</p></div><div class="count">16 / 17</div></section>
+<section class="slide" data-kind="loop" data-fs="24" data-label="17 / 17"><h2>Wo KI hilft und wo nicht</h2><div class="body"><div class="cols" style="--n:2"><div class="gbox"><h3>KI hilft bei</h3><ol class="b "><li class="step"><strong>Anforderungen:</strong> findet Lücken und fehlende Sonderfälle in Akzeptanzkriterien</li><li class="step"><strong>Exploratives Testen:</strong> Agenten erkunden mit einem Ziel und müssen für jedes Ergebnis einen Beweis zeigen</li><li class="step"><strong>Fehlgeschlagene Tests:</strong> gruppiert Fehler, schlägt "echter Fehler" oder "unzuverlässig" vor</li></ol></div><div class="gbox"><h3>Immer bei Menschen</h3><ul class="b "><li class="step">Endgültige Priorität von Fehlern</li><li class="step">Freigabe oder Stopp des Releases</li><li class="step">Rechtliche Entscheidungen, Barrierefreiheit und Datenschutz</li></ul></div></div><div class="kv step"><div class="k">Regeln</div><div class="v">keine echten Kundendaten in KI-Werkzeugen. Jedes Ergebnis braucht einen Beweis. Die KI muss auflisten, was sie nicht getestet hat.</div></div><svg class="loop nobuild" viewBox="0 0 900 128" role="img" aria-label="KI schlägt vor &gt; Eine Person prüft &gt; Das Team entscheidet"><defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="ltip"/></marker></defs><rect class="lnode" x="20" y="10" width="240" height="58" rx="16"/><text class="ltxt" x="140" y="46" text-anchor="middle">KI schlägt vor</text><rect class="lnode person" x="330" y="10" width="240" height="58" rx="16"/><text class="ltxt pb" x="450" y="46" text-anchor="middle">Eine Person prüft</text><rect class="lnode" x="640" y="10" width="240" height="58" rx="16"/><text class="ltxt" x="760" y="46" text-anchor="middle">Das Team entscheidet</text><path class="larrow" d="M260 39H326" marker-end="url(#ah)"/><path class="larrow" d="M570 39H636" marker-end="url(#ah)"/><path class="larrow" d="M760 68C760 122 140 122 140 74" marker-end="url(#ah)"/><circle class="ldot" r="8"><animateMotion dur="7s" repeatCount="indefinite" path="M140 39H450H760C760 122 140 122 140 39"/></circle></svg></div><div class="count">17 / 17</div></section>
+<section class="slide divider" data-kind="divider" data-label=""><div class="tbody"><h1>Zusatzfolien</h1></div></section>
+<section class="slide" data-kind="generic" data-fs="22" data-label="B1"><h2>Details zur Seitengeschwindigkeit</h2><div class="body"><table><thead><tr><th>Seite (mobil)</th><th>Echte Nutzer: LCP</th><th>Echte Nutzer: INP</th><th>Echte Nutzer: CLS</th><th>Laborwert</th></tr></thead><tbody><tr class="step"><td>Startseite</td><td>2 s</td><td>208 ms</td><td>0,03</td><td>43</td></tr><tr class="step"><td>Mitgliedschaft</td><td>1,1 s</td><td>227 ms</td><td>0,04</td><td>36</td></tr><tr class="step"><td>Probetraining</td><td>1,3 s</td><td>361 ms</td><td>0,05</td><td>69</td></tr></tbody></table><p class="plain step">Grenzen für "gut" (75 % der Besuche): LCP 2,5 s, INP 200 ms, CLS 0,1. Quelle: PageSpeed Insights, 27. Oktober 2026. Die Laborwerte stammen aus Einzelmessungen und schwanken.</p></div><div class="count">B1</div></section>
+<section class="slide" data-kind="generic" data-fs="22" data-label="B2"><h2>Testdaten und Umgebungen</h2><div class="body"><ul class="b "><li class="step">Stage: anonymisierte Kopie der Produktion, oder erzeugte Testdaten</li><li class="step">Feste Testkonten und Testclubs, regelmäßig zurückgesetzt</li><li class="step">Zahlungsanbieter im Testmodus, nie echte Zahlungen</li><li class="step">Fremde Systeme, die wir nicht steuern können: in API-Tests simuliert (Mock), echt nur in wenigen End-to-End-Tests auf Stage</li><li class="step">Test-E-Mails nur an reservierte Testdomains</li></ul></div><div class="count">B2</div></section>
+<section class="slide" data-kind="generic" data-fs="22" data-label="B3"><h2>Meine KI-Testagenten (entworfen, noch nicht auf einer Live-Seite benutzt)</h2><div class="body"><ul class="b "><li class="step">4 Agenten: Explorer, Komponente, Ablauf, API</li><li class="step">Regeln: nur erlaubte Testseiten, keine echten Käufe, Geheimnisse versteckt, Beweis für jedes Ergebnis</li><li class="step">Ergebnisse: bestanden, durchgefallen mit Priorität, oder "verdächtig" mit Begründung</li><li class="step">Mehrere Läufe werden zusammengeführt, weil KI-Ergebnisse von Lauf zu Lauf schwanken</li><li class="step">Ein P1-Fehler kann die Pipeline stoppen. Den Rest entscheiden Menschen.</li></ul></div><div class="count">B3</div></section>
+<section class="slide" data-kind="generic" data-fs="22" data-label="B4"><h2>Meine ersten Wochen</h2><div class="body"><div class="rows"><div class="row step"><div class="l">Woche 1 bis 2</div><div class="t">das Produkt, das Team und den Release-Prozess kennenlernen. Die Fehlerhistorie lesen.</div></div><div class="row step"><div class="l">Woche 3 bis 4</div><div class="t">Risikokarte mit dem Team, erste schnelle Erfolge (Prüfung der Einwilligung, Smoke-Tests)</div></div><div class="row step"><div class="l">Monat 2 bis 3</div><div class="t">Regressionstests für Checkout und Buchung, Quality Gates in der Pipeline</div></div></div></div><div class="count">B4</div></section>
+<section class="slide" data-kind="generic" data-fs="22" data-label="B5"><h2>Eine normale Woche</h2><div class="body"><div class="rows"><div class="row step"><div class="l">Planung</div><div class="t">Three Amigos bei neuen Aufgaben, Risiken vereinbart</div></div><div class="row step"><div class="l">Jeden Tag</div><div class="t">zu zweit arbeiten, Merge Requests prüfen, kurze Fragen</div></div><div class="row step"><div class="l">Während des Sprints</div><div class="t">explorative Runden bei neuen Funktionen</div></div><div class="row step"><div class="l">Vor dem Release</div><div class="t">Regression auf Stage, Abnahme mit dem Geschäft</div></div><div class="row step"><div class="l">Release-Tag</div><div class="t">Smoke-Test, Überwachung</div></div><div class="row step"><div class="l">Nach dem Release</div><div class="t">schauen, was durchgerutscht ist, und einen Test dafür ergänzen</div></div></div></div><div class="count">B5</div></section>
+</div></div>
+<aside id="notes"><div class="h"></div><div class="meta"><span class="tm">0:00</span><span class="pl"></span></div><div class="n"></div><div class="nx"></div></aside>
+<div id="help"><div class="card2"><h4>Tasten</h4><div><div><kbd>Rechts  Leertaste  Klick</kbd><span>Weiter</span></div><div><kbd>Links</kbd><span>Zurück</span></div><div><kbd>F</kbd><span>Vollbild</span></div><div><kbd>N</kbd><span>Notizen-Leiste (sichtbar, wenn du dieses Fenster teilst)</span></div><div><kbd>P</kbd><span>Moderatorfenster mit Notizen und Uhr (nur das Folienfenster teilen)</span></div><div><kbd>B</kbd><span>Aufbau-Modus: Punkte erscheinen einzeln</span></div><div><kbd>R</kbd><span>Animation wiederholen</span></div><div><kbd>H</kbd><span>Diese Hilfe</span></div></div></div></div>
+<div id="nav"><button id="bp" type="button" aria-label="Back" title="Back">&#9664;</button><select id="gs" aria-label="Go to slide"></select><button id="bn" type="button" aria-label="Next" title="Next">&#9654;</button><button id="bf" type="button" aria-label="Full screen" title="Full screen">&#9974;</button></div>
+<div id="toast"></div>
+<script id="data" type="application/json">{"ui": {"help_title": "Tasten", "help": [["Rechts  Leertaste  Klick", "Weiter"], ["Links", "Zurück"], ["F", "Vollbild"], ["N", "Notizen-Leiste (sichtbar, wenn du dieses Fenster teilst)"], ["P", "Moderatorfenster mit Notizen und Uhr (nur das Folienfenster teilen)"], ["B", "Aufbau-Modus: Punkte erscheinen einzeln"], ["R", "Animation wiederholen"], ["H", "Diese Hilfe"]], "next": "Als Nächstes", "plan": "Plan: fertig nach {m} Min.", "popup": "Pop-up blockiert. Pop-ups für diese Seite erlauben.", "build_on": "Aufbau-Modus: an", "build_off": "Aufbau-Modus: aus", "backup": "Zusatzfolien", "notes": "Notizen"}, "slides": [{"label": "1 / 17", "title": "Titel", "minutes": 0.5, "notes": "<p>Vielen Dank für die Einladung. Meine Präsentation hat eine einzige Idee. Ich möchte die Fehler finden, die am meisten Geld und Vertrauen kosten. Und ich möchte sie so früh wie möglich finden, solange sie noch billig zu beheben sind. Alles, was ich heute zeige, führt zu dieser Idee zurück.<\/p>"}, {"label": "2 / 17", "title": "Mein Ausgangspunkt", "minutes": 1.5, "notes": "<p>Bevor ich anfange, möchte ich offen sagen, was ich gemacht und was ich angenommen habe. Zuerst habe ich Ihre Website wie eine normale Besucherin angeschaut, um die Abläufe zu verstehen. Ich habe kein Formular abgeschickt und mich nicht eingeloggt, weil es Ihr Live-System ist. Dann habe ich mich gefragt: Fühlt sich die Seite für Nutzer langsam an, oder ist sie ungewöhnlich langsam? Ich habe das mit dem PageSpeed-Werkzeug von Google auf dem Handy gemessen. Ich habe auch geschaut, ob die Seite sich anpasst und für Handys geeignet ist. Und ich habe die Barrierefreiheit angeschaut, denn die Regeln für barrierefreie Online-Angebote werden wichtiger. Dabei habe ich nur die automatischen Werte benutzt. Das ist kein vollständiger Test. Außerdem habe ich drei Annahmen gemacht. Erstens: Sie haben Testumgebungen neben der Produktion. Zweitens: Zahlungsanbieter sind Dritte, darum können wir Zahlungen nicht auf dem Live-System testen. Drittens: Die meisten Ihrer Nutzer haben ein Handy und keinen Laptop. Wenn eine Annahme falsch ist, sagen Sie es mir bitte. Ich passe mich gerne an.<\/p>"}, {"label": "3 / 17", "title": "So erkunde ich", "minutes": 2.0, "notes": "<p>Ich beginne immer mit exploratorem Testen. Das heißt: Ich folge keinem festen Skript. Ich erkunde mit einem klaren Ziel und einer Zeitgrenze, meistens 60 bis 90 Minuten. Für Ihre Website waren meine Ziele einfach. Erstens: die Abläufe verstehen. Zweitens: sehen, ob sich die Seite für Nutzer langsam anfühlt. Drittens: sehen, ob sie auf dem Handy gut funktioniert. Ein Ziel für den Checkout könnte sein: Ich erkunde ihn und ändere oft meine Meinung, um falsche Summen zu finden. Ich gehe zurück, ich wechsle den Club, ich wechsle den Tarif, ich lade die Seite neu. Beim Testen mache ich Notizen. Ich schreibe immer auf: das Ziel, das Gerät und den Browser und welche Version der Seite ich gesehen habe. Dann, was ich abgedeckt habe, die Fehler mit genauen Schritten und Screenshots, meine offenen Fragen und auch, was ich nicht getestet habe. Dieser letzte Punkt ist wichtig. Er zeigt dem Team, wo die Lücken sind, statt sie zu verstecken. Die Notizen werden beim Ticket gespeichert, damit jeder sie später lesen kann.<\/p>"}, {"label": "4 / 17", "title": "Was ich gelernt habe: die wichtigsten Bereiche", "minutes": 2.0, "notes": "<p>Nach dem Erkunden wusste ich, welche Bereiche am wichtigsten sind. Ich habe sie mit einer Frage geordnet: Wie schlimm ist es, wenn das kaputtgeht, und wie wahrscheinlich ist es? Ich habe auf Geld, rechtliche Probleme und die Zahl der betroffenen Nutzer geschaut. Und auf komplizierte Regeln, fremde Systeme und häufige Änderungen. Der Abschluss der Mitgliedschaft ist klar die Nummer eins. Dort werden Verträge verkauft, und die Preise hängen von vielen Regeln ab. Die Cookie-Einwilligung ist Nummer zwei, weil sie ein rechtliches Thema ist und etwa fünfzehn Tracking-Dienste auf Ihren Seiten laden. Pausieren und Kündigen sind auch rechtliche Abläufe. Das Probetraining bringt neue Mitglieder. Das Magazin steht ganz unten. Ein Fehler dort ist sichtbar, aber billig. Diese Reihenfolge entscheidet, wo ich meine Zeit einsetze. Ich schaue mir die zwei Abläufe genau an, die Mitglieder bringen: den Checkout und die Probetraining-Buchung.<\/p>"}, {"label": "5 / 17", "title": "Mein Plan für jedes Risiko", "minutes": 2.5, "notes": "<p>Für jeden Bereich mache ich einen Plan für sein Hauptrisiko. Ich plane nach Risiko, nicht nach Seite. Beim Abschluss der Mitgliedschaft ist das Hauptrisiko ein falscher Preis oder ein Vertrag, der nie ankommt. Darum teste ich die Preisregeln mit vielen kleinen Tests, und ich baue End-to-End-Tests, die den ganzen Ablauf durchklicken. Nach dem Release prüft ein kleiner Roboter alle 15 Minuten die ersten Schritte. Bei der Cookie-Einwilligung ist das Risiko, dass Marketing-Tracker noch laden, nachdem ein Besucher Nein gesagt hat. Darum klickt eine automatische Prüfung auf \"Ablehnen\" und schaut, welche Dienste laden. Kündigen und Pausieren sind rechtliche Abläufe. Sie bekommen bei jedem Release einen End-to-End-Test, und ich lese die Texte von Hand. Bei der Probetraining-Buchung sind die Risiken ein Termin, den es nicht gibt, und eine Buchung, die den Club nie erreicht. Darum teste ich eine Buchung pro Handytyp und prüfe, dass sie ankommt. Bei Angeboten ist das Risiko ein altes Angebot, das nach dem Ende noch erscheint. Darum teste ich die Daten und schaue, was der Cache zeigt. Die anderen Bereiche bekommen leichtere Prüfungen, meistens von Hand.<\/p>"}, {"label": "6 / 17", "title": "Ablauf 1: Mitgliedschaft abschließen, die Risiken", "minutes": 2.5, "notes": "<p>Warum ist dieser Ablauf so wichtig? Hier verdienen Sie Geld. Und die Regeln sind kompliziert. Ein Vertrag über 24 Monate mit 12 freien Wochen. Ein Trainingspaket, das 39 oder 49 Euro kostet, je nach Club. Eine Startgebühr, die manchmal entfällt. Ein Studentenrabatt bis 25 Jahre. Und Österreich hat auf derselben Website eigene Regeln. Jede Regel ist ein Ort, an dem ein Preis falsch sein kann. Die schlimmsten Fehler sind ein falscher Preis, weil das ein rechtliches Problem und ein Vertrauensproblem ist, und ein Vertrag, den der Kunde unterschrieben hat, der aber Ihr System nie erreicht. Dann verlieren Sie den Kunden und wissen es nicht einmal. Ein weiteres Risiko: Der Checkout benutzt den Club in der Webadresse. Wenn jemand mittendrin den Club wechselt, muss sich die Zusammenfassung richtig ändern.<\/p>"}, {"label": "7 / 17", "title": "Ablauf 2: Probetraining buchen", "minutes": 1.5, "notes": "<p>Der zweite Ablauf ist das Probetraining. Die Risiken sind anders. Hier zahlt niemand, aber Sie verlieren ein zukünftiges Mitglied, wenn es nicht klappt. Das größte Risiko ist eine Buchung, die den Club nie erreicht. Die Person kommt ins Studio, und niemand erwartet sie. Das ist ein schlechter erster Eindruck. Auch Datumsfehler sind riskant: heute, das Wochenende, der Monatswechsel, Feiertage. Und eine Überraschung aus dem Test zur Seitengeschwindigkeit: Echte Nutzer warten hier 361 Millisekunden auf eine Reaktion, wenn sie etwas antippen. Die Grenze von Google für \"gut\" ist 200. Darauf komme ich zurück.<\/p>"}, {"label": "8 / 17", "title": "Geräte, Nutzer, fremde Systeme", "minutes": 1.5, "notes": "<p>Welche Geräte? Ich nehme an, dass die meisten Ihrer Besucher ein Handy benutzen. Das prüfe ich in Ihren Analysedaten. Ich baue die End-to-End-Tests zuerst im Desktop-Browser, weil man dort am schnellsten bauen und reparieren kann. Dann lasse ich dieselben Tests in der mobilen Browser-Ansicht laufen, auf einem Bildschirm in Handygröße. Vor großen Releases prüfe ich auch auf echten Handys. Ich denke auch in Nutzergruppen, nicht nur in Geräten. Ein Student sieht einen anderen Preis. Jemand aus Österreich sieht andere Regeln. Wer Cookies ablehnt, muss trotzdem kaufen können. Und Menschen mit Tastatur oder Screenreader müssen auch durch den Checkout kommen. Ich habe außerdem geschaut, welche fremden Dienste Ihre Seiten laden. Zwei sind für das Testen wichtig. Erstens VWO, ein Werkzeug für A/B-Tests. Das heißt: Verschiedene Besucher können verschiedene Versionen einer Seite sehen. Darum muss jeder Fehlerbericht sagen, welche Version angezeigt wurde. Zweitens die Cache-Dienste. Sie machen die Seite schnell, aber sie können auch ein altes Angebot zeigen, nachdem es beendet ist.<\/p>"}, {"label": "9 / 17", "title": "Hier fange ich an: End-to-End-Tests nach Priorität", "minutes": 2.0, "notes": "<p>Auf Basis der Reihenfolge fange ich an, End-to-End-Tests zu bauen. End-to-End heißt: Ein Roboter klickt wie ein Kunde durch den echten Ablauf. Ich baue sie nach Priorität. Priorität eins sind der Abschluss der Mitgliedschaft, die Probetraining-Buchung, Pausieren und Kündigen und die Prüfung der Cookie-Einwilligung. Diese baue ich zuerst in einem Desktop-Browser. Dann lasse ich dieselben Tests in der mobilen Browser-Ansicht laufen, auf einem Bildschirm in Handygröße. Danach kommt Priorität zwei: Aktionen und Angebote, Clubsuche und das Mitglieder-Login. Der Rest bekommt leichtere Prüfungen, meistens von Hand. Jeder Test hat eine Priorität aus der Reihenfolge. Wenn die Zeit knapp ist, wissen wir also, was zuerst laufen muss.<\/p>"}, {"label": "10 / 17", "title": "Ablauf 1: Was ich automatisieren würde", "minutes": 2.5, "notes": "<p>Das würde ich beim Abschluss der Mitgliedschaft automatisieren. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine und schnelle Tests. Das sind Unit-Tests, also Tests für ein kleines Stück Code. Jede Preisregel bekommt einen eigenen Test. Auch das Enddatum einer Aktion, denn Angebote, die nach Datum ein- und ausgeschaltet werden, sind eine klassische Fehlerquelle. In der Mitte sind API- und Integrationstests. Sie prüfen, dass die Systeme richtig miteinander sprechen. Zum Beispiel: Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitgliedersystem an? Bei fremden Systemen wie der Zahlung benutze ich deren Testmodus. Oben sind nur wenige End-to-End-Tests. Ich würde den Hauptweg auf einem iPhone und einem Android-Handy testen, und den Fall, dass jemand den Club wechselt. Darüber kommt das exploratorische Testen von Hand, für Dinge, die neu sind oder menschliches Urteil brauchen. Und nach dem Release prüft ein kleiner Roboter alle 15 Minuten die ersten Schritte. So merken wir ein Problem, bevor Kunden anrufen.<\/p>"}, {"label": "11 / 17", "title": "Was ich automatisiere und was nicht", "minutes": 1.5, "notes": "<p>Wie entscheide ich, was ich automatisiere? Ich stelle drei Fragen. Läuft dieser Test oft? Ist er wichtig? Und wissen wir genau, was das richtige Ergebnis ist? Wenn ja, automatisiere ich ihn. Wenn eine Funktion neu ist und sich noch ändert, teste ich sie zuerst von Hand. Sonst verbringen wir mehr Zeit damit, Tests zu reparieren, als Fehler zu finden. Ein unzuverlässiger Test, der manchmal besteht und manchmal ohne echten Grund durchfällt, kostet mehr als die Prüfung von Hand, die er ersetzt hat. Manches braucht immer einen Menschen. Wie sieht eine Seite aus? Ist der Text klar? Ergibt der Screenreader Sinn? Das bleibt von Hand. Ich sage auch klar, was ich nicht testen würde. Erstens die fremden Dienste selbst. Wir können den Zahlungsanbieter oder das Cookie-Werkzeug nicht testen. Das machen deren eigene Teams. Ich teste unsere Seite: dass sie die richtigen Daten sendet, dass sie eine klare Meldung zeigt, wenn der Dienst ausfällt, und dass nichts kaputtgeht, wenn der Dienst langsam oder nicht erreichbar ist. Bei Zahlungen nehme ich einen Testmodus auf einer Testumgebung an, nie das Live-System. Zweitens mache ich keine Lasttests oder Sicherheitsangriffe auf die Live-Seite. Sie ist die Produktion, darum braucht das eine Testumgebung und vorher eine Absprache. Drittens bekommen Bereiche mit niedrigem Risiko, wie das Magazin, nur einen kurzen Blick. Ein Fehler dort ist sichtbar, aber billig. Zu sagen, was ich auslasse, gehört zum Plan. Dann wissen alle, wo die Lücken sind.<\/p>"}, {"label": "12 / 17", "title": "Der Qualitätsprozess, den ich fördern würde", "minutes": 2.5, "notes": "<p>Jetzt zum Qualitätsprozess, den ich fördern würde, damit Fehler billiger werden. Die Idee ist einfach. Je früher wir einen Fehler finden, desto billiger ist er. Ein Fehler, der in einem Gespräch auffällt, kostet Minuten. Ein Fehler, der in der Produktion auffällt, kostet Geld und Vertrauen. Darum stelle ich in jeder Phase dieselbe Frage: Was kann schiefgehen, und wie verhindern wir es, nicht nur wie fangen wir es? Bei den Anforderungen frage ich, warum wir etwas bauen und für wen. In der Risikophase entscheiden wir als Team, was am wichtigsten ist. In der Entwicklung teste ich früh und arbeite mit den Entwicklern zu zweit. Dann automatisiere ich, was sich lohnt. Beim Release hat \"fertig\" klare Kriterien. Und nach dem Release schaue ich, was wir übersehen haben, denn das ist die ehrlichste Rückmeldung, die wir bekommen. Dann beginnt der Kreis von vorne.<\/p>"}, {"label": "13 / 17", "title": "Qualität ist die Aufgabe des Teams", "minutes": 2.0, "notes": "<p>Ich glaube, dass Qualität die Aufgabe des ganzen Teams ist, nicht nur von QA. Wenn nur QA verantwortlich ist, wird Qualität zu einer Kontrolle am Ende. Dann werden Fehler spät gefunden, wenn sie teuer sind. Darum hat jeder einen Teil. Produktverantwortliche schreiben klare Ziele und Akzeptanzkriterien. Akzeptanzkriterien sind die Bedingungen, die sagen, wann eine Funktion fertig ist. Entwickler schreiben Unit- und API-Tests für ihren eigenen Code. Die Fachabteilungen prüfen, ob das Ergebnis für das Geschäft richtig ist. Und meine Rolle hat zwei Seiten. Auf der einen Seite bin ich der Torwächter. Beim Release sage ich klar, was getestet ist, was nicht, und wie hoch das Risiko ist. Auf der anderen Seite bin ich eine Hilfe. Das Team kann zu mir kommen. Ich helfe, Akzeptanzkriterien zu schreiben, ich arbeite mit Entwicklern zu zweit, ich pflege die Testfälle, damit sie nützlich bleiben, und ich helfe dem Team, besser zu testen. Oft machen wir das in einem kurzen Treffen, das Three Amigos heißt: Produkt, Entwicklung und QA schauen gemeinsam eine Aufgabe an, bevor jemand anfängt zu bauen.<\/p>"}, {"label": "14 / 17", "title": "Von der Idee zur Live-Website", "minutes": 2.0, "notes": "<p>Hier ist der Weg von einem Feature bis zur Live-Website. Bei Acquia nehme ich drei Umgebungen an: Entwicklung, Staging und Produktion. Bei jedem Schritt gibt es eine Prüfung. Wenn ein Entwickler einen Merge Request öffnet, also die Bitte, seine Änderung in den Hauptcode zu übernehmen, gibt es ein Code-Review und die schnellen Tests. Auf der Entwicklungsumgebung laufen die API- und Integrationstests und ein Smoke-Test. Ein Smoke-Test ist eine kurze Prüfung, ob die wichtigsten Dinge noch funktionieren. Wie bei einer Maschine: Man schaltet sie ein und schaut, ob Rauch aufsteigt. Auf Staging läuft die volle Regression. Regressionstests prüfen, dass alte Funktionen nach einer Änderung noch funktionieren. Dort prüfen wir auch Optik, Barrierefreiheit, Seitengeschwindigkeit und Einwilligung. Die Fachabteilungen machen ihre Abnahme ebenfalls auf Staging. Nach dem Deploy auf die Produktion läuft der Smoke-Test noch einmal. Dann übernimmt die Überwachung. Wenn etwas schiefgeht, gehen wir zur letzten guten Version zurück. Ein wichtiger Punkt bei den Testdaten: Drupal-Seiten kopieren oft die Datenbank der Produktion auf Staging. Diese Kopie darf keine echten Kundendaten enthalten. Sie muss anonymisiert sein.<\/p>"}, {"label": "15 / 17", "title": "Wann stoppen wir ein Release?", "minutes": 2.0, "notes": "<p>Wann stoppen wir ein Release? Manche Dinge stoppen es immer: ein falscher Preis, ein kaputter Checkout oder eine kaputte Buchung, eine kaputte Kündigen-Schaltfläche, ein Cookie-Banner, bei dem \"Ablehnen\" nicht funktioniert, jedes Sicherheitsproblem oder ein Hauptablauf, den man mit der Tastatur nicht beenden kann. Andere Fehler dürfen live gehen, wenn wir Bedingungen vereinbaren. Zum Beispiel ein kleiner Fehler mit einer einfachen Umgehung, wenn es ein Ticket und einen Termin für die Reparatur gibt. Was ist mit unzuverlässigen Tests? Ich lasse einen durchgefallenen Test noch einmal laufen. Wenn er beim zweiten Mal besteht, ist er wahrscheinlich unzuverlässig. Dann kommt er in Quarantäne. Das heißt: Er stoppt die Pipeline nicht mehr, aber er hat einen Besitzer und eine Frist für die Reparatur. Er wird nie einfach ignoriert. Sehr lange Tests laufen nachts, nicht bei jeder Änderung. Wenn ein Release dringend ist, gebe ich eine klare Empfehlung, zum Beispiel ob wir live gehen oder warten sollen. Aber die Entscheidung trifft das Team, mit offenen Augen.<\/p>"}, {"label": "16 / 17", "title": "Mehr als \"es funktioniert\"", "minutes": 2.5, "notes": "<p>Neben \"es funktioniert\" habe ich drei Bereiche gewählt. Erstens die Barrierefreiheit. Sie veröffentlichen eine Erklärung zur Barrierefreiheit, also ist sie Ihnen wichtig. Ein automatischer Scan findet nur einen Teil der Probleme. Den Rest muss ein Mensch prüfen: Kann ich den Checkout nur mit der Tastatur beenden? Liest ein Screenreader die Fehlermeldungen vor? Mein Gate ist einfach: kein kritisches Problem im Checkout und bei der Buchung. Zweitens Datenschutz und Cookie-Einwilligung. Mit etwa fünfzehn Werbediensten auf der Seite ist das ein echtes Risiko. Ich würde eine einfache Prüfung automatisieren: Ein Roboter klickt auf \"Alle ablehnen\", und dann schauen wir, welche Dienste trotzdem laden. Wenn ein Marketing-Tracker nach dem Ablehnen lädt, stoppt das Release. Die rechtlichen Regeln selbst würde ich mit Ihrem Datenschutzbeauftragten klären. Drittens die Seitengeschwindigkeit. Google gibt klare Grenzen für echte Nutzer vor. Ich habe Ihre Seiten gemessen. Sie laden für echte Nutzer schnell, das ist toll. Aber alle drei reagieren zu langsam, wenn jemand etwas antippt. Auf der Probetraining-Seite sind es 361 Millisekunden, und die Grenze ist 200. Ein interessantes Detail: Der Labortest sagt, die Probetraining-Seite sei Ihre schnellste Seite. Das liegt daran, dass der Labortest die Seite nur lädt und nie den Kalender anklickt. Darum würde ich auch die Buchungsschritte selbst messen. In der Pipeline wäre meine erste Regel: Keine Seite wird langsamer als heute. Später können wir die Grenzen strenger machen.<\/p>"}, {"label": "17 / 17", "title": "Wo KI hilft und wo nicht", "minutes": 2.5, "notes": "<p>Wo passt KI hin? Ich benutze sie an drei Stellen. Erstens bei den Anforderungen. In meinem letzten Job habe ich KI-Agenten gebaut, die Akzeptanzkriterien lesen und nach Lücken und fehlenden Sonderfällen suchen. Ein Mensch entscheidet dann, welche Lücken echt sind. Zweitens beim exploratorischen Testen. Ich habe eine Gruppe von KI-Testagenten entworfen, die eine Website mit einem klaren Ziel erkunden. Ich muss hier ehrlich sein: Dieses System ist entworfen und mit Beispieldaten getestet, aber ich habe es noch nicht auf einer Live-Website laufen lassen. Wichtig sind die Regeln. Jedes Ergebnis braucht einen Beweis, zum Beispiel Screenshots. Der Agent muss aufschreiben, was er nicht getestet hat. Und Text auf einer Webseite gilt als Daten, nie als Anweisung, damit eine Seite den Agenten nicht austricksen kann. Drittens bei fehlgeschlagenen Tests. Die KI kann Fehler gruppieren und vorschlagen, ob es ein echter Fehler oder ein unzuverlässiger Test ist. Aber manche Dinge bleiben immer bei Menschen: die endgültige Priorität eines Fehlers, die Entscheidung, ob ein Release live geht, und alles Rechtliche. Und keine echten Kundendaten kommen in KI-Werkzeuge. Die KI macht Vorschläge. Das Team entscheidet.<\/p>"}, {"label": "", "title": "Zusatzfolien", "minutes": null, "notes": ""}, {"label": "B1", "title": "Details zur Seitengeschwindigkeit", "minutes": null, "notes": "<p>LCP heißt: Wie lange dauert es, bis der Hauptinhalt sichtbar ist. INP heißt: Wie schnell reagiert die Seite auf ein Antippen. CLS heißt: Wie stark springt die Seite beim Laden. Der Labortest der Startseite zeigte fast 29 Sekunden bis zum Hauptinhalt auf einem langsamen Handy, während echte Nutzer ihn nach 2 Sekunden sehen. Ich kenne den genauen Grund nicht. Es könnte der Cache für wiederkehrende Besucher sein oder einfach das langsame Testnetz. Ich würde das mit Ihrem Team genauer anschauen.<\/p>"}, {"label": "B2", "title": "Testdaten und Umgebungen", "minutes": null, "notes": "<p>Bei den Testdaten gilt eine einfache Regel: keine echten Kundendaten außerhalb der Produktion. Wenn ein System schwer zu steuern ist, zum Beispiel ein Zahlungsanbieter, simuliere ich es in den meisten Tests. Das nennt man Mocking. Nur wenige End-to-End-Tests benutzen den echten Testmodus des Anbieters.<\/p>"}, {"label": "B3", "title": "Meine KI-Testagenten (entworfen, noch nicht auf einer Live-Seite benutzt)", "minutes": null, "notes": "<p>Das ist das System, das ich erwähnt habe. Ich möchte klar sagen: Es ist gebaut und mit Beispieldaten getestet, aber noch nicht auf einer echten Website. Worauf ich stolz bin, sind die Regeln, denn sie beantworten Ihre Fragen zur Kontrolle: Beweise, Ehrlichkeit über Lücken, und Menschen, die die endgültigen Entscheidungen treffen.<\/p>"}, {"label": "B4", "title": "Meine ersten Wochen", "minutes": null, "notes": "<p>Wenn ich anfange, würde ich nicht am ersten Tag alles ändern. Zuerst lerne ich, wie Sie arbeiten und woher die Fehler in der Vergangenheit kamen. Dann vereinbaren wir gemeinsam eine Risikokarte. Die ersten schnellen Erfolge wären die Prüfung der Einwilligung und die Smoke-Tests, weil sie klein sind und viel schützen.<\/p>"}, {"label": "B5", "title": "Eine normale Woche", "minutes": null, "notes": "<p>Damit man sieht, dass das im echten Alltag funktioniert, hier eine normale Woche. Bei der Planung schauen wir neue Aufgaben gemeinsam an und vereinbaren die Risiken. Jeden Tag arbeite ich mit Entwicklern zu zweit und schaue Merge Requests an. Während des Sprints mache ich explorative Runden bei den neuen Funktionen. Vor dem Release läuft die Regression auf Staging, und das Geschäft macht die Abnahme. Am Release-Tag gibt es einen Smoke-Test und Überwachung. Und nach dem Release schaue ich, was durchgerutscht ist. Für jeden Fehler, der die Produktion erreicht hat, ergänzen wir einen Test, damit er nicht wiederkommt.<\/p>"}], "lang": "de"}</script>
+<script>
+(function(){
+'use strict';
+var D=JSON.parse(document.getElementById('data').textContent), UI=D.ui, S=D.slides;
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return [].slice.call((r||document).querySelectorAll(s));}
+var slides=$$('.slide'), stage=$('#stage'), area=$('#area'), panel=$('#notes'), help=$('#help'), toastEl=$('#toast');
+var params=new URLSearchParams(location.search);
+var printMode=params.has('print');
+var reduce=printMode||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+var cur=0, token=0, build=false, t0=null, pw=null, ROW=2.5;
+
+function scale(){
+  var s=Math.min(area.clientWidth/1280, area.clientHeight/720);
+  stage.style.transform='translate(-50%,-50%) scale('+s+')';
+}
+function fit(){
+  slides.forEach(function(s){
+    var b=$('.body',s); if(!b) return;
+    var fs=parseFloat(s.getAttribute('data-fs')||24), n=0;
+    b.style.fontSize=fs+'px';
+    while((b.scrollHeight>b.clientHeight+1||b.scrollWidth>b.clientWidth+1)&&fs>13&&n++<60){fs-=0.5;b.style.fontSize=fs+'px';}
+    s.setAttribute('data-fit',fs);
+  });
+}
+function msg(t){toastEl.textContent=t;toastEl.classList.add('on');clearTimeout(msg.t);msg.t=setTimeout(function(){toastEl.classList.remove('on');},2200);}
+function applySteps(s,k){$$('.step',s).forEach(function(e,i){e.classList.toggle('pending',build&&i>=k);});}
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
+
+function settle(){
+  token++;
+  slides.forEach(function(s){
+    $$('.step',s).forEach(function(e){e.classList.remove('pending');});
+    $$('.rrow',s).forEach(function(r,i){r.classList.remove('notrans');r.style.top=(i*ROW)+'em';r.style.opacity=1;r.classList.toggle('top',i<4);});
+    $$('.light',s).forEach(function(l){l.className='light ok';});
+    var m=$('.mover',s); if(m){m.style.opacity=0;m.classList.remove('stuck');}
+  });
+}
+function animRank(s){
+  var rows=$$('.rrow',s), idx=rows.map(function(_,i){return i;}), my=token;
+  function place(o){rows.forEach(function(r,i){r.style.top=(o[i]*ROW)+'em';});}
+  if(reduce){place(idx);rows.forEach(function(r,i){r.classList.toggle('top',i<4);r.style.opacity=1;});return;}
+  var sh=idx.slice(); for(var i=sh.length-1;i>0;i--){var j=(i*7+3)%(i+1);var t=sh[i];sh[i]=sh[j];sh[j]=t;}
+  rows.forEach(function(r){r.classList.add('notrans');r.classList.remove('top');r.style.opacity=0;});
+  place(sh); void s.offsetHeight;
+  rows.forEach(function(r){r.classList.remove('notrans');});
+  rows.forEach(function(r,i){setTimeout(function(){if(token===my)r.style.opacity=1;},300+i*220);});
+  var t1=300+rows.length*220+900;
+  setTimeout(function(){if(token===my)place(idx);},t1);
+  setTimeout(function(){if(token===my)rows.forEach(function(r,i){r.classList.toggle('top',i<4);});},t1+1000);
+}
+function animPipe(s){
+  var cells=$$('.lcell',s), lights=$$('.light',s), mover=$('.mover',s), my=token;
+  if(!mover||reduce){lights.forEach(function(l){l.className='light ok';});return;}
+  function pos(i){var c=cells[i],l=lights[i];
+    mover.style.left=(c.offsetLeft+l.offsetLeft+l.offsetWidth/2)+'px';
+    mover.style.top=(c.offsetTop+l.offsetTop+l.offsetHeight/2)+'px';}
+  function alive(){return token===my;}
+  function run(failAt){
+    lights.forEach(function(l){l.className='light';}); mover.classList.remove('stuck');
+    mover.style.transition='none'; pos(0); mover.style.opacity=1; void mover.offsetWidth; mover.style.transition='';
+    return sleep(600).then(function(){
+      var p=Promise.resolve();
+      cells.forEach(function(_,i){p=p.then(function(){
+        if(!alive()||p.stop) return;
+        pos(i);
+        return sleep(i===0?150:800).then(function(){
+          if(!alive()||p.stop) return;
+          if(i===failAt){lights[i].className='light bad';mover.classList.add('stuck');p.stop=true;return;}
+          lights[i].className='light ok';
+        });
+      });});
+      return p.then(function(){ if(failAt<0&&alive()) mover.style.opacity=0; });
+    });
+  }
+  run(-1).then(function(){ if(!alive())return; return sleep(1500).then(function(){ if(alive()) return run(3); }); });
+}
+function animCycle(s){
+  var cs=$$('.card',s), my=token, i=0;
+  cs.forEach(function(c){c.classList.remove('hot');});
+  if(printMode||!cs.length) return;
+  (function step(){
+    if(token!==my) return;
+    cs.forEach(function(c,k){c.classList.toggle('hot',k===i);});
+    i=(i+1)%cs.length;
+    setTimeout(step,1500);
+  })();
+}
+function enter(s){var k=s.getAttribute('data-kind'); if(k==='rank')animRank(s); else if(k==='pipe')animPipe(s); else if(k==='cycle')animCycle(s);}
+function replay(){token++; enter(slides[cur]);}
+
+function show(n,fromPrev){
+  n=Math.max(0,Math.min(slides.length-1,n)); token++; cur=n;
+  slides.forEach(function(s,i){s.classList.toggle('active',i===n);});
+  applySteps(slides[n], fromPrev?99999:0);
+  enter(slides[n]);
+  try{history.replaceState(null,'','#'+(n+1)+(printMode?'':''));}catch(e){}
+  if(t0===null&&n>=1) t0=Date.now(); if(n===0) t0=null;
+  upd();
+}
+function next(){
+  var s=slides[cur];
+  if(build){var st=$$('.step',s), k=st.filter(function(e){return !e.classList.contains('pending');}).length;
+    if(k<st.length){applySteps(s,k+1);return;}}
+  if(cur<slides.length-1) show(cur+1);
+}
+function prev(){ if(cur>0) show(cur-1,true); }
+
+function cum(i){var t=0; if(S[i].minutes==null) return ''; for(var k=0;k<=i;k++) if(S[k].minutes!=null) t+=S[k].minutes; return String(Math.round(t*10)/10).replace('.0','');}
+function fmt(sec){var m=Math.floor(sec/60), s=Math.floor(sec%60); return m+':'+(s<10?'0':'')+s;}
+function fill(root){
+  var d=S[cur], nx=S[cur+1], el=function(c){return root.querySelector('.'+c);};
+  el('h').textContent=(d.label?d.label+'  ·  ':'')+d.title+(d.minutes!=null?'  ·  ~'+d.minutes+' min':'');
+  el('n').innerHTML=d.notes;
+  el('nx').textContent=nx?UI.next+': '+nx.title:'';
+  var c=cum(cur); el('pl').textContent=c?UI.plan.replace('{m}',c):'';
+  el('tm').textContent=fmt(t0?(Date.now()-t0)/1000:0);
+}
+var gs=$('#gs');
+S.forEach(function(d,i){var o=document.createElement('option');o.value=i;o.textContent=(d.label?d.label+'   ':'')+d.title;gs.appendChild(o);});
+gs.addEventListener('change',function(){show(parseInt(gs.value,10));gs.blur();});
+$('#bp').addEventListener('click',function(){prev();});
+$('#bn').addEventListener('click',function(){next();});
+$('#bf').addEventListener('click',function(){fullscreen();});
+function wake(){document.body.classList.add('moving');clearTimeout(wake.t);wake.t=setTimeout(function(){document.body.classList.remove('moving');},3000);}
+['mousemove','touchstart','mousedown'].forEach(function(ev){document.addEventListener(ev,wake,{passive:true});});
+wake();
+function upd(){ gs.value=cur; fill(panel); if(pw&&!pw.closed) fill(pw.document.body); }
+setInterval(function(){ if(panel.classList.contains('on')||(pw&&!pw.closed)) upd(); },1000);
+
+function presenter(){
+  if(pw&&!pw.closed){pw.focus();return;}
+  pw=window.open('','tina_presenter','width=560,height=780');
+  if(!pw){msg(UI.popup);return;}
+  var css='body{margin:0;padding:20px 24px;font:22px/1.5 "Avenir Next","Segoe UI",system-ui,sans-serif;color:#1c2b33}'+
+   '.h{font-weight:700;color:#0b4f4a;margin-bottom:.3em}.meta{color:#5d6d75;font-size:.85em;margin-bottom:.8em}'+
+   '.tm{font-variant-numeric:tabular-nums;font-weight:700;color:#1c2b33;margin-right:.8em;font-size:1.3em}'+
+   '.nx{margin-top:1em;color:#5d6d75;font-size:.8em}p{margin:0 0 .8em}';
+  pw.document.open();
+  pw.document.write('<!doctype html><html lang="'+D.lang+'"><head><meta charset="utf-8"><title>'+UI.notes+'</title><style>'+css+'</style></head><body>'+
+    '<div class="h"></div><div class="meta"><span class="tm">0:00</span><span class="pl"></span></div><div class="n"></div><div class="nx"></div></body></html>');
+  pw.document.close();
+  pw.document.addEventListener('keydown',onKey);
+  upd();
+}
+function fullscreen(){var e=document.documentElement; if(!document.fullscreenElement){if(e.requestFullscreen)e.requestFullscreen();}else{document.exitFullscreen();}}
+function onKey(e){
+  if(e.metaKey||e.ctrlKey||e.altKey) return;
+  var k=e.key;
+  if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Enter'){e.preventDefault();next();}
+  else if(k==='ArrowLeft'||k==='PageUp'||k==='Backspace'){e.preventDefault();prev();}
+  else if(k==='Home'){show(0);} else if(k==='End'){show(slides.length-1);}
+  else if(k==='f'||k==='F'){fullscreen();}
+  else if(k==='n'||k==='N'){panel.classList.toggle('on');scale();upd();}
+  else if(k==='p'||k==='P'){presenter();}
+  else if(k==='b'||k==='B'){build=!build;applySteps(slides[cur],build?0:99999);msg(build?UI.build_on:UI.build_off);}
+  else if(k==='r'||k==='R'){replay();}
+  else if(k==='h'||k==='H'||k==='?'){help.classList.toggle('on');}
+  else if(k==='Escape'){help.classList.remove('on');}
+}
+document.addEventListener('keydown',onKey);
+stage.addEventListener('click',function(){ if(window.getSelection&&String(window.getSelection()))return; next(); });
+help.addEventListener('click',function(){help.classList.remove('on');});
+window.addEventListener('resize',scale);
+window.addEventListener('beforeprint',settle);
+window.addEventListener('afterprint',function(){show(cur);});
+
+scale(); fit();
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){fit();});
+var h=parseInt(location.hash.slice(1),10);
+if(printMode){settle(); show(isNaN(h)?0:h-1); settle();}
+else show(isNaN(h)?0:h-1);
+window.__deck={slides:slides,show:show,fit:function(){return slides.map(function(s){return s.getAttribute('data-fit');});}};
+})();
+</script>
+</body>
+</html>

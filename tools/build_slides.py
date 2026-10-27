@@ -78,7 +78,7 @@ def inline(s):
 # ---------- parsing ----------
 
 def parse_file(text):
-    parts = re.split(r"(?m)^# (?:Extra|Backup) slides[^\n]*", text, maxsplit=1)
+    parts = re.split(r"(?m)^# (?:Extra slides|Backup slides|Zusatzfolien)[^\n]*", text, maxsplit=1)
     main, backup = parts[0], (parts[1] if len(parts) > 1 else "")
     slides = []
     for part, is_backup in ((main, False), (backup, True)):
