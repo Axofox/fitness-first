@@ -8,7 +8,7 @@ Nothing on this list goes on a slide until it is checked. When something is chec
 - [ ] Which payment provider the membership shop uses. (Payment step not opened.)
 - [ ] Which booking system or CRM receives trial training bookings. (No separate booking host seen.)
 - [ ] How Acquia names its environments (assumption: Dev, Stage, Prod).
-- [ ] Page speed numbers for membership and trial pages (homepage done, see site-analysis.md).
+- [ ] Page speed numbers for the trial page (homepage and membership done, see site-analysis.md).
 - [ ] Content of the click-to-open panels on qama.netlify.app.
 
 ## Verified

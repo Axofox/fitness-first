@@ -82,7 +82,33 @@ Suggestions shown: better cache lifetimes (about 2.6 MB to save), better image d
 
 **What this shows:** real users get a fast page (2 s), but a first visit on a slow phone in the lab takes almost 29 seconds for the main content. Why the gap is so big is not known. Possible reasons, not verified: real users are often returning visitors with cached files (Baqend, Cloudflare), the lab run is a cold first visit on a throttled network, and one lab run can vary a lot. This is exactly the "lab versus field" point for slide 14.
 
-Membership and trial pages: not measured yet.
+### Membership page (`/mitgliedschaft`), mobile
+
+Report from 2026-10-27, 9:00 PM. Link: https://pagespeed.web.dev/analysis/https-www-fitnessfirst-de-mitgliedschaft/i69cmpiges?form_factor=mobile
+
+**Real users** (this URL, last 28 days). Assessment: **Failed**.
+
+| Metric | Value | Limit for "good" | Result |
+|---|---|---|---|
+| LCP | 1.1 s | 2.5 s | Good |
+| INP | 227 ms | 200 ms | Too slow, the reason it fails |
+| CLS | 0.04 | 0.1 | Good |
+| FCP | 1 s | | |
+| TTFB | 0.6 s | | |
+
+**Lab test** (same setup as the homepage). Scores: Performance 36, Accessibility 93, Best Practices 96, SEO 85.
+
+| Metric | Value |
+|---|---|
+| FCP | 4.4 s |
+| LCP | 9.2 s |
+| Total Blocking Time | 970 ms |
+| CLS | 0 |
+| Speed Index | 9.6 s |
+
+**Pattern across both pages:** loading is fine for real users, but reacting to taps (INP) is too slow on both, and worse on the membership page, which is the main sales page. High Total Blocking Time in the lab (970 ms) points the same way: the phone is busy running scripts. A possible cause, not verified: the many tracking and ad scripts listed above.
+
+Trial page: not measured.
 
 ## Not seen
 - Prices on the plan step, extras, the data form, the payment step
