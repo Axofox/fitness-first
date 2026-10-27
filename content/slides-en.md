@@ -16,7 +16,7 @@ Thank you for the invitation. My presentation has one idea. I want to find the m
 
 ---
 
-## 2. My assumptions (1.5 min)
+## 2. My starting point (1.5 min)
 
 **Slide**
 How I prepared:
