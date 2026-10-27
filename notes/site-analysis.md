@@ -56,7 +56,33 @@ Not seen: the payment provider and the booking system. Both are behind steps I d
 
 ## Page speed
 
-Not measured. The PageSpeed Insights API refused with "429" (too many requests without an API key). Next try: pagespeed.web.dev by hand, mobile, for `/`, `/mitgliedschaft`, `/probetraining`.
+Homepage, mobile, PageSpeed Insights report from 2026-10-27, 9:00 PM. Link: https://pagespeed.web.dev/analysis/https-www-fitnessfirst-de/0djbx8pexr?form_factor=mobile
+
+**Real users** (Chrome UX Report, last 28 days, this URL). Core Web Vitals assessment: **Failed**.
+
+| Metric | Value | Limit for "good" | Result |
+|---|---|---|---|
+| LCP (main content visible) | 2 s | 2.5 s | Good |
+| INP (reaction to a tap) | 208 ms | 200 ms | Just over, this is why it fails |
+| CLS (page jumping) | 0.03 | 0.1 | Good |
+| FCP (first content) | 0.6 s | | |
+| TTFB (server answers) | 0.3 s | | |
+
+**Lab test** (one Lighthouse 13.5.0 run, emulated Moto G Power, slow 4G, first visit). Scores: Performance 43, Accessibility 92, Best Practices 96, SEO 92.
+
+| Metric | Value |
+|---|---|
+| FCP | 5.5 s |
+| LCP | 28.8 s |
+| Total Blocking Time | 530 ms |
+| CLS | 0 |
+| Speed Index | 10.6 s |
+
+Suggestions shown: better cache lifetimes (about 2.6 MB to save), better image delivery (about 2.4 MB), render-blocking requests (about 180 ms).
+
+**What this shows:** real users get a fast page (2 s), but a first visit on a slow phone in the lab takes almost 29 seconds for the main content. Why the gap is so big is not known. Possible reasons, not verified: real users are often returning visitors with cached files (Baqend, Cloudflare), the lab run is a cold first visit on a throttled network, and one lab run can vary a lot. This is exactly the "lab versus field" point for slide 14.
+
+Membership and trial pages: not measured yet.
 
 ## Not seen
 - Prices on the plan step, extras, the data form, the payment step
