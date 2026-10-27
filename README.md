@@ -14,7 +14,7 @@ Private repo.
 | `docs/` | The case study (original PDF, English translation) and the plan |
 | `notes/` | Website analysis, risk ranking, fact checks |
 | `content/` | Slide text and speaker notes |
-| `slides/` | Finished HTML presentations and PDF backups |
+| `slides/` | Finished HTML presentations and PDF copies |
 | `.claude/agents/` | The helpers, each fixed to one model |
 
 ## The helpers
@@ -47,6 +47,6 @@ For Teams: share only the slides window, never the whole screen, and keep the no
 | Tuesday evening | Repo set up, website analysis, page speed numbers | Sonnet + Opus |
 | Wednesday morning | Slide text and speaker notes (English) | Opus |
 | Wednesday afternoon | Build the English HTML presentation | Sonnet |
-| Thursday morning | German version, PDF backups | Sonnet |
+| Thursday morning | German version, PDF copies | Sonnet |
 | Thursday afternoon | Deliver | |
 | Friday before the interview | Practice run | |

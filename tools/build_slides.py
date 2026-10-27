@@ -14,7 +14,7 @@ Markdown format per slide:
   **Slide**       what is on screen
   **Animation**   optional, only slides 4, 12, 14 and 17 use it
   **Notes**       what the speaker says
-Backup slides sit under "# Backup slides" and are numbered B1, B2, ...
+Extra slides sit under "# Extra slides" and are numbered B1, B2, ...
 """
 import argparse
 import html
@@ -40,7 +40,7 @@ UI = {
         "popup": "Pop-up blocked. Allow pop-ups for this page.",
         "build_on": "Build mode: on",
         "build_off": "Build mode: off",
-        "backup": "Backup slides",
+        "backup": "Extra slides",
         "notes": "Notes",
     },
     "de": {
@@ -60,7 +60,7 @@ UI = {
         "popup": "Pop-up blockiert. Pop-ups für diese Seite erlauben.",
         "build_on": "Aufbau-Modus: an",
         "build_off": "Aufbau-Modus: aus",
-        "backup": "Zusatzfolien (Backup)",
+        "backup": "Zusatzfolien",
         "notes": "Notizen",
     },
 }
@@ -78,7 +78,8 @@ def inline(s):
 # ---------- parsing ----------
 
 def parse_file(text):
-    main, _, backup = text.partition("\n# Backup slides")
+    parts = re.split(r"(?m)^# (?:Extra|Backup) slides[^\n]*", text, maxsplit=1)
+    main, backup = parts[0], (parts[1] if len(parts) > 1 else "")
     slides = []
     for part, is_backup in ((main, False), (backup, True)):
         for sec in re.split(r"^## ", part, flags=re.M)[1:]:
@@ -414,7 +415,7 @@ def main():
               .replace("%%HELP%%", help_rows))
     Path(a.dst).parent.mkdir(parents=True, exist_ok=True)
     Path(a.dst).write_text(out, encoding="utf-8")
-    print(f"Built {a.dst}: {total} slides + {len(backups)} backup slides")
+    print(f"Built {a.dst}: {total} slides + {len(backups)} extra slides")
 
 
 if __name__ == "__main__":
