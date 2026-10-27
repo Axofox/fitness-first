@@ -1,0 +1,369 @@
+# Slides (English)
+
+Format per slide: **Slide** = what is on screen. **Animation** = only where the plan says so. **Notes** = what Tina says.
+Target: about 30 minutes. Shorten slides 7, 8 and 16 first if the practice run is too long.
+
+---
+
+## 1. Title (0.5 min)
+
+**Slide**
+- Quality for fitnessfirst.de
+- Find the expensive mistakes first, and find them early.
+- Christine (Tina) Harnut, QA Engineer
+
+**Notes**
+Thank you for the invitation. My presentation has one idea. I want to find the mistakes that cost the most money and trust first. And I want to find them as early as possible, when they are still cheap to fix. Everything I show today comes back to this idea.
+
+---
+
+## 2. My assumptions (1.5 min)
+
+**Slide**
+How I prepared:
+- Visited the website as a normal visitor, read-only
+- Measured page speed with PageSpeed Insights (mobile, 27 October)
+- Nothing submitted, no login, no tests on your live site
+
+What I assumed:
+- Acquia environments: Dev, Stage, Prod
+- A small team, one QA person
+- Payment provider and booking system: unknown to me
+- Most visitors use a phone (to check in your analytics)
+
+**Notes**
+Before I start, I want to be open about what I know and what I don't. I looked at your website like a normal visitor. I did not submit any form and I did not log in, because it is your live system. I also measured page speed with Google's tool. Some things I could not see. I don't know your payment provider, your booking system or your team setup. So I made assumptions. For example, I assume three environments on Acquia: development, staging and production. If an assumption is wrong, please tell me. I am happy to adapt.
+
+---
+
+## 3. How I work (1.5 min)
+
+**Slide**
+Six phases, one question: what could go wrong, and how do we prevent it?
+1. Requirements: understand the why
+2. Risk: decide together what matters most
+3. Development: explore and pair early
+4. Automation: automate the right things
+5. Release: done is a criterion, not a feeling
+6. After release: learn from what got through
+
+**Notes**
+This is how I think about quality across the whole process. It is the same question in every phase: what could go wrong, and how do we prevent it, not only catch it? In requirements I ask why we build something and for whom. In the risk phase we decide as a team what matters most. During development I test early and pair with developers. Then I automate what is worth it. At release, "done" has clear criteria. And after the release I look at what we missed, because that is the most honest feedback we get. The rest of my talk follows these phases.
+
+---
+
+## 4. Where the money is (2 min)
+
+**Slide**
+Risk = how bad if it breaks x how likely it breaks
+
+1. Membership checkout
+2. Cookie consent and tracking
+3. Pause, cancel, withdrawal
+4. Trial training booking
+5. Campaigns and offers
+6. Club search
+7. Member login
+8. Course plan
+9. Magazine, career
+
+**Animation**
+The 9 parts appear one by one in random order, then slide into the ranked order. The top 4 turn teal.
+
+**Notes**
+I started with a simple question: which part of the website hurts most if it breaks? I looked at two things. First, how bad is it: money, legal problems, many users. Second, how likely is it: complex rules, outside systems, frequent changes. The membership checkout is clearly number one. It sells contracts, and the prices depend on many rules. Cookie consent is number two, because it is a legal topic and about fifteen tracking services load on your pages. Pause and cancel are legal flows too. The trial booking brings new members. The magazine is at the bottom. A mistake there is visible, but cheap. I chose the two conversion flows for the next slides: membership and trial training.
+
+---
+
+## 5. Flow 1: Membership checkout, the risks (2.5 min)
+
+**Slide**
+5 steps: Club > Plan > Extras > Your details > Payment
+
+What can go wrong:
+- Wrong price: club, plan, campaign, age, country
+- Summary does not match the choice
+- Customer gets stuck and leaves
+- Contract or payment does not reach your systems
+- Legal text missing or wrong
+
+Most expensive: a wrong price or a contract that was never created.
+
+**Notes**
+Why is this flow so important? It is the place where you earn money. And the rules are complex. A 24-month contract with 12 free weeks. A training package that costs 39 or 49 euro, depending on the club. A start fee that is sometimes waived. A student discount up to age 25. And Austria has its own rules on the same website. Every rule is a place where a price can be wrong. The worst mistakes are a wrong price, because that is a legal and trust problem, and a contract that the customer signed but that never reached your system. Then you lose the customer and you don't even know it. Another risk: the checkout uses the club in the web address. If someone changes the club in the middle, the summary must update correctly.
+
+---
+
+## 6. Flow 1: what I would automate (3 min)
+
+**Slide**
+Test pyramid: many small fast tests at the bottom, few slow ones at the top.
+
+- **Exploratory (manual):** new campaigns, odd combinations, Austria
+- **End-to-end (few):** buy a plan up to the payment step, on iPhone Safari and Android Chrome. Change the club mid-way: summary updates.
+- **Visual and accessibility:** price cards and summary look right, keyboard works, errors are read out
+- **API and integration:** the right plans and prices per club. Contract reaches the member system. Payment provider in test mode.
+- **Unit (many):** every price rule. Campaign start and end dates.
+
+Plus in production: a robot check of steps 1 to 3 every 15 minutes.
+
+**Notes**
+Here is what I would automate for the membership checkout. Think of it as a pyramid. At the bottom are many small and fast tests. These are unit tests, meaning tests of one small piece of code. Every price rule gets its own test. The campaign end date too, because offers that switch on and off by date are a classic source of bugs. In the middle are API and integration tests. They check that the systems talk to each other correctly. For example: for this club, do we get the right plans and prices? Does the contract arrive in the member system? For outside systems like payment, I use their test mode. At the top are only a few end-to-end tests. End-to-end means a robot clicks through the real flow like a customer. I would do the main path on an iPhone and an Android phone, and the case where someone changes the club. Above that is manual exploratory testing, for things that are new or need human judgement. And after the release, a small robot checks the first steps every 15 minutes, so we notice a problem before customers call.
+
+---
+
+## 7. Flow 2: Trial training booking (1.5 min)
+
+**Slide**
+3 steps: Club > Date and time > Your details
+
+What can go wrong:
+- Booked slot does not exist at the club
+- Booking never reaches the club
+- Date mistakes: today, weekend, month change, holidays
+- Slow to react: 361 ms per tap for real users (good: 200 ms)
+
+Automate: slot rules, booking arrives at the club, one end-to-end booking per phone type.
+
+**Notes**
+The second flow is the trial training. The risks are different. Here nobody pays, but you lose a future member if it fails. The biggest risk is a booking that never reaches the club. The person comes to the gym and nobody expects them. That is a bad first impression. Dates are also risky: today, the weekend, the change of month, holidays. And one surprise from the page speed test: real users wait 361 milliseconds for a reaction when they tap something here. Google's limit for good is 200. I'll come back to this.
+
+---
+
+## 8. Devices, users, outside systems (1.5 min)
+
+**Slide**
+Devices: phones first. iPhone Safari, Android Chrome. Desktop: Chrome, Edge, Safari, Firefox.
+Screen widths: 360, 390, 768, 1280 pixels.
+
+Users: new visitors, students, people switching gyms, visitors from Austria, keyboard and screen reader users, slow mobile internet, people who decline cookies.
+
+Outside systems I saw:
+- Usercentrics (cookie consent)
+- VWO (A/B tests: not everyone sees the same page)
+- Google Tag Manager and about 15 ad services
+- Probably Baqend and Cloudflare (speed and caching)
+- Unknown to me: payment, booking, member system
+
+**Notes**
+Which devices? Phones first, because I assume most of your visitors come on a phone. I would check that in your analytics. On desktop the four main browsers. I also think in user groups, not only devices. A student sees a different price. Someone from Austria sees different rules. Someone who declines cookies must still be able to buy. And people who use a keyboard or a screen reader must get through the checkout too. I also looked at which outside services your pages load. Two are important for testing. First, VWO, an A/B testing tool. It means different visitors can see different versions of a page. So every bug report must say which version was shown. Second, caching services. They make the site fast, but they can also show an old offer after it has ended.
+
+---
+
+## 9. How I test on my own (2 min)
+
+**Slide**
+Exploratory testing: short sessions with a clear goal.
+
+Example goal: "Explore the checkout by changing my mind often, to find wrong totals."
+
+What I write down every time:
+- Goal and setup (device, browser, page version)
+- What I covered
+- Bugs, with steps and screenshots
+- Open questions
+- What I did NOT test
+
+Saved next to the ticket, so the team can see it.
+
+**Notes**
+Now about my own way of testing. A big part of my work is exploratory testing. That means I don't follow a script. I explore with a clear goal and a time limit, usually 60 to 90 minutes. For example: "Explore the checkout by changing my mind often, to find wrong totals." I go back, I change the club, I change the plan, I reload the page. While I test, I take notes. I always write down the goal, the device and browser, and which page version I saw. Then what I covered, the bugs with exact steps and screenshots, my open questions, and also what I did not test. That last part is important. It shows the team where the gaps are, instead of hiding them. These notes are saved next to the ticket, so anyone can read them later.
+
+---
+
+## 10. Manual or automated? (1.5 min)
+
+**Slide**
+Automate when:
+- it runs often, matters a lot, and the expected result is clear
+- it is stable and cheap to maintain
+
+Keep manual when:
+- it is new or still changing
+- it needs human judgement: look, wording, screen reader
+
+Examples:
+- Price rules: automate (unit tests)
+- New campaign page: explore first, then a visual check
+- Screen reader on checkout: manual, every release
+
+**Notes**
+How do I decide what to automate? I ask three questions. Will this test run often? Is it important? And do we know exactly what the right result is? If yes, I automate it. If a feature is new and still changing, I test it by hand first. Otherwise we spend more time fixing tests than finding bugs. A flaky test, meaning a test that sometimes passes and sometimes fails for no real reason, costs more than the manual check it replaced. Some things always need a human. How does a page look? Is the wording clear? Does a screen reader make sense? Those stay manual.
+
+---
+
+## 11. Quality is the team's job (2 min)
+
+**Slide**
+- **Product:** clear goals and acceptance criteria. Decides on risk together with the team.
+- **Developers:** unit and API tests for their code. Fix what breaks the pipeline.
+- **Business departments:** check that it is right for the business (acceptance).
+- **QA:** gate keeper at release, and a resource for everyone:
+  - helps write acceptance criteria
+  - pairs with developers
+  - keeps the test cases alive
+  - coaches the team on testing
+
+**Notes**
+I believe quality is the job of the whole team, not only of QA. If QA is the only one responsible, quality becomes a check at the end. And then bugs are found late, when they are expensive. So everyone has a part. Product owners write clear goals and acceptance criteria. Acceptance criteria are the conditions that say when a feature is done. Developers write unit and API tests for their own code. The business departments check that the result is right for the business. And my role has two sides. On one side I am the gate keeper. At release I say clearly what is tested, what is not, and what the risk is. On the other side I am a resource. The team can come to me. I help write acceptance criteria, I pair with developers, I maintain the test cases so they stay useful, and I help the team get better at testing. We often do this in a short meeting called Three Amigos: product, development and QA look at a story together before anyone starts building.
+
+---
+
+## 12. From idea to live website (2.5 min)
+
+**Slide**
+Feature > Merge request > Dev > Stage > Production > After release
+
+- **Feature:** acceptance criteria and risks agreed
+- **Merge request:** code review, unit tests, code checks
+- **Dev:** API and integration tests, smoke test
+- **Stage:** end-to-end regression, visual, accessibility, page speed, consent check, acceptance by business
+- **Production:** smoke test right after deploy
+- **After release:** monitoring and real-user page speed. Rollback ready.
+
+Test data: no real customer data on Stage. Copied data is anonymised.
+
+**Animation**
+A feature card moves from left to right. At each checkpoint a light turns green. In a second run, the light at Stage turns red and the card stops.
+
+**Notes**
+Here is the release path from a feature to the live website. On Acquia I assume three environments: development, staging and production. At each step there is a check. When a developer opens a merge request, which means a request to add their change to the main code, we have a code review and the fast tests. On development we run the API and integration tests and a smoke test. A smoke test is a short check that the most important things still work, like switching on a machine and seeing if smoke comes out. On staging we run the full regression. Regression tests check that old features still work after a change. We also check the look, accessibility, page speed and consent there. The business departments do their acceptance on staging too. After the deploy to production we run the smoke test again. Then monitoring takes over. If something goes wrong, we roll back to the last good version. One important point about test data: Drupal sites often copy the production database to staging. That copy must not contain real customer data. It has to be anonymised.
+
+---
+
+## 13. When do we stop a release? (2 min)
+
+**Slide**
+**Stops the release:**
+- Wrong price, checkout or booking broken
+- Cancel or pause broken
+- Cookie decline does not work
+- Security problem, or someone sees another person's data
+- Main flow not usable with a keyboard
+
+**Can go, with conditions:**
+- Small bug with an easy workaround, ticket and fix date
+- Problem on a low-traffic page
+- New feature switched off with a feature flag
+
+**Unreliable tests:** run once more. If it passes, it goes to quarantine with an owner and a deadline. Never just ignored.
+
+**Go / no-go:** one page: what changed, what we tested, what we did not, open bugs, rollback plan. QA recommends, the team decides.
+
+**Notes**
+When do we stop a release? Some things always stop it: a wrong price, a broken checkout or booking, a broken cancel button, a cookie banner where "decline" does not work, any security problem, or a main flow that a keyboard user cannot finish. Other bugs can go live if we agree on conditions. For example a small bug with an easy workaround, if there is a ticket and a fix date. What about unreliable tests? I run a failed test once more. If it passes the second time, it is probably flaky. Then it goes into quarantine. That means it does not block the pipeline anymore, but it has an owner and a deadline to fix it. It is never just ignored. Very long tests run at night, not on every change. And when a release is urgent, I prepare one page for the decision: what changed, what we tested, what we did not test, which bugs are open, and how we roll back. I give a clear recommendation. But the decision is made by the team, with open eyes.
+
+---
+
+## 14. Beyond "does it work" (3 min)
+
+**Slide**
+| Area | Automated | Manual | Limit (gate) |
+|---|---|---|---|
+| Accessibility | Accessibility scan on every merge request | Keyboard and screen reader on main flows every release, expert audit once a year | No critical issues on checkout and booking |
+| Data protection and consent | After "decline all", only allowed services load | Check banner texts with the data protection officer | Any marketing tracker after decline stops the release |
+| Page speed | Lighthouse in the pipeline, timing of booking steps | Look at real-user data every week | Real users: LCP 2.5 s, INP 200 ms, CLS 0.1. Pipeline: no page slower than today |
+
+Today, real users, mobile: all 3 pages load fast, all 3 react too slowly.
+Membership INP 227 ms, trial training 361 ms.
+
+**Notes**
+Besides "does it work", I chose three areas. First, accessibility. You publish an accessibility statement, so it matters to you. An automatic scan finds only part of the problems. The rest needs a human: can I finish the checkout with only a keyboard? Does a screen reader read the error messages? My gate is simple: no critical problem on the checkout and the booking. Second, data protection and cookie consent. With about fifteen ad services on the page, this is a real risk. I would automate one simple check: a robot clicks "decline all", and then we look at which services still load. If a marketing tracker loads after decline, the release stops. The legal rules themselves I would clarify with your data protection officer. Third, page speed. Google gives clear limits for real users. I measured your pages. They load fast for real users, which is great. But all three react too slowly when someone taps. On the trial page it is 361 milliseconds, and the limit is 200. Interesting detail: the lab test says the trial page is your fastest page. That's because the lab only loads the page and never clicks the calendar. So I would also measure the booking steps themselves. In the pipeline, my first rule would be: no page gets slower than today. Later we can make the limits stricter.
+
+---
+
+## 15. Where AI helps, and where it doesn't (2.5 min)
+
+**Slide**
+AI helps with:
+1. **Requirements:** finds gaps and missing edge cases in acceptance criteria
+2. **Exploratory testing:** agents explore with a goal and must show evidence for every result
+3. **Failed tests:** groups failures, suggests "real bug" or "flaky"
+
+Always with people:
+- Final priority of bugs
+- Go / no-go
+- Legal, accessibility and data protection decisions
+
+Rules: no real customer data in AI tools. Every result needs evidence. AI must list what it did not test.
+
+**Animation**
+A loop: AI suggests > a person checks > the team decides. The person in the middle stays visible the whole time.
+
+**Notes**
+Where does AI fit? I use it in three places. First, requirements. In my last job I built AI agents that read acceptance criteria and look for gaps and missing edge cases. A person then decides which gaps are real. Second, exploratory testing. I designed a set of AI testing agents that explore a website with a clear goal. I have to be honest here: this system is designed and tested on sample data, but I have not run it on a live website yet. The important part is the rules. Every result needs evidence, like screenshots. The agent must write down what it did not test. And text on a web page is treated as data, never as an instruction, so a page cannot trick the agent. Third, failed tests. AI can group failures and suggest whether it's a real bug or a flaky test. But some things always stay with people: the final priority of a bug, the go or no-go decision, and anything legal. And no real customer data goes into AI tools. AI makes suggestions. The team decides.
+
+---
+
+## 16. One normal week (1 min)
+
+**Slide**
+- **Planning:** Three Amigos on new stories, risks agreed
+- **Every day:** pairing, merge request checks, quick questions
+- **During the sprint:** exploratory sessions on new features
+- **Before release:** regression on Stage, acceptance with business, go / no-go page
+- **Release day:** smoke test, monitoring
+- **After release:** look at what got through, add a test for it
+
+**Notes**
+To show that this works in real life, here is a normal week. At planning we look at new stories together and agree on the risks. Every day I pair with developers and look at merge requests. During the sprint I run exploratory sessions on the new features. Before the release we run the regression on staging and the business does acceptance. On release day, a smoke test and monitoring. And after the release I look at what got through. For every bug that reached production, we add a test, so it cannot come back.
+
+---
+
+## 17. Thank you (0.5 min)
+
+**Slide**
+- Find the expensive mistakes first, and find them early.
+- The whole team owns quality. QA keeps the gate and helps everyone get through it.
+- Questions?
+
+**Notes**
+To sum up: I start with the risks that cost the most, I test as early as possible, and I make quality the team's job, with QA as the gate keeper and as a helper. Thank you. I'm happy to answer your questions.
+
+---
+
+# Backup slides
+
+## B1. Page speed details
+
+| Page (mobile) | Real users: LCP | Real users: INP | Real users: CLS | Lab score |
+|---|---|---|---|---|
+| Homepage | 2 s | 208 ms | 0.03 | 43 |
+| Membership | 1.1 s | 227 ms | 0.04 | 36 |
+| Trial training | 1.3 s | 361 ms | 0.05 | 69 |
+
+Limits for good (75% of visits): LCP 2.5 s, INP 200 ms, CLS 0.1. Source: PageSpeed Insights, 27 October 2026. Lab numbers come from single runs and vary.
+
+**Notes**
+LCP means: how long until the main content is visible. INP means: how fast the page reacts to a tap. CLS means: how much the page jumps while loading. The homepage lab test showed almost 29 seconds for the main content on a slow phone, while real users see it in 2 seconds. I don't know the exact reason. It could be caching for returning visitors, or simply the slow test network. I would look into it with your team.
+
+## B2. Test data and environments
+
+- Stage: anonymised copy of production, or generated test data
+- Fixed test accounts and test clubs, reset regularly
+- Payment provider in test mode, never real payments
+- Outside systems we cannot control: simulated (mocked) in API tests, real only in a few end-to-end tests on Stage
+- Test emails only on reserved test domains
+
+**Notes**
+For test data I follow a simple rule: no real customer data outside production. When a system is hard to control, like a payment provider, I simulate it in most tests. That is called mocking. Only a few end-to-end tests use the real test mode of the provider.
+
+## B3. My AI testing agents (designed, not yet run on a live site)
+
+- 4 agents: explorer, component, flow, API
+- Rules: only allowed test sites, no real purchases, secrets hidden, evidence for every result
+- Results: pass, fail with priority, or "suspicious" with a reason
+- Several runs are merged, because AI results vary from run to run
+- A P1 failure can block the pipeline. Humans decide on the rest.
+
+**Notes**
+This is the system I mentioned. I want to be clear: it is built and tested on sample data, but not yet on a real website. What I'm proud of is the rule set, because it answers the questions you asked about control: evidence, honesty about gaps, and people making the final decisions.
+
+## B4. My first weeks
+
+- Weeks 1 to 2: learn the product, the team and the release process. Read the bug history.
+- Weeks 3 to 4: risk map with the team, first quick wins (consent check, smoke tests)
+- Month 2 to 3: regression suite for checkout and booking, quality gates in the pipeline
+
+**Notes**
+If I join, I would not change everything on day one. First I learn how you work and where bugs came from in the past. Then we agree on a risk map together. The first quick wins would be the consent check and smoke tests, because they are small and protect a lot.
