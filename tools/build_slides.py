@@ -12,7 +12,7 @@ markdown or the template and build again.
 Markdown format per slide:
   ## <number>. <title> (<minutes> min)
   **Slide**       what is on screen
-  **Animation**   optional, only slides 4, 12 and 15 use it
+  **Animation**   optional, only slides 4, 12, 14 and 17 use it
   **Notes**       what the speaker says
 Backup slides sit under "# Backup slides" and are numbered B1, B2, ...
 """
@@ -321,7 +321,7 @@ def render_slide(s, idx, main_total, ui, first_main, last_main):
                 f'<div class="tbody"><h1>{inline(items[0])}</h1><p class="tag">{inline(items[1])}</p>'
                 + (f'<p class="by">{inline(items[2])}</p>' if items[2] else '') + '</div></section>')
 
-    if num == "3" and not s["backup"]:
+    if num == "4" and not s["backup"]:
         paras = [n for n in nodes if n["type"] == "para"]
         lists = [n for n in nodes if n["type"] == "list" and n["data"]["ordered"]]
         if paras and lists:
@@ -333,7 +333,7 @@ def render_slide(s, idx, main_total, ui, first_main, last_main):
             body = (f'<div class="rankwrap"><div class="formula">{inline(paras[0]["data"])}</div>'
                     f'<div class="rank nobuild" style="height:{len(its) * 2.5}em">{rows}</div></div>')
             kind, fs = "rank", 21
-    elif num == "12" and not s["backup"]:
+    elif num == "14" and not s["backup"]:
         chev = nodes[0] if nodes and nodes[0]["type"] == "para" else None
         lst = next((n for n in nodes if n["type"] == "list"), None)
         if chev and lst and chev["data"].count(" > ") >= 2:
@@ -352,10 +352,12 @@ def render_slide(s, idx, main_total, ui, first_main, last_main):
                     + render_nodes([dict(n) for n in rest], first=False).replace('class="kv step"', 'class="kv"'))
                 kind, fs = "pipe", 24
     if not body:
-        body = render_nodes(nodes, pyramid=(num == "6" and not s["backup"]))
-        if num == "15" and not s["backup"]:
+        body = render_nodes(nodes, pyramid=(num == "10" and not s["backup"]))
+        if num == "17" and not s["backup"]:
             body += loop_svg(s["animation"])
             kind = "loop"
+        if num == "12" and not s["backup"]:
+            kind = "cycle"
         if idx == last_main and not s["backup"]:
             kind, fs = "closing", 30
         if s["backup"]:

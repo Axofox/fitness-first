@@ -101,6 +101,11 @@ tbody tr:nth-child(even) td{background:var(--tint)}
 .ltxt{font-size:23px;fill:var(--ink)} .ltxt.pb{font-weight:700;fill:var(--teal-d)}
 .larrow{fill:none;stroke:var(--muted);stroke-width:2.5} .ltip{fill:var(--muted)}
 .ldot{fill:var(--teal)}
+/* quality cycle */
+[data-kind=cycle] .card{transition:background .4s,transform .4s,box-shadow .4s}
+[data-kind=cycle] .card.hot{background:var(--teal);color:#fff;transform:scale(1.04);box-shadow:0 6px 18px rgba(15,118,110,.3)}
+[data-kind=cycle] .card.hot .l{color:#fff}
+[data-kind=cycle] .card.hot .n{background:#fff;color:var(--teal-d)}
 /* closing */
 .closing ul.b li{margin:.6em 0}
 /* build mode */
@@ -228,7 +233,18 @@ function animPipe(s){
   }
   run(-1).then(function(){ if(!alive())return; return sleep(1500).then(function(){ if(alive()) return run(3); }); });
 }
-function enter(s){var k=s.getAttribute('data-kind'); if(k==='rank')animRank(s); else if(k==='pipe')animPipe(s);}
+function animCycle(s){
+  var cs=$$('.card',s), my=token, i=0;
+  cs.forEach(function(c){c.classList.remove('hot');});
+  if(printMode||!cs.length) return;
+  (function step(){
+    if(token!==my) return;
+    cs.forEach(function(c,k){c.classList.toggle('hot',k===i);});
+    i=(i+1)%cs.length;
+    setTimeout(step,1500);
+  })();
+}
+function enter(s){var k=s.getAttribute('data-kind'); if(k==='rank')animRank(s); else if(k==='pipe')animPipe(s); else if(k==='cycle')animCycle(s);}
 function replay(){token++; enter(slides[cur]);}
 
 function show(n,fromPrev){
