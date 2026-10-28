@@ -157,42 +157,30 @@ Which devices? I assume most of your visitors use a phone. I check that in your 
 
 ---
 
-## 9. Where I start: end-to-end tests by priority (2 min)
-
-**Slide**
-End-to-end tests, built in order of priority:
-1. **Priority 1:** membership checkout, trial booking, pause and cancel, cookie consent check. Built first in a desktop browser.
-2. **Same tests, mobile view:** the priority 1 tests again in the mobile browser view, on a phone-sized screen.
-3. **Priority 2:** campaigns and offers, club search, member login.
-4. **The rest:** lighter checks, mostly by hand.
-
-**Notes**
-Based on the ranking, I start building end-to-end tests. End-to-end means a robot clicks through the real flow like a customer. I build them in order of priority. Priority one is the membership checkout, the trial booking, pause and cancel, and the cookie consent check. I build these first in a desktop browser. Then I run the same tests in the mobile browser view, on a phone-sized screen. After that comes priority two: campaigns and offers, club search and the member login. The rest gets lighter checks, mostly by hand. Every test has a priority from the ranking, so when time is short we know what to run first.
-
----
-
-## 10. Flow 1: what I would automate (2.5 min)
+## 9. Checkout tests: what each one expects (3 min)
 
 **Slide**
 Test pyramid: many small fast tests at the bottom, few slow ones at the top.
 
-- **Exploratory (manual):** new campaigns, odd combinations, Austria
-- **End-to-end (few):** buy a plan up to the payment step, on iPhone Safari and Android Chrome. Change the club mid-way: summary updates.
-- **Visual and accessibility:** price cards and summary look right, keyboard works, errors are read out
-- **API and integration:** the right plans and prices per club. Contract reaches the member system. Payment provider in test mode.
-- **Unit (many):** every price rule. Campaign start and end dates.
+- **Exploratory (manual):** new offers, odd combinations (student, other club), Austria. Expected: no wrong price or text.
+- **End-to-end (few):** pick club and plan, reach payment, on iPhone and Android. Change club mid-way. Expected: every step opens, price updates.
+- **Visual and accessibility:** Expected: looks right, keyboard reaches every step, errors are read out.
+- **API and integration:** plans, prices, contract, payment test mode. Expected: right data, contract arrives.
+- **Unit (many):** every price rule and campaign date. Expected: same input, same exact price.
 
-Plus in production: a robot check of steps 1 to 3 every 15 minutes.
+Plus in production: every 15 minutes a robot opens steps 1 to 3. Expected: all load, or the team is told.
+
+Build order: priority 1 first in a desktop browser, then mobile view, then priority 2.
 
 **Animation**
 [pyramid] 
 
 **Notes**
-Here is what I would automate for the membership checkout. Think of it as a pyramid. At the bottom are many small and fast tests. These are unit tests, meaning tests of one small piece of code. Every price rule gets its own test. The campaign end date too, because offers that switch on and off by date are a classic source of bugs. In the middle are API and integration tests. They check that the systems talk to each other correctly. For example: for this club, do we get the right plans and prices? Does the contract arrive in the member system? For outside systems like payment, I use their test mode. At the top are only a few end-to-end tests. End-to-end means a robot clicks through the real flow like a customer. I would do the main path on an iPhone and an Android phone, and the case where someone changes the club. Above that is manual exploratory testing, for things that are new or need human judgement. And after the release, a small robot checks the first steps every 15 minutes, so we notice a problem before customers call.
+Here is what I would automate for the membership checkout, and what each test expects. Think of a pyramid. At the bottom are many small and fast tests. These are unit tests, meaning tests of one small piece of code. Every price rule gets its own test, and so does the campaign end date, because offers that switch on and off by date are a classic source of bugs. Expected: the same input always gives the exact price. In the middle are API and integration tests. They check that the systems talk to each other correctly. For this club, do we get the right plans and prices? Does the contract arrive in the member system? For outside systems like payment, I use their test mode. Expected: the right data comes back and the contract arrives. Then come the visual and accessibility checks. Expected: it looks right, the keyboard reaches every step, and errors are read out. At the top are only a few end-to-end tests. End-to-end means a robot clicks through the real flow like a customer. I would do the main path on an iPhone and an Android phone, and the case where someone changes the club. Expected: every step opens, and the summary and price update. Above that is manual exploratory testing, for things that are new or need human judgement. After the release, a small robot checks the first steps every 15 minutes, so we notice a problem before customers call. I build the end-to-end tests by priority, using the ranking. Priority one is the membership checkout, the trial booking, pause and cancel, and the cookie consent check. I build these first in a desktop browser, because that is the fastest place to build and fix them. Then I run the same tests in the mobile browser view, on a phone-sized screen. After that comes priority two: campaigns and offers, club search and the member login. The rest gets lighter checks, mostly by hand.
 
 ---
 
-## 11. What I automate, and what I don't (1.5 min)
+## 10. What I automate, and what I don't (1.5 min)
 
 **Slide**
 Automate when:
@@ -215,7 +203,7 @@ How do I decide what to automate? I ask three questions. Will this test run ofte
 
 ---
 
-## 12. The quality process I would encourage (2.5 min)
+## 11. The quality process I would encourage (2.5 min)
 
 **Slide**
 Six phases, one question: what could go wrong, and how do we prevent it?
@@ -235,7 +223,7 @@ Now the quality process I would encourage, to make bugs cheaper. The idea is sim
 
 ---
 
-## 13. Quality is the team's job (2 min)
+## 12. Quality is the team's job (2 min)
 
 **Slide**
 - **Product:** clear goals and acceptance criteria. Decides on risk together with the team.
@@ -252,7 +240,7 @@ I believe quality is the job of the whole team, not only of QA. If QA is the onl
 
 ---
 
-## 14. From idea to live website (2 min)
+## 13. From idea to live website (2 min)
 
 **Slide**
 Feature > Merge request > Dev > Stage > Production > After release
@@ -274,7 +262,7 @@ Here is the release path from a feature to the live website. On Acquia I assume 
 
 ---
 
-## 15. When do we stop a release? (2 min)
+## 14. When do we stop a release? (2 min)
 
 **Slide**
 **Stops the release:**
@@ -297,7 +285,7 @@ When do we stop a release? Some things always stop it: a wrong price, a broken c
 
 ---
 
-## 16. Beyond "does it work" (2.5 min)
+## 15. Beyond "does it work" (2.5 min)
 
 **Slide**
 | Area | Automated | Manual | Limit (gate) |
@@ -314,7 +302,7 @@ Besides "does it work", I chose three areas. First, accessibility. You publish a
 
 ---
 
-## 17. Where AI helps, and where it doesn't (2.5 min)
+## 16. Where AI helps, and where it doesn't (2.5 min)
 
 **Slide**
 AI helps with:

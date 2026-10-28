@@ -12,7 +12,7 @@ markdown or the template and build again.
 Markdown format per slide:
   ## <number>. <title> (<minutes> min)
   **Slide**       what is on screen
-  **Animation**   optional, only slides 4, 12, 14 and 17 use it
+  **Animation**   optional, only slides 4, 9, 11, 13 and 16 use it
   **Notes**       what the speaker says
 Extra slides sit under "# Extra slides" and are numbered B1, B2, ...
 """
@@ -334,7 +334,7 @@ def render_slide(s, idx, main_total, ui, first_main, last_main):
             body = (f'<div class="rankwrap"><div class="formula">{inline(paras[0]["data"])}</div>'
                     f'<div class="rank nobuild" style="height:{len(its) * 2.5}em">{rows}</div></div>')
             kind, fs = "rank", 21
-    elif num == "14" and not s["backup"]:
+    elif num == "13" and not s["backup"]:
         chev = nodes[0] if nodes and nodes[0]["type"] == "para" else None
         lst = next((n for n in nodes if n["type"] == "list"), None)
         if chev and lst and chev["data"].count(" > ") >= 2:
@@ -353,11 +353,11 @@ def render_slide(s, idx, main_total, ui, first_main, last_main):
                     + render_nodes([dict(n) for n in rest], first=False).replace('class="kv step"', 'class="kv"'))
                 kind, fs = "pipe", 24
     if not body:
-        body = render_nodes(nodes, pyramid=(num == "10" and not s["backup"]))
-        if num == "17" and not s["backup"]:
+        body = render_nodes(nodes, pyramid=(num == "9" and not s["backup"]))
+        if num == "16" and not s["backup"]:
             body += loop_svg(s["animation"])
             kind = "loop"
-        if num == "12" and not s["backup"]:
+        if num == "11" and not s["backup"]:
             kind = "cycle"
         if num == "18" and not s["backup"]:
             kind, fs = "closing", 30

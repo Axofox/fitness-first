@@ -155,42 +155,30 @@ Welche Geräte? Ich nehme an: Die meisten Besucher benutzen ein Handy. Das prüf
 
 ---
 
-## 9. Hier fange ich an: Tests für den ganzen Ablauf, nach Wichtigkeit (2 min)
-
-**Slide**
-Tests für den ganzen Ablauf (End-to-End), gebaut nach Wichtigkeit:
-1. **Wichtigkeit 1:** Mitgliedschaft abschließen, Probetraining buchen, pausieren und kündigen, Check der Cookie-Auswahl. Zuerst im Browser am Computer gebaut.
-2. **Dieselben Tests, Handy-Ansicht:** die Tests von Wichtigkeit 1 noch einmal in der Handy-Ansicht im Browser.
-3. **Wichtigkeit 2:** Aktionen und Angebote, Clubsuche, Mitglieder-Login.
-4. **Der Rest:** leichtere Checks, meistens von Hand.
-
-**Notes**
-Jetzt fange ich an, Tests zu bauen. Ich nutze dafür die Reihenfolge von vorhin. Ich baue Tests für den ganzen Ablauf. Man sagt dazu End-to-End. Ein Roboter klickt durch den echten Ablauf, wie ein Kunde. Zuerst baue ich die wichtigsten Tests. Das sind die Mitgliedschaft, die Buchung vom Probetraining, Pausieren und Kündigen und der Check der Cookie-Auswahl. Ich baue sie zuerst im Browser am Computer. Dann lasse ich dieselben Tests in der Handy-Ansicht laufen. Danach kommt die zweite Gruppe: Aktionen und Angebote, Clubsuche und Login. Der Rest bekommt leichtere Checks, meistens von Hand. Jeder Test hat eine Wichtigkeit aus der Reihenfolge. Wenn die Zeit knapp ist, wissen wir so, was zuerst laufen muss.
-
----
-
-## 10. Ablauf 1: Was ich automatisieren würde (2.5 min)
+## 9. Checkout-Tests: Was jeder erwartet (3 min)
 
 **Slide**
 Test-Pyramide: unten viele kleine, schnelle Tests. Oben wenige, langsame.
 
-- **Von Hand ausprobieren:** neue Aktionen, ungewöhnliche Kombinationen, Österreich
-- **Ganzer Ablauf (wenige):** einen Tarif bis zum Zahlungsschritt buchen, auf iPhone Safari und Android Chrome. Mittendrin den Club wechseln: Die Zusammenfassung ändert sich.
-- **Aussehen und Barrierefreiheit:** Preiskarten und Zusammenfassung sehen richtig aus, die Tastatur geht, Fehler werden vorgelesen
-- **Schnittstellen:** die richtigen Tarife und Preise pro Club. Der Vertrag kommt im Mitglieder-System an. Zahlungsanbieter im Test-Modus.
-- **Kleine Tests (viele):** jede Preisregel. Start und Ende von Aktionen.
+- **Von Hand ausprobieren:** neue Aktionen, ungewöhnliche Kombinationen (Student, anderer Club), Österreich. Erwartet: kein falscher Preis oder Text.
+- **Ganzer Ablauf (wenige):** Club und Tarif wählen, bis zur Zahlung, auf iPhone und Android. Club mittendrin wechseln. Erwartet: Jeder Schritt öffnet sich. Der Preis ändert sich.
+- **Aussehen und Barrierefreiheit:** Erwartet: Es sieht richtig aus. Die Tastatur kommt zu jedem Schritt. Fehler werden vorgelesen.
+- **Schnittstellen:** Tarife, Preise, Vertrag, Zahlung im Test-Modus. Erwartet: Die Daten stimmen. Der Vertrag kommt an.
+- **Kleine Tests (viele):** jede Preisregel und jedes Datum einer Aktion. Erwartet: Gleiche Eingabe gibt genau den gleichen Preis.
 
-Dazu auf der echten Seite: alle 15 Minuten ein Roboter-Check der Schritte 1 bis 3.
+Dazu auf der echten Seite: alle 15 Minuten öffnet ein Roboter die Schritte 1 bis 3. Erwartet: Alles lädt. Sonst bekommt das Team Bescheid.
+
+Reihenfolge beim Bauen: wichtigste Abläufe zuerst im Browser am Computer, dann Handy-Ansicht, dann die zweite Gruppe.
 
 **Animation**
 [pyramid] 
 
 **Notes**
-Das würde ich bei der Mitgliedschaft automatisieren. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine, schnelle Tests. Jede Preisregel hat einen eigenen Test. Auch das Ende einer Aktion. Angebote, die nach Datum an und aus gehen, sind eine typische Fehlerquelle. In der Mitte sind die Tests für die Schnittstellen. Das sind die Stellen, an denen Systeme miteinander sprechen. Zum Beispiel: Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitglieder-System an? Bei fremden Systemen wie der Zahlung nutze ich den Test-Modus der Firma. Oben sind nur wenige Tests für den ganzen Ablauf. Ein Roboter klickt durch den echten Ablauf wie ein Kunde. Ich teste den Hauptweg auf einem iPhone und auf einem Android-Handy. Und den Fall, dass jemand den Club wechselt. Ganz oben probiere ich von Hand aus. Das ist für Dinge, die neu sind oder bei denen ein Mensch urteilen muss. Und nach dem Release prüft ein kleiner Roboter alle 15 Minuten die ersten Schritte. So sehen wir ein Problem, bevor Kunden anrufen.
+Das würde ich bei der Mitgliedschaft automatisieren. Und das erwartet jeder Test. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine, schnelle Tests. Jede Preisregel hat einen eigenen Test. Auch das Ende einer Aktion. Angebote, die nach Datum an und aus gehen, sind eine typische Fehlerquelle. Erwartet: Gleiche Eingabe gibt immer genau den gleichen Preis. In der Mitte sind die Tests für die Schnittstellen. Das sind die Stellen, an denen Systeme miteinander sprechen. Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitglieder-System an? Bei fremden Systemen wie der Zahlung nutze ich den Test-Modus der Firma. Erwartet: Die richtigen Daten kommen zurück. Und der Vertrag kommt an. Dann prüfe ich Aussehen und Barrierefreiheit. Erwartet: Es sieht richtig aus. Die Tastatur kommt zu jedem Schritt. Fehler werden vorgelesen. Oben sind nur wenige Tests für den ganzen Ablauf. Man sagt dazu End-to-End. Ein Roboter klickt durch den echten Ablauf, wie ein Kunde. Ich teste den Hauptweg auf einem iPhone und auf einem Android-Handy. Und den Fall, dass jemand den Club wechselt. Erwartet: Jeder Schritt öffnet sich. Zusammenfassung und Preis ändern sich. Ganz oben probiere ich von Hand aus. Das ist für Dinge, die neu sind oder bei denen ein Mensch urteilen muss. Nach dem Release prüft ein kleiner Roboter alle 15 Minuten die ersten Schritte. So sehen wir ein Problem, bevor Kunden anrufen. Ich baue die Tests nach Wichtigkeit, mit der Reihenfolge von vorhin. Zuerst die wichtigsten Abläufe: Mitgliedschaft, Buchung vom Probetraining, Pausieren und Kündigen und der Cookie-Check. Die baue ich zuerst im Browser am Computer. Dort kann man am schnellsten bauen und reparieren. Dann lasse ich dieselben Tests in der Handy-Ansicht laufen. Danach kommt die zweite Gruppe: Aktionen und Angebote, Clubsuche und Login. Der Rest bekommt leichtere Checks, meistens von Hand.
 
 ---
 
-## 11. Was ich automatisiere und was nicht (1.5 min)
+## 10. Was ich automatisiere und was nicht (1.5 min)
 
 **Slide**
 Automatisieren, wenn:
@@ -213,7 +201,7 @@ Wie entscheide ich, was ich automatisiere? Ich stelle drei Fragen. Läuft der Te
 
 ---
 
-## 12. Der Qualitäts-Prozess, den ich vorschlagen würde (2.5 min)
+## 11. Der Qualitäts-Prozess, den ich vorschlagen würde (2.5 min)
 
 **Slide**
 Sechs Phasen, eine Frage: Was kann schiefgehen? Und wie verhindern wir es?
@@ -233,7 +221,7 @@ Jetzt zum Prozess für Qualität. Er soll Fehler billiger machen. Die Idee ist e
 
 ---
 
-## 13. Qualität ist Aufgabe des ganzen Teams (2 min)
+## 12. Qualität ist Aufgabe des ganzen Teams (2 min)
 
 **Slide**
 - **Produkt:** klare Ziele und Regeln, wann etwas fertig ist. Entscheidet mit dem Team über Risiken.
@@ -250,7 +238,7 @@ Ich glaube: Qualität ist die Aufgabe des ganzen Teams. Nicht nur von QA. Wenn n
 
 ---
 
-## 14. Von der Idee zur Live-Website (2 min)
+## 13. Von der Idee zur Live-Website (2 min)
 
 **Slide**
 Feature > Merge Request > Dev > Stage > Echte Seite > Nach dem Release
@@ -272,7 +260,7 @@ Hier sehen Sie den Weg von einer neuen Funktion bis zur echten Website. Bei Acqu
 
 ---
 
-## 15. Wann stoppen wir ein Release? (2 min)
+## 14. Wann stoppen wir ein Release? (2 min)
 
 **Slide**
 **Das stoppt das Release:**
@@ -295,7 +283,7 @@ Wann stoppen wir ein Release? Manche Dinge stoppen es immer. Ein falscher Preis.
 
 ---
 
-## 16. Mehr als "es geht" (2.5 min)
+## 15. Mehr als "es geht" (2.5 min)
 
 **Slide**
 | Bereich | Automatisch | Von Hand | Grenze |
@@ -312,7 +300,7 @@ Neben "es geht" habe ich drei Bereiche gewählt. Erstens die Barrierefreiheit. S
 
 ---
 
-## 17. Wo KI hilft und wo nicht (2.5 min)
+## 16. Wo KI hilft und wo nicht (2.5 min)
 
 **Slide**
 KI hilft bei:

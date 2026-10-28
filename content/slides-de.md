@@ -155,42 +155,30 @@ Welche Geräte? Ich nehme an, dass die meisten Ihrer Besucher ein Handy benutzen
 
 ---
 
-## 9. Hier fange ich an: End-to-End-Tests nach Priorität (2 min)
-
-**Slide**
-End-to-End-Tests, gebaut in der Reihenfolge der Priorität:
-1. **Priorität 1:** Mitgliedschaft abschließen, Probetraining buchen, pausieren und kündigen, Prüfung der Cookie-Einwilligung. Zuerst im Desktop-Browser gebaut.
-2. **Dieselben Tests, mobile Ansicht:** die Tests der Priorität 1 noch einmal in der mobilen Browser-Ansicht, auf einem Bildschirm in Handygröße.
-3. **Priorität 2:** Aktionen und Angebote, Clubsuche, Mitglieder-Login.
-4. **Der Rest:** leichtere Prüfungen, meistens von Hand.
-
-**Notes**
-Auf Basis der Reihenfolge fange ich an, End-to-End-Tests zu bauen. End-to-End heißt: Ein Roboter klickt wie ein Kunde durch den echten Ablauf. Ich baue sie nach Priorität. Priorität eins sind der Abschluss der Mitgliedschaft, die Probetraining-Buchung, Pausieren und Kündigen und die Prüfung der Cookie-Einwilligung. Diese baue ich zuerst in einem Desktop-Browser. Dann lasse ich dieselben Tests in der mobilen Browser-Ansicht laufen, auf einem Bildschirm in Handygröße. Danach kommt Priorität zwei: Aktionen und Angebote, Clubsuche und das Mitglieder-Login. Der Rest bekommt leichtere Prüfungen, meistens von Hand. Jeder Test hat eine Priorität aus der Reihenfolge. Wenn die Zeit knapp ist, wissen wir also, was zuerst laufen muss.
-
----
-
-## 10. Ablauf 1: Was ich automatisieren würde (2.5 min)
+## 9. Checkout-Tests: was jeder erwartet (3 min)
 
 **Slide**
 Testpyramide: unten viele kleine, schnelle Tests, oben wenige langsame.
 
-- **Explorativ (von Hand):** neue Aktionen, ungewöhnliche Kombinationen, Österreich
-- **End-to-End (wenige):** einen Tarif bis zum Zahlungsschritt buchen, auf iPhone Safari und Android Chrome. Den Club mittendrin wechseln: die Zusammenfassung ändert sich.
-- **Optik und Barrierefreiheit:** Preiskarten und Zusammenfassung sehen richtig aus, die Tastatur funktioniert, Fehler werden vorgelesen
-- **API und Integration:** die richtigen Tarife und Preise pro Club. Der Vertrag erreicht das Mitgliedersystem. Zahlungsanbieter im Testmodus.
-- **Unit (viele):** jede Preisregel. Start- und Enddatum der Aktionen.
+- **Explorativ (von Hand):** neue Aktionen, ungewöhnliche Kombinationen (Student, anderer Club), Österreich. Erwartet: kein falscher Preis oder Text.
+- **End-to-End (wenige):** Club und Tarif wählen, bis zur Zahlung, auf iPhone und Android. Club mittendrin wechseln. Erwartet: jeder Schritt öffnet sich, Preis ändert sich.
+- **Optik und Barrierefreiheit:** Erwartet: sieht richtig aus, Tastatur erreicht jeden Schritt, Fehler werden vorgelesen.
+- **API und Integration:** Tarife, Preise, Vertrag, Zahlung im Testmodus. Erwartet: richtige Daten, Vertrag kommt an.
+- **Unit (viele):** jede Preisregel und jedes Aktionsdatum. Erwartet: gleiche Eingabe, genau gleicher Preis.
 
-Dazu in der Produktion: alle 15 Minuten eine Roboter-Prüfung der Schritte 1 bis 3.
+Dazu in der Produktion: alle 15 Minuten öffnet ein Roboter die Schritte 1 bis 3. Erwartet: alles lädt, sonst wird das Team informiert.
+
+Reihenfolge beim Bauen: Priorität 1 zuerst im Desktop-Browser, dann mobile Ansicht, dann Priorität 2.
 
 **Animation**
 [pyramid] 
 
 **Notes**
-Das würde ich beim Abschluss der Mitgliedschaft automatisieren. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine und schnelle Tests. Das sind Unit-Tests, also Tests für ein kleines Stück Code. Jede Preisregel bekommt einen eigenen Test. Auch das Enddatum einer Aktion, denn Angebote, die nach Datum ein- und ausgeschaltet werden, sind eine klassische Fehlerquelle. In der Mitte sind API- und Integrationstests. Sie prüfen, dass die Systeme richtig miteinander sprechen. Zum Beispiel: Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitgliedersystem an? Bei fremden Systemen wie der Zahlung benutze ich deren Testmodus. Oben sind nur wenige End-to-End-Tests. Ich würde den Hauptweg auf einem iPhone und einem Android-Handy testen, und den Fall, dass jemand den Club wechselt. Darüber kommt das exploratorische Testen von Hand, für Dinge, die neu sind oder menschliches Urteil brauchen. Und nach dem Release prüft ein kleiner Roboter alle 15 Minuten die ersten Schritte. So merken wir ein Problem, bevor Kunden anrufen.
+Das würde ich beim Abschluss der Mitgliedschaft automatisieren, und das erwartet jeder Test. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine und schnelle Tests. Das sind Unit-Tests, also Tests für ein kleines Stück Code. Jede Preisregel bekommt einen eigenen Test, auch das Enddatum einer Aktion. Denn Angebote, die nach Datum ein- und ausgeschaltet werden, sind eine klassische Fehlerquelle. Erwartet: Dieselbe Eingabe ergibt immer genau denselben Preis. In der Mitte sind API- und Integrationstests. Sie prüfen, dass die Systeme richtig miteinander sprechen. Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitgliedersystem an? Bei fremden Systemen wie der Zahlung benutze ich deren Testmodus. Erwartet: Die richtigen Daten kommen zurück, und der Vertrag kommt an. Dann kommen die Prüfungen von Optik und Barrierefreiheit. Erwartet: Es sieht richtig aus, die Tastatur erreicht jeden Schritt, und Fehler werden vorgelesen. Oben sind nur wenige End-to-End-Tests. End-to-End heißt: Ein Roboter klickt wie ein Kunde durch den echten Ablauf. Ich würde den Hauptweg auf einem iPhone und einem Android-Handy testen, und den Fall, dass jemand den Club wechselt. Erwartet: Jeder Schritt öffnet sich, und Zusammenfassung und Preis ändern sich. Darüber kommt das Ausprobieren von Hand, für Dinge, die neu sind oder menschliches Urteil brauchen. Nach dem Release prüft ein kleiner Roboter alle 15 Minuten die ersten Schritte. So merken wir ein Problem, bevor Kunden anrufen. Die End-to-End-Tests baue ich nach Priorität, aus der Reihenfolge von vorhin. Priorität eins sind der Abschluss der Mitgliedschaft, die Probetraining-Buchung, Pausieren und Kündigen und die Prüfung der Cookie-Einwilligung. Die baue ich zuerst im Desktop-Browser, weil man dort am schnellsten bauen und reparieren kann. Dann lasse ich dieselben Tests in der mobilen Ansicht laufen, auf einem Bildschirm in Handygröße. Danach kommt Priorität zwei: Aktionen und Angebote, Clubsuche und Login. Der Rest bekommt leichtere Prüfungen, meistens von Hand.
 
 ---
 
-## 11. Was ich automatisiere und was nicht (1.5 min)
+## 10. Was ich automatisiere und was nicht (1.5 min)
 
 **Slide**
 Automatisieren, wenn:
@@ -213,7 +201,7 @@ Wie entscheide ich, was ich automatisiere? Ich stelle drei Fragen. Läuft dieser
 
 ---
 
-## 12. Der Qualitätsprozess, den ich fördern würde (2.5 min)
+## 11. Der Qualitätsprozess, den ich fördern würde (2.5 min)
 
 **Slide**
 Sechs Phasen, eine Frage: Was kann schiefgehen, und wie verhindern wir es?
@@ -233,7 +221,7 @@ Jetzt zum Qualitätsprozess, den ich fördern würde, damit Fehler billiger werd
 
 ---
 
-## 13. Qualität ist die Aufgabe des Teams (2 min)
+## 12. Qualität ist die Aufgabe des Teams (2 min)
 
 **Slide**
 - **Produkt:** klare Ziele und Akzeptanzkriterien. Entscheidet gemeinsam mit dem Team über Risiken.
@@ -250,7 +238,7 @@ Ich glaube, dass Qualität die Aufgabe des ganzen Teams ist, nicht nur von QA. W
 
 ---
 
-## 14. Von der Idee zur Live-Website (2 min)
+## 13. Von der Idee zur Live-Website (2 min)
 
 **Slide**
 Feature > Merge Request > Dev > Stage > Produktion > Nach dem Release
@@ -272,7 +260,7 @@ Hier ist der Weg von einem Feature bis zur Live-Website. Bei Acquia nehme ich dr
 
 ---
 
-## 15. Wann stoppen wir ein Release? (2 min)
+## 14. Wann stoppen wir ein Release? (2 min)
 
 **Slide**
 **Stoppt das Release:**
@@ -295,7 +283,7 @@ Wann stoppen wir ein Release? Manche Dinge stoppen es immer: ein falscher Preis,
 
 ---
 
-## 16. Mehr als "es funktioniert" (2.5 min)
+## 15. Mehr als "es funktioniert" (2.5 min)
 
 **Slide**
 | Bereich | Automatisch | Von Hand | Grenze (Gate) |
@@ -312,7 +300,7 @@ Neben "es funktioniert" habe ich drei Bereiche gewählt. Erstens die Barrierefre
 
 ---
 
-## 17. Wo KI hilft und wo nicht (2.5 min)
+## 16. Wo KI hilft und wo nicht (2.5 min)
 
 **Slide**
 KI hilft bei:
