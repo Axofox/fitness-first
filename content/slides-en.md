@@ -295,7 +295,7 @@ Besides "does it work", I chose three areas. First, accessibility. You publish a
 
 ---
 
-## 16. Where AI helps, and where it doesn't (2.5 min)
+## 16. How can AI help us, and where? (2.5 min)
 
 **Slide**
 AI helps with:

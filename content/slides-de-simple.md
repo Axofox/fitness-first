@@ -293,7 +293,7 @@ Neben "es geht" habe ich drei Bereiche gewählt. Erstens die Barrierefreiheit. S
 
 ---
 
-## 16. Wo KI hilft und wo nicht (2.5 min)
+## 16. Wie kann uns KI helfen, und wo? (2.5 min)
 
 **Slide**
 KI hilft bei:
