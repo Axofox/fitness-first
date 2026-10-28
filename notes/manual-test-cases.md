@@ -201,7 +201,7 @@ Only the automatic scores were seen: 92, 93 and 100 on the three pages. These ca
 ## 7. A/B tests and caching
 
 ### AB-01 Different versions of the page (LOOK, priority 2)
-- **Why:** VWO shows different visitors different versions (slide 8).
+- **Why:** VWO is an A/B testing tool, so different visitors may see different versions of a page (slide 8). I saw VWO load, but I did not check if a test is running right now.
 - **Steps:** 1. Open the same page in two private windows. 2. Compare text, buttons and prices.
 - **Expected:** if the versions differ, note which one each window showed. Every bug report must say which version it saw.
 
@@ -221,7 +221,7 @@ Only the automatic scores were seen: 92, 93 and 100 on the three pages. These ca
 
 ## 9. Three exploratory sessions (slide 3)
 
-Exploratory means you explore with a goal and a time limit, without a fixed script. Write down: goal, device and browser, page version, what you covered, bugs with steps and screenshots, open questions, what you did NOT test.
+Exploratory means you explore with a goal and a time limit, without a fixed script. Write down: goal, device and browser, which version of the page you saw (only if the site shows different A/B versions, see AB-01), what you covered, bugs with steps and screenshots, open questions, what you did NOT test.
 
 1. **Checkout, change my mind often.** 60 to 90 minutes. Goal: find wrong totals. Change club, plan and extras, go back, reload.
 2. **Strange combinations.** 60 minutes. Goal: find prices that look wrong. Student plus another club, an Austrian club, an offer on its last day.
