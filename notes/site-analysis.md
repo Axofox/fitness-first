@@ -148,3 +148,10 @@ All three load fast for real users and all three fail on reaction time (INP). Si
 - Prices on the plan step, extras, the data form, the payment step
 - The personal details step of the trial booking
 - Club search page, course plan, member login, cancellation page
+
+## Public pages read again (2026-10-28, read-only, text only, nothing clicked)
+
+- `/mitgliedschaft`: offer banner "NUR BIS 31. OKTOBER" with a countdown. Club list with "CLUB AUSWÄHLEN" and BLACK or RED labels. Small print for DE (24 months, 12 free weeks, package 39 or 49 euro in selected clubs, start fee 39 euro waived, Flex option 99 euro, switch offer up to 12 months) and AT (12 months, package 39 euro, switch offer up to 6 months). Student discount valid up to and including age 25.
+- `/probetraining`: club list with "CLUB AUSWÄHLEN", FAQ including a question about minors.
+- `/mitgliedschaft/gesamtpreis`: total price page, asks for a club first.
+- `/kuendigung` (pause, 4, 8 or 12 weeks, button "WEITER" and "TRAINING PAUSIEREN", link "VERTRAG HIER KÜNDIGEN") and `/kuendigung/antrag` (cancel form with member number, button "JETZT KÜNDIGEN"). No login needed to reach them. Footer links under SERVICE: "Mitgliedschaft hier pausieren", "Mitgliedschaft hier kündigen", "Widerruf", "Cookie-Einstellungen"; footer link "Barrierefreiheitserklärung".

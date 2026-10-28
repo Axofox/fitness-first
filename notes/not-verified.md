@@ -21,3 +21,11 @@ Nothing on this list goes on a slide until it is checked. When something is chec
 - Page speed for homepage, membership and trial pages measured with PageSpeed Insights, mobile, 2026-10-27 (see site-analysis.md).
 - BFSG (German accessibility law for online services, B2C, including online shops and booking sites) in force since 28 June 2025, no grace period; micro-enterprises with services only are exempt. Source: https://www.e-recht24.de/ecommerce/13236-barrierefreiheitsstaerkungsgesetz.html (secondary source, not the law text, checked 2026-10-27).
 - Automatic accessibility scores (Lighthouse, mobile, 2026-10-27): homepage 92, membership 93, trial training 100. Automatic tools find only part of the problems.
+
+## Added 2026-10-28
+- The offer end date: the page says 31 October now. My first notes said 27 October. Not clarified (a different banner, or a changed date).
+- Student discount: the text says "2 euro off your weekly fee", the small print says "up to 13 euro per month" (DE) and "up to 8.50 euro" (AT). Not checked if they agree.
+- The pause page claims "86% of our members choose a pause". Source unknown.
+- Which clubs have the 39 euro and which the 49 euro training package: not known. The small print only lists the "selected clubs".
+- Button names after the club choice in the checkout, and in the trial booking (calendar, confirm button): not seen.
+- Usercentrics banner button names on a first visit: not seen (my browser had a saved choice).
