@@ -1,7 +1,7 @@
 # Slides (English)
 
 Format per slide: **Slide** = what is on screen. **Animation** = only where the plan says so. **Notes** = what Tina says.
-Target: about 30 minutes. Shorten slides 7, 8 and 16 first if the practice run is too long.
+Target: about 30 minutes. Shorten slides 7, 8 and 15 first if the practice run is too long.
 
 ---
 
@@ -30,11 +30,11 @@ How I prepared:
 
 What I assumed:
 - You have test environments next to production
-- Payment providers are third parties, so they cannot be tested on production
+- Payments are tested only in the provider's test mode, never on the live site (real money)
 - Most users use a phone, not a laptop
 
 **Notes**
-Before I start, I want to be open about what I did and what I assumed. First I explored your website like a normal visitor, to understand the flows. I did not submit any form and I did not log in, because it is your live system. Then I asked myself: does the site feel slow for a user, or is it unusually slow? I measured it with Google's PageSpeed tool on mobile. I also looked at whether the site is responsive and ready for mobile. And I looked at accessibility, because the rules for accessible online services are getting more important. Here I only ran a quick automatic scan with Google's tool. That is not a check by hand. I also made three assumptions. First, you have test environments next to production. Second, payment providers are third parties, so we cannot test payments on the live system. Third, most of your users use a phone and not a laptop. If an assumption is wrong, please tell me. I am happy to adapt.
+Before I start, I want to be open about what I did and what I assumed. First I explored your website like a normal visitor, to understand the flows. I did not submit any form and I did not log in, because it is your live system. Then I asked myself: does the site feel slow for a user, or is it unusually slow? I measured it with Google's PageSpeed tool on mobile. I also looked at whether the site is responsive and ready for mobile. And I looked at accessibility, because the rules for accessible online services are getting more important. Here I only ran a quick automatic scan with Google's tool. That is not a check by hand. I also made three assumptions. First, you have test environments next to production. Second, payments go through an outside provider. I test them only in its test mode, never on the live system, because there it is real money. Third, most of your users use a phone and not a laptop. If an assumption is wrong, please tell me. I am happy to adapt.
 
 ---
 
@@ -46,7 +46,7 @@ Exploratory testing: short sessions with a clear goal.
 Example goal: "Explore the checkout by changing my mind often, to find wrong totals."
 
 What I write down every time:
-- Goal and setup (device, browser, page version)
+- Goal and setup (device, browser, which version of the page in an A/B test)
 - What I covered
 - Bugs, with steps and screenshots
 - Open questions
@@ -55,7 +55,7 @@ What I write down every time:
 Saved next to the ticket, so the team can see it.
 
 **Notes**
-I always start with exploratory testing. That means I don't follow a script. I explore with a clear goal and a time limit, usually 60 to 90 minutes. For your website my goals were simple. First, understand the flows. Second, see if the site feels slow for a user. Third, see if it works well on a phone. A goal for the checkout could be: explore it by changing my mind often, to find wrong totals. I go back, I change the club, I change the plan, I reload the page. While I test, I take notes. I always write down the goal, the device and browser, and which page version I saw. Then what I covered, the bugs with exact steps and screenshots, my open questions, and also what I did not test. That last part is important. It shows the team where the gaps are, instead of hiding them. The notes are saved next to the ticket, so anyone can read them later.
+I always start with exploratory testing. That means I don't follow a script. I explore with a clear goal and a time limit, usually 60 to 90 minutes. For your website my goals were simple. First, understand the flows. Second, see if the site feels slow for a user. Third, see if it works well on a phone. A goal for the checkout could be: explore it by changing my mind often, to find wrong totals. I go back, I change the club, I change the plan, I reload the page. While I test, I take notes. I always write down the goal, the device and browser, and which version of the page I saw, because with A/B tests not everyone sees the same page. Then what I covered, the bugs with exact steps and screenshots, my open questions, and also what I did not test. That last part is important. It shows the team where the gaps are, instead of hiding them. The notes are saved next to the ticket, so anyone can read them later.
 
 ---
 
@@ -96,7 +96,7 @@ After exploring, I knew which areas matter most. I ranked them with one question
 The other areas: lighter checks, mostly by hand.
 
 **Notes**
-For each area I make a plan for its main risk. I plan by risk, not by page. For the membership checkout the main risk is a wrong price or a contract that never arrives. So I test the price rules with many small tests, and I add end-to-end tests that click through the whole flow. These tests run automatically on every push, and again every night. For cookie consent the risk is that marketing trackers still load after a visitor says no. So an automatic check clicks decline and looks at which services load. Cancel and pause are legal flows. They get an end-to-end test on every release, and I read the texts by hand. For the trial booking the risks are a slot that does not exist and a booking that never reaches the club. So I test one booking per phone type and check that it arrives. For offers, the risk is an old offer that still shows after it ended. So I test the dates, and I look at what the cache shows. The other areas get lighter checks, mostly by hand.
+For each area I make a plan for its main risk. I plan by risk, not by page. For the membership checkout the main risk is a wrong price or a contract that never arrives. So I test the price rules with many small tests, and I add end-to-end tests that click through the whole flow. These tests run automatically on every push, and again every night. For cookie consent the risk is that marketing trackers still load after a visitor says no. So an automatic check clicks decline and looks at which services load. Cancel and pause are legal flows. They get an end-to-end test on every release, and I read the texts by hand. For the trial booking the risks are a slot that does not exist and a booking that never reaches the club. So I test one booking per phone type and check that it arrives. For offers, the risk is an old offer that still shows after it ended. So I test the dates, and I look at what the cache shows. The other areas get lighter checks, mostly by hand. I build the end-to-end tests in this order. Priority one is the membership checkout, the trial booking, pause and cancel, and the cookie consent check. Priority two is campaigns and offers, club search and the member login.
 
 ---
 
@@ -119,7 +119,7 @@ Why is this flow so important? It is the place where you earn money. And the rul
 
 ---
 
-## 7. Flow 2: Trial training booking (1.5 min)
+## 7. Flow 2: Trial training booking, the risks (1.5 min)
 
 **Slide**
 3 steps: Club > Date and time > Your details
@@ -133,7 +133,7 @@ What can go wrong:
 Automate: slot rules, booking arrives at the club, one end-to-end booking per phone type.
 
 **Notes**
-The second flow is the trial training. The risks are different. Here nobody pays, but you lose a future member if it fails. The biggest risk is a booking that never reaches the club. The person comes to the gym and nobody expects them. That is a bad first impression. Dates are also risky: today, the weekend, the change of month, holidays. And one surprise from the page speed test: real users wait 361 milliseconds for a reaction when they tap something here. Google's limit for good is 200. I'll come back to this.
+The second flow is the trial training. The risks are different. Here nobody pays, but you lose a future member if it fails. The biggest risk is a booking that never reaches the club. The person comes to the gym and nobody expects them. That is a bad first impression. Dates are also risky: today, the weekend, the change of month, holidays. And one surprise from the page speed test: here the page reacts slowly when real users tap something, slower than Google's limit for good. I'll come back to this.
 
 ---
 
@@ -172,7 +172,7 @@ Test pyramid: many small fast tests at the bottom, few slow ones at the top.
 [pyramid]
 
 **Notes**
-Here is what I would automate for the membership checkout, and what each test expects. Think of a pyramid. At the bottom are many small and fast tests. These are unit tests, meaning tests of one small piece of code. Every price rule gets its own test, and so does the campaign end date, because offers that switch on and off by date are a classic source of bugs. Expected: the same input always gives the exact price. In the middle are API and integration tests. They check that the systems talk to each other correctly. For this club, do we get the right plans and prices? Does the contract arrive in the member system? For outside systems like payment, I use their test mode. Expected: the right data comes back and the contract arrives. Then come the visual and accessibility checks. Expected: it looks right, the keyboard reaches every step, and errors are read out. At the top are only a few end-to-end tests. End-to-end means a script clicks through the real flow like a customer. I would do the main path on an iPhone and an Android phone, and the case where someone changes the club. Expected: every step opens, and the summary and price update. Above that is manual exploratory testing, for things that are new or need human judgement. These tests run on staging, never on the live site. I build the end-to-end tests by priority, using the ranking. Priority one is the membership checkout, the trial booking, pause and cancel, and the cookie consent check. I build these first in a desktop browser, because that is the fastest place to build and fix them. Then I run the same tests in the mobile browser view, on a phone-sized screen. After that comes priority two: campaigns and offers, club search and the member login. The rest gets lighter checks, mostly by hand.
+Here is what I would automate for the membership checkout, and what each test expects. Think of a pyramid. At the bottom are many small and fast tests. These are unit tests, meaning tests of one small piece of code. Every price rule gets its own test, and so does the campaign end date, because offers that switch on and off by date are a classic source of bugs. Expected: the same input always gives the exact price. In the middle are API and integration tests. They check that the systems talk to each other correctly. For this club, do we get the right plans and prices? Does the contract arrive in the member system? For outside systems like payment, I use their test mode. Expected: the right data comes back and the contract arrives. Then come the visual and accessibility checks. Expected: it looks right, the keyboard reaches every step, and errors are read out. At the top are only a few end-to-end tests. End-to-end means a script clicks through the real flow like a customer. I would do the main path on an iPhone and an Android phone, and the case where someone changes the club. Expected: every step opens, and the summary and price update. Above that is manual exploratory testing, for things that are new or need human judgement. These tests run on staging, never on the live site.
 
 ---
 
@@ -276,7 +276,7 @@ Here is the release path from a feature to the live website. On Acquia I assume 
 
 
 **Notes**
-When do we stop a release? Some things always stop it: a wrong price, a broken checkout or booking, a broken cancel button, a cookie banner where "decline" does not work, any security problem, or a main flow that a keyboard user cannot finish. Other bugs can go live if we agree on conditions. For example a small bug with an easy workaround, if there is a ticket and a fix date. What about unreliable tests? I run a failed test once more. If it passes the second time, it is probably flaky. Then it goes into quarantine. That means it does not block the pipeline anymore, but it has an owner and a deadline to fix it. It is never just ignored. Very long tests run at night, not on every change. I give a clear recommendation when a release is urgent, for example if we should go live or wait. But the decision is made by the team, with open eyes.
+When do we stop a release? Some things always stop it: a wrong price, a broken checkout or booking, a broken cancel button, a cookie banner where "decline" does not work, any security problem, or a main flow that a keyboard user cannot finish. Other bugs can go live if we agree on conditions. For example a small bug with an easy workaround, if there is a ticket and a fix date. What about unreliable tests? I run a failed test once more. If it passes the second time, it is probably flaky. Then it goes into quarantine. That means it does not block the pipeline anymore, but it has an owner and a deadline to fix it. It is never just ignored. I give a clear recommendation when a release is urgent, for example if we should go live or wait. But the decision is made by the team, with open eyes.
 
 ---
 
@@ -291,7 +291,7 @@ When do we stop a release? Some things always stop it: a wrong price, a broken c
 
 
 **Notes**
-Besides "does it work", I chose three areas. First, accessibility. You publish an accessibility statement, so it matters to you. An automatic scan finds only part of the problems. The rest needs a human: can I finish the checkout with only a keyboard? Does a screen reader read the error messages? My gate is simple: no critical problem on the checkout and the booking. Second, data protection and cookie consent. With about fifteen ad services on the page, this is a real risk. I would automate one simple check: a script clicks "decline all", and then we look at which services still load. If a marketing tracker loads after decline, the release stops. The legal rules themselves I would clarify with your data protection officer. Third, page speed. Google gives clear limits for real users. I measured your pages. They load fast for real users, which is great. But all three react too slowly when someone taps. On the trial page it is 361 milliseconds, and the limit is 200. A test that only loads the page misses this, because it never clicks the calendar. So I would also measure the booking steps themselves. In the pipeline, my first rule would be: no page gets slower than today. Later we can make the limits stricter.
+Besides "does it work", I chose three areas. First, accessibility. You publish an accessibility statement, so it matters to you. An automatic scan finds only part of the problems. The rest needs a human: can I finish the checkout with only a keyboard? Does a screen reader read the error messages? My gate is simple: no critical problem on the checkout and the booking. Second, data protection and cookie consent. With about fifteen ad services on the page, this is a real risk. I would automate one simple check: a script clicks "decline all", and then we look at which services still load. If a marketing tracker loads after decline, the release stops. The legal rules themselves I would clarify with your data protection officer. Third, page speed. Google gives clear limits for real users. I measured your pages. They load fast for real users. But all three react too slowly when someone taps. The trial page is the slowest. A test that only loads the page misses this, because it never clicks the calendar. So I would also measure the booking steps themselves. In the pipeline, my first rule would be: no page gets slower than today. Later we can make the limits stricter.
 
 ---
 
@@ -305,7 +305,7 @@ AI helps with:
 
 Always with people:
 - Final priority of bugs
-- Go / no-go
+- Release or stop
 - Legal, accessibility and data protection decisions
 
 Rules: no real customer data in AI tools. Every result needs evidence. AI must list what it did not test.
@@ -314,7 +314,7 @@ Rules: no real customer data in AI tools. Every result needs evidence. AI must l
 [loop] A loop: AI suggests > a person checks > the team decides. The person in the middle stays visible the whole time.
 
 **Notes**
-Where does AI fit? I use it in three places. First, requirements. In my last job I built AI agents that read acceptance criteria and look for gaps and missing edge cases. A person then decides which gaps are real. Second, exploratory testing. I designed a set of AI testing agents that explore a website with a clear goal. I have to be honest here: this system is designed and tested on sample data, but I have not run it on a live website yet. The important part is the rules. Every result needs evidence, like screenshots. The agent must write down what it did not test. And text on a web page is treated as data, never as an instruction, so a page cannot trick the agent. Third, failed tests. AI can group failures and suggest whether it's a real bug or a flaky test. But some things always stay with people: the final priority of a bug, the go or no-go decision, and anything legal. And no real customer data goes into AI tools. AI makes suggestions. The team decides.
+How can AI help us? I use it in three places. First, requirements. In my last job I built AI agents that read acceptance criteria and look for gaps and missing edge cases. A person then decides which gaps are real. Second, exploratory testing. I designed a set of AI testing agents that explore a website with a clear goal. I have to be honest here: this system is designed and tested on sample data, but I have not run it on a live website yet. The important part is the rules. Every result needs evidence, like screenshots. The agent must write down what it did not test. And text on a web page is treated as data, never as an instruction, so a page cannot trick the agent. Third, failed tests. AI can group failures and suggest whether it's a real bug or a flaky test. But some things always stay with people: the final priority of a bug, the go or no-go decision, and anything legal. And no real customer data goes into AI tools. AI makes suggestions. The team decides. So we come back to my one idea: find the expensive mistakes first, and find them early. Thank you.
 
 ---
 

@@ -1,7 +1,7 @@
 # Folien (Deutsch, sehr einfach)
 
 Gleiche Folien wie in slides-de.md, aber mit noch einfacheren Wörtern und kürzeren Sätzen.
-Ziel: etwa 30 Minuten. Wenn die Probe zu lang ist, zuerst die Folien 7, 8 und 16 kürzen.
+Ziel: etwa 30 Minuten. Wenn die Probe zu lang ist, zuerst die Folien 7, 8 und 15 kürzen.
 
 ---
 
@@ -28,11 +28,11 @@ Das habe ich gemacht:
 
 Das nehme ich an:
 - Sie haben Test-Umgebungen neben der echten Seite
-- Zahlungsanbieter gehören anderen Firmen. Auf der echten Seite kann man sie nicht testen.
+- Zahlungen teste ich nur im Test-Modus der Firma. Nie auf der echten Seite, denn dort ist es echtes Geld.
 - Die meisten Nutzer haben ein Handy, keinen Laptop
 
 **Notes**
-Zuerst sage ich offen, was ich gemacht habe und was ich annehme. Ich habe Ihre Website angeschaut wie eine normale Besucherin. So habe ich die Abläufe verstanden. Ich habe kein Formular abgeschickt. Ich habe mich nicht eingeloggt. Es ist Ihre echte Seite, die Kunden benutzen. Dann habe ich mich gefragt: Ist die Seite langsam für Nutzer? Oder ist sie ungewöhnlich langsam? Ich habe das mit dem Werkzeug PageSpeed von Google gemessen, auf dem Handy. Ich habe auch geschaut, ob die Seite sich gut an das Handy anpasst. Und ich habe die Barrierefreiheit angeschaut. Barrierefrei heißt: Alle Menschen können die Seite benutzen. Dabei habe ich nur einen schnellen automatischen Scan mit dem Google-Werkzeug gemacht. Das ist keine Prüfung von Hand. Ich habe drei Annahmen gemacht. Erstens: Sie haben Test-Umgebungen. Zweitens: Zahlungsanbieter gehören anderen Firmen. Darum teste ich Zahlungen nicht auf der echten Seite. Drittens: Die meisten Nutzer haben ein Handy. Wenn eine Annahme falsch ist, sagen Sie es bitte. Dann passe ich mich an.
+Zuerst sage ich offen, was ich gemacht habe und was ich annehme. Ich habe Ihre Website angeschaut wie eine normale Besucherin. So habe ich die Abläufe verstanden. Ich habe kein Formular abgeschickt. Ich habe mich nicht eingeloggt. Es ist Ihre echte Seite, die Kunden benutzen. Dann habe ich mich gefragt: Ist die Seite langsam für Nutzer? Oder ist sie ungewöhnlich langsam? Ich habe das mit dem Werkzeug PageSpeed von Google gemessen, auf dem Handy. Ich habe auch geschaut, ob die Seite sich gut an das Handy anpasst. Und ich habe die Barrierefreiheit angeschaut. Barrierefrei heißt: Alle Menschen können die Seite benutzen. Dabei habe ich nur einen schnellen automatischen Scan mit dem Google-Werkzeug gemacht. Das ist keine Prüfung von Hand. Ich habe drei Annahmen gemacht. Erstens: Sie haben Test-Umgebungen. Zweitens: Zahlungen laufen über eine andere Firma. Ich teste sie nur in ihrem Test-Modus. Nie auf der echten Seite. Denn dort ist es echtes Geld. Drittens: Die meisten Nutzer haben ein Handy. Wenn eine Annahme falsch ist, sagen Sie es bitte. Dann passe ich mich an.
 
 ---
 
@@ -44,7 +44,7 @@ Ausprobieren mit einem Ziel, in kurzen Runden. Man sagt dazu: exploratives Teste
 Beispiel für ein Ziel: "Ich probiere den Checkout aus und ändere oft meine Meinung. So finde ich falsche Summen."
 
 Das schreibe ich immer auf:
-- Ziel und Aufbau (Gerät, Browser, Version der Seite)
+- Ziel und Aufbau (Gerät, Browser, welche Version der Seite im A/B-Test)
 - Was ich angeschaut habe
 - Fehler, mit Schritten und Screenshots
 - Offene Fragen
@@ -53,7 +53,7 @@ Das schreibe ich immer auf:
 Gespeichert beim Ticket. So sieht es das ganze Team.
 
 **Notes**
-Ich fange immer mit dem Ausprobieren an. Das Fachwort dafür ist exploratives Testen. Ich habe keinen festen Plan mit Schritten. Ich habe ein Ziel und eine Zeit. Meistens sind es 60 bis 90 Minuten. Bei Ihrer Website hatte ich drei einfache Ziele. Erstens: die Abläufe verstehen. Zweitens: sehen, ob die Seite langsam ist. Drittens: sehen, ob sie auf dem Handy gut geht. Ein Ziel für den Checkout wäre: Ich ändere oft meine Meinung, um falsche Summen zu finden. Ich gehe zurück. Ich wechsle den Club. Ich wechsle den Tarif. Ich lade die Seite neu. Dabei schreibe ich auf. Ich schreibe das Ziel auf, das Gerät und den Browser. Dann, was ich angeschaut habe. Dann die Fehler, mit genauen Schritten und Screenshots. Dann meine offenen Fragen. Und auch, was ich nicht getestet habe. Das ist wichtig. So sieht das Team, wo noch Lücken sind. Wir verstecken sie nicht. Die Notizen liegen beim Ticket. Jeder kann sie später lesen.
+Ich fange immer mit dem Ausprobieren an. Das Fachwort dafür ist exploratives Testen. Ich habe keinen festen Plan mit Schritten. Ich habe ein Ziel und eine Zeit. Meistens sind es 60 bis 90 Minuten. Bei Ihrer Website hatte ich drei einfache Ziele. Erstens: die Abläufe verstehen. Zweitens: sehen, ob die Seite langsam ist. Drittens: sehen, ob sie auf dem Handy gut geht. Ein Ziel für den Checkout wäre: Ich ändere oft meine Meinung, um falsche Summen zu finden. Ich gehe zurück. Ich wechsle den Club. Ich wechsle den Tarif. Ich lade die Seite neu. Dabei schreibe ich auf. Ich schreibe das Ziel auf, das Gerät und den Browser. Und welche Version der Seite ich gesehen habe. Denn bei A/B-Tests sieht nicht jeder dieselbe Seite. Dann, was ich angeschaut habe. Dann die Fehler, mit genauen Schritten und Screenshots. Dann meine offenen Fragen. Und auch, was ich nicht getestet habe. Das ist wichtig. So sieht das Team, wo noch Lücken sind. Wir verstecken sie nicht. Die Notizen liegen beim Ticket. Jeder kann sie später lesen.
 
 ---
 
@@ -94,7 +94,7 @@ Nach dem Ausprobieren wusste ich, welche Bereiche am wichtigsten sind. Ich habe 
 Die anderen Bereiche: leichtere Checks, meistens von Hand.
 
 **Notes**
-Für jeden Bereich mache ich einen Plan für das größte Risiko. Ich plane nach Risiko, nicht nach Seite. Bei der Mitgliedschaft ist das größte Risiko ein falscher Preis. Oder ein Vertrag, der nie ankommt. Darum teste ich die Preisregeln mit vielen kleinen Tests. Dazu baue ich Tests, die den ganzen Ablauf durchklicken. Diese Tests laufen automatisch bei jedem Push und noch einmal jede Nacht. Bei den Cookies ist das Risiko: Werbe-Dienste laden weiter, obwohl der Besucher Nein gesagt hat. Darum klickt ein automatischer Check auf "Ablehnen". Dann schaut er, welche Dienste laden. Kündigen und Pausieren sind rechtlich wichtig. Sie bekommen bei jedem Release einen Test. Und ich lese die Texte selbst. Bei der Buchung vom Probetraining gibt es zwei Risiken. Den Termin gibt es nicht. Oder die Buchung kommt im Club nicht an. Darum teste ich eine Buchung pro Handy-Typ. Und ich prüfe, ob sie ankommt. Bei den Angeboten ist das Risiko ein altes Angebot, das noch da ist. Darum teste ich die Daten. Und ich schaue, was der Zwischenspeicher zeigt. Die anderen Bereiche bekommen leichtere Checks, meistens von Hand.
+Für jeden Bereich mache ich einen Plan für das größte Risiko. Ich plane nach Risiko, nicht nach Seite. Bei der Mitgliedschaft ist das größte Risiko ein falscher Preis. Oder ein Vertrag, der nie ankommt. Darum teste ich die Preisregeln mit vielen kleinen Tests. Dazu baue ich Tests, die den ganzen Ablauf durchklicken. Diese Tests laufen automatisch bei jedem Push und noch einmal jede Nacht. Bei den Cookies ist das Risiko: Werbe-Dienste laden weiter, obwohl der Besucher Nein gesagt hat. Darum klickt ein automatischer Check auf "Ablehnen". Dann schaut er, welche Dienste laden. Kündigen und Pausieren sind rechtlich wichtig. Sie bekommen bei jedem Release einen Test. Und ich lese die Texte selbst. Bei der Buchung vom Probetraining gibt es zwei Risiken. Den Termin gibt es nicht. Oder die Buchung kommt im Club nicht an. Darum teste ich eine Buchung pro Handy-Typ. Und ich prüfe, ob sie ankommt. Bei den Angeboten ist das Risiko ein altes Angebot, das noch da ist. Darum teste ich die Daten. Und ich schaue, was der Zwischenspeicher zeigt. Die anderen Bereiche bekommen leichtere Checks, meistens von Hand. Die Tests für den ganzen Ablauf baue ich in dieser Reihenfolge. Zuerst: Mitgliedschaft, Buchung vom Probetraining, Pausieren und Kündigen und der Cookie-Check. Dann: Aktionen und Angebote, Clubsuche und Login.
 
 ---
 
@@ -117,7 +117,7 @@ Warum ist dieser Ablauf so wichtig? Hier verdienen Sie Geld. Und die Regeln sind
 
 ---
 
-## 7. Ablauf 2: Probetraining buchen (1.5 min)
+## 7. Ablauf 2: Probetraining buchen, die Risiken (1.5 min)
 
 **Slide**
 3 Schritte: Club > Datum und Uhrzeit > Ihre Daten
@@ -131,7 +131,7 @@ Was schiefgehen kann:
 Automatisieren: die Regeln für Termine, ob die Buchung im Club ankommt, eine Buchung pro Handy-Typ.
 
 **Notes**
-Der zweite Ablauf ist das Probetraining. Hier sind die Risiken anders. Niemand zahlt. Aber Sie verlieren ein neues Mitglied, wenn es nicht klappt. Das größte Risiko: Die Buchung kommt im Club nicht an. Die Person kommt ins Studio, und niemand erwartet sie. Das ist ein schlechter erster Eindruck. Auch das Datum ist riskant. Heute, das Wochenende, der Monatswechsel, Feiertage. Und eine Überraschung aus dem Tempo-Test: Echte Nutzer warten hier 361 Millisekunden, wenn sie etwas antippen. Google sagt: Gut ist 200 oder weniger. Darauf komme ich später zurück.
+Der zweite Ablauf ist das Probetraining. Hier sind die Risiken anders. Niemand zahlt. Aber Sie verlieren ein neues Mitglied, wenn es nicht klappt. Das größte Risiko: Die Buchung kommt im Club nicht an. Die Person kommt ins Studio, und niemand erwartet sie. Das ist ein schlechter erster Eindruck. Auch das Datum ist riskant. Heute, das Wochenende, der Monatswechsel, Feiertage. Und eine Überraschung aus dem Tempo-Test: Hier reagiert die Seite langsam, wenn echte Nutzer etwas antippen. Langsamer, als Google für "gut" sagt. Darauf komme ich später zurück.
 
 ---
 
@@ -170,7 +170,7 @@ Test-Pyramide: unten viele kleine, schnelle Tests. Oben wenige, langsame.
 [pyramid]
 
 **Notes**
-Das würde ich bei der Mitgliedschaft automatisieren. Und das erwartet jeder Test. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine, schnelle Tests. Jede Preisregel hat einen eigenen Test. Auch das Ende einer Aktion. Angebote, die nach Datum an und aus gehen, sind eine typische Fehlerquelle. Erwartet: Gleiche Eingabe gibt immer genau den gleichen Preis. In der Mitte sind die Tests für die Schnittstellen. Das sind die Stellen, an denen Systeme miteinander sprechen. Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitglieder-System an? Bei fremden Systemen wie der Zahlung nutze ich den Test-Modus der Firma. Erwartet: Die richtigen Daten kommen zurück. Und der Vertrag kommt an. Dann prüfe ich Aussehen und Barrierefreiheit. Erwartet: Es sieht richtig aus. Die Tastatur kommt zu jedem Schritt. Fehler werden vorgelesen. Oben sind nur wenige Tests für den ganzen Ablauf. Man sagt dazu End-to-End. Ein Skript klickt durch den echten Ablauf, wie ein Kunde. Ich teste den Hauptweg auf einem iPhone und auf einem Android-Handy. Und den Fall, dass jemand den Club wechselt. Erwartet: Jeder Schritt öffnet sich. Zusammenfassung und Preis ändern sich. Ganz oben probiere ich von Hand aus. Das ist für Dinge, die neu sind oder bei denen ein Mensch urteilen muss. Diese Tests laufen auf Stage. Nie auf der echten Seite. Ich baue die Tests nach Wichtigkeit, mit der Reihenfolge von vorhin. Zuerst die wichtigsten Abläufe: Mitgliedschaft, Buchung vom Probetraining, Pausieren und Kündigen und der Cookie-Check. Die baue ich zuerst im Browser am Computer. Dort kann man am schnellsten bauen und reparieren. Dann lasse ich dieselben Tests in der Handy-Ansicht laufen. Danach kommt die zweite Gruppe: Aktionen und Angebote, Clubsuche und Login. Der Rest bekommt leichtere Checks, meistens von Hand.
+Das würde ich bei der Mitgliedschaft automatisieren. Und das erwartet jeder Test. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine, schnelle Tests. Jede Preisregel hat einen eigenen Test. Auch das Ende einer Aktion. Angebote, die nach Datum an und aus gehen, sind eine typische Fehlerquelle. Erwartet: Gleiche Eingabe gibt immer genau den gleichen Preis. In der Mitte sind die Tests für die Schnittstellen. Das sind die Stellen, an denen Systeme miteinander sprechen. Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitglieder-System an? Bei fremden Systemen wie der Zahlung nutze ich den Test-Modus der Firma. Erwartet: Die richtigen Daten kommen zurück. Und der Vertrag kommt an. Dann prüfe ich Aussehen und Barrierefreiheit. Erwartet: Es sieht richtig aus. Die Tastatur kommt zu jedem Schritt. Fehler werden vorgelesen. Oben sind nur wenige Tests für den ganzen Ablauf. Man sagt dazu End-to-End. Ein Skript klickt durch den echten Ablauf, wie ein Kunde. Ich teste den Hauptweg auf einem iPhone und auf einem Android-Handy. Und den Fall, dass jemand den Club wechselt. Erwartet: Jeder Schritt öffnet sich. Zusammenfassung und Preis ändern sich. Ganz oben probiere ich von Hand aus. Das ist für Dinge, die neu sind oder bei denen ein Mensch urteilen muss. Diese Tests laufen auf Stage. Nie auf der echten Seite.
 
 ---
 
@@ -274,7 +274,7 @@ Hier sehen Sie den Weg von einer neuen Funktion bis zur echten Website. Bei Acqu
 
 
 **Notes**
-Wann stoppen wir ein Release? Manche Dinge stoppen es immer. Ein falscher Preis. Ein kaputter Checkout oder eine kaputte Buchung. Eine kaputte Kündigen-Schaltfläche. Ein Cookie-Banner, bei dem "Ablehnen" nicht geht. Jedes Sicherheitsproblem. Oder ein Hauptablauf, den man mit der Tastatur nicht schafft. Andere Fehler dürfen live gehen, wenn wir Bedingungen absprechen. Zum Beispiel ein kleiner Fehler mit einem einfachen Ausweg. Dann braucht es ein Ticket und einen Termin zum Reparieren. Und was ist mit Tests, die mal klappen und mal nicht? Ich lasse einen durchgefallenen Test noch einmal laufen. Wenn er beim zweiten Mal klappt, ist er wahrscheinlich nicht stabil. Dann legen wir ihn zur Seite. Das heißt: Er stoppt die automatische Strecke nicht mehr. Aber er hat einen Besitzer und eine Frist zum Reparieren. Wir ignorieren ihn nie einfach. Sehr lange Tests laufen nachts. Nicht bei jeder Änderung. Wenn ein Release dringend ist, gebe ich eine klare Empfehlung. Zum Beispiel: Wir gehen live. Oder: Wir warten. Aber das Team entscheidet. Mit offenen Augen.
+Wann stoppen wir ein Release? Manche Dinge stoppen es immer. Ein falscher Preis. Ein kaputter Checkout oder eine kaputte Buchung. Eine kaputte Kündigen-Schaltfläche. Ein Cookie-Banner, bei dem "Ablehnen" nicht geht. Jedes Sicherheitsproblem. Oder ein Hauptablauf, den man mit der Tastatur nicht schafft. Andere Fehler dürfen live gehen, wenn wir Bedingungen absprechen. Zum Beispiel ein kleiner Fehler mit einem einfachen Ausweg. Dann braucht es ein Ticket und einen Termin zum Reparieren. Und was ist mit Tests, die mal klappen und mal nicht? Ich lasse einen durchgefallenen Test noch einmal laufen. Wenn er beim zweiten Mal klappt, ist er wahrscheinlich nicht stabil. Dann legen wir ihn zur Seite. Das heißt: Er stoppt die automatische Strecke nicht mehr. Aber er hat einen Besitzer und eine Frist zum Reparieren. Wir ignorieren ihn nie einfach. Wenn ein Release dringend ist, gebe ich eine klare Empfehlung. Zum Beispiel: Wir gehen live. Oder: Wir warten. Aber das Team entscheidet. Mit offenen Augen.
 
 ---
 
@@ -289,7 +289,7 @@ Wann stoppen wir ein Release? Manche Dinge stoppen es immer. Ein falscher Preis.
 
 
 **Notes**
-Neben "es geht" habe ich drei Bereiche gewählt. Erstens die Barrierefreiheit. Sie haben eine Erklärung zur Barrierefreiheit auf der Seite. Also ist sie Ihnen wichtig. Ein automatischer Scan findet nur einen Teil der Probleme. Den Rest muss ein Mensch prüfen. Kann ich den Checkout nur mit der Tastatur schaffen? Liest der Screenreader die Fehlermeldungen vor? Meine Grenze ist einfach: Kein großes Problem im Checkout und bei der Buchung. Zweitens Datenschutz und Cookie-Auswahl. Etwa fünfzehn Werbedienste laufen auf der Seite. Das ist ein echtes Risiko. Ich würde einen einfachen Check automatisieren. Ein Skript klickt auf "Alle ablehnen". Dann schauen wir, welche Dienste trotzdem laden. Wenn ein Werbe-Dienst lädt, stoppt das Release. Die rechtlichen Regeln kläre ich mit Ihrem Datenschutz-Beauftragten. Drittens das Tempo der Seite. Google nennt klare Grenzen für echte Nutzer. Ich habe Ihre Seiten gemessen. Für echte Nutzer laden sie schnell. Das ist gut. Aber alle drei Seiten reagieren zu langsam, wenn jemand etwas antippt. Auf der Seite für das Probetraining sind es 361 Millisekunden. Die Grenze ist 200. Ein Test, der nur die Seite lädt, sieht das nicht. Er klickt nie auf den Kalender. Darum würde ich auch die Buchungsschritte selbst messen. Meine erste Regel für die automatische Strecke wäre: Keine Seite wird langsamer als heute. Später machen wir die Grenzen strenger.
+Neben "es geht" habe ich drei Bereiche gewählt. Erstens die Barrierefreiheit. Sie haben eine Erklärung zur Barrierefreiheit auf der Seite. Also ist sie Ihnen wichtig. Ein automatischer Scan findet nur einen Teil der Probleme. Den Rest muss ein Mensch prüfen. Kann ich den Checkout nur mit der Tastatur schaffen? Liest der Screenreader die Fehlermeldungen vor? Meine Grenze ist einfach: Kein großes Problem im Checkout und bei der Buchung. Zweitens Datenschutz und Cookie-Auswahl. Etwa fünfzehn Werbedienste laufen auf der Seite. Das ist ein echtes Risiko. Ich würde einen einfachen Check automatisieren. Ein Skript klickt auf "Alle ablehnen". Dann schauen wir, welche Dienste trotzdem laden. Wenn ein Werbe-Dienst lädt, stoppt das Release. Die rechtlichen Regeln kläre ich mit Ihrem Datenschutz-Beauftragten. Drittens das Tempo der Seite. Google nennt klare Grenzen für echte Nutzer. Ich habe Ihre Seiten gemessen. Für echte Nutzer laden sie schnell. Aber alle drei Seiten reagieren zu langsam, wenn jemand etwas antippt. Die Seite für das Probetraining ist am langsamsten. Ein Test, der nur die Seite lädt, sieht das nicht. Er klickt nie auf den Kalender. Darum würde ich auch die Buchungsschritte selbst messen. Meine erste Regel für die automatische Strecke wäre: Keine Seite wird langsamer als heute. Später machen wir die Grenzen strenger.
 
 ---
 
@@ -312,7 +312,7 @@ Regeln: keine echten Kundendaten in KI-Werkzeugen. Jedes Ergebnis braucht einen 
 [loop] Ein Kreislauf. loop: KI schlägt vor > Eine Person prüft > Das Team entscheidet. Die Person in der Mitte bleibt die ganze Zeit sichtbar.
 
 **Notes**
-Wo hilft KI? Ich nutze sie an drei Stellen. Erstens bei den Anforderungen. In meinem letzten Job habe ich KI-Helfer gebaut. Sie lesen die Regeln für "fertig" und suchen nach Lücken. Ein Mensch entscheidet dann, welche Lücken echt sind. Zweitens beim Ausprobieren. Ich habe KI-Helfer entworfen. Sie probieren eine Website mit einem klaren Ziel aus. Ich muss hier ehrlich sein. Das System ist entworfen und mit Beispieldaten getestet. Aber ich habe es noch nicht auf einer echten Website benutzt. Wichtig sind die Regeln. Jedes Ergebnis braucht einen Beweis, zum Beispiel einen Screenshot. Der Helfer muss aufschreiben, was er nicht getestet hat. Und Text auf einer Webseite ist für ihn nur Information. Es ist nie eine Anweisung. So kann eine Seite ihn nicht austricksen. Drittens bei Tests, die durchfallen. Die KI kann Fehler gruppieren. Sie kann vorschlagen: echter Fehler, oder Test nicht stabil. Aber manche Dinge bleiben immer bei Menschen. Wie wichtig ein Fehler ist. Ob ein Release live geht. Und alles Rechtliche. Und keine echten Kundendaten kommen in KI-Werkzeuge. Die KI macht Vorschläge. Das Team entscheidet.
+Wie kann uns KI helfen? Ich nutze sie an drei Stellen. Erstens bei den Anforderungen. In meinem letzten Job habe ich KI-Helfer gebaut. Sie lesen die Regeln für "fertig" und suchen nach Lücken. Ein Mensch entscheidet dann, welche Lücken echt sind. Zweitens beim Ausprobieren. Ich habe KI-Helfer entworfen. Sie probieren eine Website mit einem klaren Ziel aus. Ich muss hier ehrlich sein. Das System ist entworfen und mit Beispieldaten getestet. Aber ich habe es noch nicht auf einer echten Website benutzt. Wichtig sind die Regeln. Jedes Ergebnis braucht einen Beweis, zum Beispiel einen Screenshot. Der Helfer muss aufschreiben, was er nicht getestet hat. Und Text auf einer Webseite ist für ihn nur Information. Es ist nie eine Anweisung. So kann eine Seite ihn nicht austricksen. Drittens bei Tests, die durchfallen. Die KI kann Fehler gruppieren. Sie kann vorschlagen: echter Fehler, oder Test nicht stabil. Aber manche Dinge bleiben immer bei Menschen. Wie wichtig ein Fehler ist. Ob ein Release live geht. Und alles Rechtliche. Und keine echten Kundendaten kommen in KI-Werkzeuge. Die KI macht Vorschläge. Das Team entscheidet. Damit bin ich wieder bei meiner einen Idee: die teuren Fehler zuerst finden. Und so früh wie möglich. Vielen Dank.
 
 ---
 
