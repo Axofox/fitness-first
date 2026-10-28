@@ -6,6 +6,7 @@ These are the tests behind the slides, written as steps you can follow by hand. 
 
 ## How to read the steps
 
+- **The page can look different for you.** The site loads an A/B testing tool (VWO) and shows different visitors different versions. On 28 October I saw the button "ANGEBOT SICHERN" at the top of `/mitgliedschaft` on a phone-sized and on a desktop-sized window, but you may not see it. If a button or text is not there, do not give up: scroll to the club list ("CLUB AUSWÄHLEN"), and write down what you see instead. This is exactly the "which version did I see" note from slide 3.
 - **Names in CAPITALS in quotes** (like "JETZT MITGLIED WERDEN") are written exactly like that on the site. I read them on 28 October 2026.
 - **LOOK (live site):** safe on www.fitnessfirst.de. You only open pages and look, like a normal visitor. Nothing is submitted, no login, nothing booked.
 - **TEST ENV:** needs a test environment (the assumption on slide 2). Never do these on the live site, because they submit forms or create bookings and contracts. The address of a test environment is not known, so the steps use the same page names.
@@ -36,7 +37,7 @@ Flow on the site: Club, then "Laufzeit / Tarif", then "Extras", then "Deine Date
 - **Precondition:** a test club, test personal data.
 - **Steps:**
     1. Open `/mitgliedschaft`.
-    2. Under "WO WILLST DU TRAINIEREN?" find the club list. Click "CLUB AUSWÄHLEN" next to a club, for example "München - Laim". (The big button "JETZT MITGLIED WERDEN" and the top button "ANGEBOT SICHERN" lead to the same start.)
+    2. Under "WO WILLST DU TRAINIEREN?" find the club list. Click "CLUB AUSWÄHLEN" next to a club, for example "München - Laim". (There are also the buttons "ANGEBOT SICHERN" at the top and "JETZT MITGLIED WERDEN" further down. I did not click them, so I do not know where they lead. The club list is the way I describe here.)
     3. The checkout page opens, with `club_id` in the address. The step "Club" is done.
     4. On "Laufzeit / Tarif" choose a plan. Look for the card with "Bestseller / Top-Preis" and the button "Mehr Tarifoptionen zeigen" for more plans.
     5. On "Extras" choose or skip extras (button label not checked).
