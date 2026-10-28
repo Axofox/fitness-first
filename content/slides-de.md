@@ -85,7 +85,7 @@ Nach dem Erkunden wusste ich, welche Bereiche am wichtigsten sind. Ich habe sie 
 **Slide**
 | Bereich | Hauptrisiko | Mein Plan |
 |---|---|---|
-| Mitgliedschaft abschließen | Falscher Preis, oder ein Vertrag kommt nie an | Tests für die Preisregeln, End-to-End-Tests, alle 15 Minuten ein Smoke-Test in der Produktion |
+| Mitgliedschaft abschließen | Falscher Preis, oder ein Vertrag kommt nie an | Tests für die Preisregeln, End-to-End-Tests auf Stage, automatischer Lauf bei jedem Push und jede Nacht |
 | Cookie-Einwilligung und Tracking | Marketing-Tracker laden nach "Ablehnen" | Automatische Prüfung nach "Alle ablehnen", Abstimmung mit dem Datenschutzbeauftragten |
 | Pausieren, kündigen, widerrufen | Ein rechtlicher Ablauf funktioniert nicht mehr | End-to-End-Test bei jedem Release, Texte von Hand prüfen |
 | Probetraining buchen | Termin gibt es nicht, Buchung erreicht den Club nie | Eine End-to-End-Buchung pro Handytyp, prüfen, dass sie ankommt |
@@ -94,7 +94,7 @@ Nach dem Erkunden wusste ich, welche Bereiche am wichtigsten sind. Ich habe sie 
 Die anderen Bereiche: leichtere Prüfungen, meistens von Hand.
 
 **Notes**
-Für jeden Bereich mache ich einen Plan für sein Hauptrisiko. Ich plane nach Risiko, nicht nach Seite. Beim Abschluss der Mitgliedschaft ist das Hauptrisiko ein falscher Preis oder ein Vertrag, der nie ankommt. Darum teste ich die Preisregeln mit vielen kleinen Tests, und ich baue End-to-End-Tests, die den ganzen Ablauf durchklicken. Nach dem Release läuft alle 15 Minuten ein kleines Skript als Smoke-Test. Ein Smoke-Test ist eine kurze Prüfung, ob die wichtigsten Dinge noch funktionieren. Bei der Cookie-Einwilligung ist das Risiko, dass Marketing-Tracker noch laden, nachdem ein Besucher Nein gesagt hat. Darum klickt eine automatische Prüfung auf "Ablehnen" und schaut, welche Dienste laden. Kündigen und Pausieren sind rechtliche Abläufe. Sie bekommen bei jedem Release einen End-to-End-Test, und ich lese die Texte von Hand. Bei der Probetraining-Buchung sind die Risiken ein Termin, den es nicht gibt, und eine Buchung, die den Club nie erreicht. Darum teste ich eine Buchung pro Handytyp und prüfe, dass sie ankommt. Bei Angeboten ist das Risiko ein altes Angebot, das nach dem Ende noch erscheint. Darum teste ich die Daten und schaue, was der Cache zeigt. Die anderen Bereiche bekommen leichtere Prüfungen, meistens von Hand.
+Für jeden Bereich mache ich einen Plan für sein Hauptrisiko. Ich plane nach Risiko, nicht nach Seite. Beim Abschluss der Mitgliedschaft ist das Hauptrisiko ein falscher Preis oder ein Vertrag, der nie ankommt. Darum teste ich die Preisregeln mit vielen kleinen Tests, und ich baue End-to-End-Tests, die den ganzen Ablauf durchklicken. Diese Tests laufen automatisch bei jedem Push und noch einmal jede Nacht. Bei der Cookie-Einwilligung ist das Risiko, dass Marketing-Tracker noch laden, nachdem ein Besucher Nein gesagt hat. Darum klickt eine automatische Prüfung auf "Ablehnen" und schaut, welche Dienste laden. Kündigen und Pausieren sind rechtliche Abläufe. Sie bekommen bei jedem Release einen End-to-End-Test, und ich lese die Texte von Hand. Bei der Probetraining-Buchung sind die Risiken ein Termin, den es nicht gibt, und eine Buchung, die den Club nie erreicht. Darum teste ich eine Buchung pro Handytyp und prüfe, dass sie ankommt. Bei Angeboten ist das Risiko ein altes Angebot, das nach dem Ende noch erscheint. Darum teste ich die Daten und schaue, was der Cache zeigt. Die anderen Bereiche bekommen leichtere Prüfungen, meistens von Hand.
 
 ---
 
@@ -166,15 +166,11 @@ Testpyramide: unten viele kleine, schnelle Tests, oben wenige langsame.
 - **API und Integration:** Tarife, Preise, Vertrag, Zahlung im Testmodus. Erwartet: richtige Daten, Vertrag kommt an.
 - **Unit (viele):** jede Preisregel und jedes Aktionsdatum. Erwartet: gleiche Eingabe, genau gleicher Preis.
 
-Dazu in der Produktion: alle 15 Minuten öffnet ein Smoke-Test-Skript die Schritte 1 bis 3. Erwartet: alles lädt, sonst wird das Team informiert.
-
-Reihenfolge beim Bauen: Priorität 1 zuerst im Desktop-Browser, dann mobile Ansicht, dann Priorität 2.
-
 **Animation**
 [pyramid] 
 
 **Notes**
-Das würde ich beim Abschluss der Mitgliedschaft automatisieren, und das erwartet jeder Test. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine und schnelle Tests. Das sind Unit-Tests, also Tests für ein kleines Stück Code. Jede Preisregel bekommt einen eigenen Test, auch das Enddatum einer Aktion. Denn Angebote, die nach Datum ein- und ausgeschaltet werden, sind eine klassische Fehlerquelle. Erwartet: Dieselbe Eingabe ergibt immer genau denselben Preis. In der Mitte sind API- und Integrationstests. Sie prüfen, dass die Systeme richtig miteinander sprechen. Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitgliedersystem an? Bei fremden Systemen wie der Zahlung benutze ich deren Testmodus. Erwartet: Die richtigen Daten kommen zurück, und der Vertrag kommt an. Dann kommen die Prüfungen von Optik und Barrierefreiheit. Erwartet: Es sieht richtig aus, die Tastatur erreicht jeden Schritt, und Fehler werden vorgelesen. Oben sind nur wenige End-to-End-Tests. End-to-End heißt: Ein Skript klickt wie ein Kunde durch den echten Ablauf. Ich würde den Hauptweg auf einem iPhone und einem Android-Handy testen, und den Fall, dass jemand den Club wechselt. Erwartet: Jeder Schritt öffnet sich, und Zusammenfassung und Preis ändern sich. Darüber kommt das Ausprobieren von Hand, für Dinge, die neu sind oder menschliches Urteil brauchen. Nach dem Release prüft das Smoke-Test-Skript alle 15 Minuten die ersten Schritte. So merken wir ein Problem, bevor Kunden anrufen. Die End-to-End-Tests baue ich nach Priorität, aus der Reihenfolge von vorhin. Priorität eins sind der Abschluss der Mitgliedschaft, die Probetraining-Buchung, Pausieren und Kündigen und die Prüfung der Cookie-Einwilligung. Die baue ich zuerst im Desktop-Browser, weil man dort am schnellsten bauen und reparieren kann. Dann lasse ich dieselben Tests in der mobilen Ansicht laufen, auf einem Bildschirm in Handygröße. Danach kommt Priorität zwei: Aktionen und Angebote, Clubsuche und Login. Der Rest bekommt leichtere Prüfungen, meistens von Hand.
+Das würde ich beim Abschluss der Mitgliedschaft automatisieren, und das erwartet jeder Test. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine und schnelle Tests. Das sind Unit-Tests, also Tests für ein kleines Stück Code. Jede Preisregel bekommt einen eigenen Test, auch das Enddatum einer Aktion. Denn Angebote, die nach Datum ein- und ausgeschaltet werden, sind eine klassische Fehlerquelle. Erwartet: Dieselbe Eingabe ergibt immer genau denselben Preis. In der Mitte sind API- und Integrationstests. Sie prüfen, dass die Systeme richtig miteinander sprechen. Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitgliedersystem an? Bei fremden Systemen wie der Zahlung benutze ich deren Testmodus. Erwartet: Die richtigen Daten kommen zurück, und der Vertrag kommt an. Dann kommen die Prüfungen von Optik und Barrierefreiheit. Erwartet: Es sieht richtig aus, die Tastatur erreicht jeden Schritt, und Fehler werden vorgelesen. Oben sind nur wenige End-to-End-Tests. End-to-End heißt: Ein Skript klickt wie ein Kunde durch den echten Ablauf. Ich würde den Hauptweg auf einem iPhone und einem Android-Handy testen, und den Fall, dass jemand den Club wechselt. Erwartet: Jeder Schritt öffnet sich, und Zusammenfassung und Preis ändern sich. Darüber kommt das Ausprobieren von Hand, für Dinge, die neu sind oder menschliches Urteil brauchen. Diese Tests laufen auf Stage, nie auf der Live-Seite. Die End-to-End-Tests baue ich nach Priorität, aus der Reihenfolge von vorhin. Priorität eins sind der Abschluss der Mitgliedschaft, die Probetraining-Buchung, Pausieren und Kündigen und die Prüfung der Cookie-Einwilligung. Die baue ich zuerst im Desktop-Browser, weil man dort am schnellsten bauen und reparieren kann. Dann lasse ich dieselben Tests in der mobilen Ansicht laufen, auf einem Bildschirm in Handygröße. Danach kommt Priorität zwei: Aktionen und Angebote, Clubsuche und Login. Der Rest bekommt leichtere Prüfungen, meistens von Hand.
 
 ---
 
@@ -241,14 +237,13 @@ Ich glaube, dass Qualität die Aufgabe des ganzen Teams ist, nicht nur von QA. W
 ## 13. Von der Idee zur Live-Website (2 min)
 
 **Slide**
-Feature > Merge Request > Dev > Stage > Produktion > Nach dem Release
+Feature > Push und Merge Request > Dev > Stage > Release
 
 - **Feature:** Akzeptanzkriterien und Risiken vereinbart
-- **Merge Request:** Code-Review, Unit-Tests, Code-Prüfungen
-- **Dev:** API- und Integrationstests, Smoke-Test
-- **Stage:** End-to-End-Regression, Optik, Barrierefreiheit, Seitengeschwindigkeit, Prüfung der Einwilligung, Abnahme durch das Geschäft
-- **Produktion:** Smoke-Test direkt nach dem Deploy
-- **Nach dem Release:** Überwachung und Seitengeschwindigkeit bei echten Nutzern. Rollback bereit.
+- **Push und Merge Request:** Unit- und API-Tests laufen bei jedem Push. Sie müssen bestehen, bevor der Code in master kommt.
+- **Dev:** Integrationstests. Smoke-Test nach jedem Deployment.
+- **Stage:** Smoke-Test nach jedem Deployment, dann End-to-End-Regression, Optik, Barrierefreiheit, Seitengeschwindigkeit, Prüfung der Einwilligung, Abnahme durch das Geschäft. Dazu jede Nacht ein voller Lauf.
+- **Release:** alles grün, dann live, mit einem Smoke-Test nach dem Deployment. Rollback bereit.
 
 Testdaten: keine echten Kundendaten auf Stage. Kopierte Daten werden anonymisiert.
 
@@ -256,7 +251,7 @@ Testdaten: keine echten Kundendaten auf Stage. Kopierte Daten werden anonymisier
 [pipe] Eine Feature-Karte wandert von links nach rechts. An jedem Kontrollpunkt wird ein Licht grün. Im zweiten Durchlauf wird das Licht bei Stage rot, und die Karte bleibt stehen.
 
 **Notes**
-Hier ist der Weg von einem Feature bis zur Live-Website. Bei Acquia nehme ich drei Umgebungen an: Entwicklung, Staging und Produktion. Bei jedem Schritt gibt es eine Prüfung. Wenn ein Entwickler einen Merge Request öffnet, also die Bitte, seine Änderung in den Hauptcode zu übernehmen, gibt es ein Code-Review und die schnellen Tests. Auf der Entwicklungsumgebung laufen die API- und Integrationstests und ein Smoke-Test. Ein Smoke-Test ist eine kurze Prüfung, ob die wichtigsten Dinge noch funktionieren. Wie bei einer Maschine: Man schaltet sie ein und schaut, ob Rauch aufsteigt. Auf Staging läuft die volle Regression. Regressionstests prüfen, dass alte Funktionen nach einer Änderung noch funktionieren. Dort prüfen wir auch Optik, Barrierefreiheit, Seitengeschwindigkeit und Einwilligung. Die Fachabteilungen machen ihre Abnahme ebenfalls auf Staging. Nach dem Deploy auf die Produktion läuft der Smoke-Test noch einmal. Dann übernimmt die Überwachung. Wenn etwas schiefgeht, gehen wir zur letzten guten Version zurück. Ein wichtiger Punkt bei den Testdaten: Drupal-Seiten kopieren oft die Datenbank der Produktion auf Staging. Diese Kopie darf keine echten Kundendaten enthalten. Sie muss anonymisiert sein.
+Hier ist der Weg von einem Feature bis zur Live-Website. Bei Acquia nehme ich drei Umgebungen an: Entwicklung, Staging und Produktion. Die Tests laufen, bevor etwas dort ankommt. Jedes Mal, wenn ein Entwickler Code pusht, laufen automatisch die schnellen Tests: Unit-Tests, API-Tests und Code-Prüfungen. Sie müssen bestehen, bevor die Änderung in master darf. Ein Merge Request ist die Bitte, die Änderung in den Hauptcode zu übernehmen. Dort gibt es auch ein Code-Review. Auf der Entwicklungsumgebung laufen die Integrationstests. Nach jedem Deployment läuft auch ein Smoke-Test. Ein Smoke-Test ist eine kurze Prüfung, ob die wichtigsten Dinge noch funktionieren. Wie bei einer Maschine: Man schaltet sie ein und schaut, ob Rauch aufsteigt. Auf Staging läuft nach jedem Deployment ein Smoke-Test, dann die End-to-End-Tests und die volle Regression. Regressionstests prüfen, dass alte Funktionen nach einer Änderung noch funktionieren. Dort prüfen wir auch Optik, Barrierefreiheit, Seitengeschwindigkeit und Einwilligung. Die Fachabteilungen machen ihre Abnahme ebenfalls auf Staging. Dazu würde ich einen nächtlichen Lauf einrichten. Ein Zeitplan startet jede Nacht alle Tests. So finden wir Probleme, die sich tagsüber einschleichen, und sehen morgens, was kaputt ist. Wenn alles grün ist, geht das Release raus, und auch nach diesem Deployment läuft ein Smoke-Test. Wenn etwas schiefgeht, gehen wir zur letzten guten Version zurück. Ein wichtiger Punkt bei den Testdaten: Drupal-Seiten kopieren oft die Datenbank der Produktion auf Staging. Diese Kopie darf keine echten Kundendaten enthalten. Sie muss anonymisiert sein.
 
 ---
 
@@ -376,8 +371,8 @@ Wenn ich anfange, würde ich nicht am ersten Tag alles ändern. Zuerst lerne ich
 - **Jeden Tag:** zu zweit arbeiten, Merge Requests prüfen, kurze Fragen
 - **Während des Sprints:** explorative Runden bei neuen Funktionen
 - **Vor dem Release:** Regression auf Stage, Abnahme mit dem Geschäft
-- **Release-Tag:** Smoke-Test, Überwachung
+- **Release-Tag:** prüfen, dass alle Gates grün sind, Release
 - **Nach dem Release:** schauen, was durchgerutscht ist, und einen Test dafür ergänzen
 
 **Notes**
-Damit man sieht, dass das im echten Alltag funktioniert, hier eine normale Woche. Bei der Planung schauen wir neue Aufgaben gemeinsam an und vereinbaren die Risiken. Jeden Tag arbeite ich mit Entwicklern zu zweit und schaue Merge Requests an. Während des Sprints mache ich explorative Runden bei den neuen Funktionen. Vor dem Release läuft die Regression auf Staging, und das Geschäft macht die Abnahme. Am Release-Tag gibt es einen Smoke-Test und Überwachung. Und nach dem Release schaue ich, was durchgerutscht ist. Für jeden Fehler, der die Produktion erreicht hat, ergänzen wir einen Test, damit er nicht wiederkommt.
+Damit man sieht, dass das im echten Alltag funktioniert, hier eine normale Woche. Bei der Planung schauen wir neue Aufgaben gemeinsam an und vereinbaren die Risiken. Jeden Tag arbeite ich mit Entwicklern zu zweit und schaue Merge Requests an. Während des Sprints mache ich explorative Runden bei den neuen Funktionen. Vor dem Release läuft die Regression auf Staging, und das Geschäft macht die Abnahme. Am Release-Tag prüfen wir, dass alle Gates grün sind, und dann geht das Release raus. Und nach dem Release schaue ich, was durchgerutscht ist. Für jeden Fehler, der die Produktion erreicht hat, ergänzen wir einen Test, damit er nicht wiederkommt.

@@ -85,7 +85,7 @@ Nach dem Ausprobieren wusste ich, welche Bereiche am wichtigsten sind. Ich habe 
 **Slide**
 | Bereich | Größtes Risiko | Mein Plan |
 |---|---|---|
-| Mitgliedschaft abschließen | Falscher Preis, oder der Vertrag kommt nie an | Tests für die Preisregeln, Tests für den ganzen Ablauf, alle 15 Minuten ein Smoke-Test auf der echten Seite |
+| Mitgliedschaft abschließen | Falscher Preis, oder der Vertrag kommt nie an | Tests für die Preisregeln, Tests für den ganzen Ablauf auf Stage, automatischer Lauf bei jedem Push und jede Nacht |
 | Cookie-Auswahl und Tracking | Werbe-Dienste laden nach "Ablehnen" | Automatischer Check nach "Alle ablehnen", mit dem Datenschutz-Beauftragten besprechen |
 | Pausieren, kündigen, widerrufen | Ein rechtlicher Ablauf geht nicht mehr | Test des ganzen Ablaufs bei jedem Release, Texte von Hand lesen |
 | Probetraining buchen | Den Termin gibt es nicht, oder die Buchung kommt im Club nicht an | Eine Buchung pro Handy-Typ testen, prüfen, ob sie ankommt |
@@ -94,7 +94,7 @@ Nach dem Ausprobieren wusste ich, welche Bereiche am wichtigsten sind. Ich habe 
 Die anderen Bereiche: leichtere Checks, meistens von Hand.
 
 **Notes**
-Für jeden Bereich mache ich einen Plan für das größte Risiko. Ich plane nach Risiko, nicht nach Seite. Bei der Mitgliedschaft ist das größte Risiko ein falscher Preis. Oder ein Vertrag, der nie ankommt. Darum teste ich die Preisregeln mit vielen kleinen Tests. Dazu baue ich Tests, die den ganzen Ablauf durchklicken. Nach dem Release läuft alle 15 Minuten ein kleines Skript als Smoke-Test. Ein Smoke-Test ist ein kurzer Check, ob das Wichtigste noch geht. Bei den Cookies ist das Risiko: Werbe-Dienste laden weiter, obwohl der Besucher Nein gesagt hat. Darum klickt ein automatischer Check auf "Ablehnen". Dann schaut er, welche Dienste laden. Kündigen und Pausieren sind rechtlich wichtig. Sie bekommen bei jedem Release einen Test. Und ich lese die Texte selbst. Bei der Buchung vom Probetraining gibt es zwei Risiken. Den Termin gibt es nicht. Oder die Buchung kommt im Club nicht an. Darum teste ich eine Buchung pro Handy-Typ. Und ich prüfe, ob sie ankommt. Bei den Angeboten ist das Risiko ein altes Angebot, das noch da ist. Darum teste ich die Daten. Und ich schaue, was der Zwischenspeicher zeigt. Die anderen Bereiche bekommen leichtere Checks, meistens von Hand.
+Für jeden Bereich mache ich einen Plan für das größte Risiko. Ich plane nach Risiko, nicht nach Seite. Bei der Mitgliedschaft ist das größte Risiko ein falscher Preis. Oder ein Vertrag, der nie ankommt. Darum teste ich die Preisregeln mit vielen kleinen Tests. Dazu baue ich Tests, die den ganzen Ablauf durchklicken. Diese Tests laufen automatisch bei jedem Push und noch einmal jede Nacht. Bei den Cookies ist das Risiko: Werbe-Dienste laden weiter, obwohl der Besucher Nein gesagt hat. Darum klickt ein automatischer Check auf "Ablehnen". Dann schaut er, welche Dienste laden. Kündigen und Pausieren sind rechtlich wichtig. Sie bekommen bei jedem Release einen Test. Und ich lese die Texte selbst. Bei der Buchung vom Probetraining gibt es zwei Risiken. Den Termin gibt es nicht. Oder die Buchung kommt im Club nicht an. Darum teste ich eine Buchung pro Handy-Typ. Und ich prüfe, ob sie ankommt. Bei den Angeboten ist das Risiko ein altes Angebot, das noch da ist. Darum teste ich die Daten. Und ich schaue, was der Zwischenspeicher zeigt. Die anderen Bereiche bekommen leichtere Checks, meistens von Hand.
 
 ---
 
@@ -166,15 +166,11 @@ Test-Pyramide: unten viele kleine, schnelle Tests. Oben wenige, langsame.
 - **Schnittstellen:** Tarife, Preise, Vertrag, Zahlung im Test-Modus. Erwartet: Die Daten stimmen. Der Vertrag kommt an.
 - **Kleine Tests (viele):** jede Preisregel und jedes Datum einer Aktion. Erwartet: Gleiche Eingabe gibt genau den gleichen Preis.
 
-Dazu auf der echten Seite: alle 15 Minuten öffnet ein Smoke-Test-Skript die Schritte 1 bis 3. Erwartet: Alles lädt. Sonst bekommt das Team Bescheid.
-
-Reihenfolge beim Bauen: wichtigste Abläufe zuerst im Browser am Computer, dann Handy-Ansicht, dann die zweite Gruppe.
-
 **Animation**
 [pyramid] 
 
 **Notes**
-Das würde ich bei der Mitgliedschaft automatisieren. Und das erwartet jeder Test. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine, schnelle Tests. Jede Preisregel hat einen eigenen Test. Auch das Ende einer Aktion. Angebote, die nach Datum an und aus gehen, sind eine typische Fehlerquelle. Erwartet: Gleiche Eingabe gibt immer genau den gleichen Preis. In der Mitte sind die Tests für die Schnittstellen. Das sind die Stellen, an denen Systeme miteinander sprechen. Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitglieder-System an? Bei fremden Systemen wie der Zahlung nutze ich den Test-Modus der Firma. Erwartet: Die richtigen Daten kommen zurück. Und der Vertrag kommt an. Dann prüfe ich Aussehen und Barrierefreiheit. Erwartet: Es sieht richtig aus. Die Tastatur kommt zu jedem Schritt. Fehler werden vorgelesen. Oben sind nur wenige Tests für den ganzen Ablauf. Man sagt dazu End-to-End. Ein Skript klickt durch den echten Ablauf, wie ein Kunde. Ich teste den Hauptweg auf einem iPhone und auf einem Android-Handy. Und den Fall, dass jemand den Club wechselt. Erwartet: Jeder Schritt öffnet sich. Zusammenfassung und Preis ändern sich. Ganz oben probiere ich von Hand aus. Das ist für Dinge, die neu sind oder bei denen ein Mensch urteilen muss. Nach dem Release prüft das Smoke-Test-Skript alle 15 Minuten die ersten Schritte. So sehen wir ein Problem, bevor Kunden anrufen. Ich baue die Tests nach Wichtigkeit, mit der Reihenfolge von vorhin. Zuerst die wichtigsten Abläufe: Mitgliedschaft, Buchung vom Probetraining, Pausieren und Kündigen und der Cookie-Check. Die baue ich zuerst im Browser am Computer. Dort kann man am schnellsten bauen und reparieren. Dann lasse ich dieselben Tests in der Handy-Ansicht laufen. Danach kommt die zweite Gruppe: Aktionen und Angebote, Clubsuche und Login. Der Rest bekommt leichtere Checks, meistens von Hand.
+Das würde ich bei der Mitgliedschaft automatisieren. Und das erwartet jeder Test. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine, schnelle Tests. Jede Preisregel hat einen eigenen Test. Auch das Ende einer Aktion. Angebote, die nach Datum an und aus gehen, sind eine typische Fehlerquelle. Erwartet: Gleiche Eingabe gibt immer genau den gleichen Preis. In der Mitte sind die Tests für die Schnittstellen. Das sind die Stellen, an denen Systeme miteinander sprechen. Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitglieder-System an? Bei fremden Systemen wie der Zahlung nutze ich den Test-Modus der Firma. Erwartet: Die richtigen Daten kommen zurück. Und der Vertrag kommt an. Dann prüfe ich Aussehen und Barrierefreiheit. Erwartet: Es sieht richtig aus. Die Tastatur kommt zu jedem Schritt. Fehler werden vorgelesen. Oben sind nur wenige Tests für den ganzen Ablauf. Man sagt dazu End-to-End. Ein Skript klickt durch den echten Ablauf, wie ein Kunde. Ich teste den Hauptweg auf einem iPhone und auf einem Android-Handy. Und den Fall, dass jemand den Club wechselt. Erwartet: Jeder Schritt öffnet sich. Zusammenfassung und Preis ändern sich. Ganz oben probiere ich von Hand aus. Das ist für Dinge, die neu sind oder bei denen ein Mensch urteilen muss. Diese Tests laufen auf Stage. Nie auf der echten Seite. Ich baue die Tests nach Wichtigkeit, mit der Reihenfolge von vorhin. Zuerst die wichtigsten Abläufe: Mitgliedschaft, Buchung vom Probetraining, Pausieren und Kündigen und der Cookie-Check. Die baue ich zuerst im Browser am Computer. Dort kann man am schnellsten bauen und reparieren. Dann lasse ich dieselben Tests in der Handy-Ansicht laufen. Danach kommt die zweite Gruppe: Aktionen und Angebote, Clubsuche und Login. Der Rest bekommt leichtere Checks, meistens von Hand.
 
 ---
 
@@ -241,14 +237,13 @@ Ich glaube: Qualität ist die Aufgabe des ganzen Teams. Nicht nur von QA. Wenn n
 ## 13. Von der Idee zur Live-Website (2 min)
 
 **Slide**
-Feature > Merge Request > Dev > Stage > Echte Seite > Nach dem Release
+Feature > Push und Merge Request > Dev > Stage > Release
 
 - **Feature:** Regeln für "fertig" und Risiken sind abgesprochen
-- **Merge Request:** Code wird von einem Kollegen gelesen, kleine Tests, automatische Code-Checks
-- **Dev:** Tests für Schnittstellen, ein kurzer Check, ob das Wichtigste geht (Smoke-Test)
-- **Stage:** alle Tests für den ganzen Ablauf, Aussehen, Barrierefreiheit, Tempo, Cookie-Check, Abnahme durch das Geschäft
-- **Echte Seite:** Smoke-Test direkt nach dem Start
-- **Nach dem Release:** beobachten und Tempo bei echten Nutzern messen. Zurück zur alten Version ist vorbereitet.
+- **Push und Merge Request:** Bei jedem Push laufen kleine Tests und Tests für Schnittstellen. Sie müssen klappen, bevor der Code in den Hauptcode (master) kommt.
+- **Dev:** Tests für Schnittstellen. Nach jedem Deployment ein kurzer Check, ob das Wichtigste geht (Smoke-Test)
+- **Stage:** Smoke-Test nach jedem Deployment, dann alle Tests für den ganzen Ablauf, Aussehen, Barrierefreiheit, Tempo, Cookie-Check, Abnahme durch das Geschäft. Dazu jede Nacht ein voller Lauf.
+- **Release:** alles grün, dann live, mit einem Smoke-Test nach dem Deployment. Zurück zur alten Version ist vorbereitet.
 
 Testdaten: keine echten Kundendaten auf Stage. Kopierte Daten werden unkenntlich gemacht.
 
@@ -256,7 +251,7 @@ Testdaten: keine echten Kundendaten auf Stage. Kopierte Daten werden unkenntlich
 [pipe] Eine Feature-Karte wandert von links nach rechts. An jedem Kontrollpunkt wird ein Licht grün. Im zweiten Durchlauf wird das Licht bei Stage rot, und die Karte bleibt stehen.
 
 **Notes**
-Hier sehen Sie den Weg von einer neuen Funktion bis zur echten Website. Bei Acquia nehme ich drei Umgebungen an: Dev, Stage und die echte Seite. Bei jedem Schritt gibt es einen Check. Zuerst öffnet ein Entwickler einen Merge Request. Das ist die Bitte, seine Änderung in den Hauptcode zu übernehmen. Dann liest ein Kollege den Code. Und die schnellen Tests laufen. Auf Dev laufen die Tests für die Schnittstellen. Dazu ein Smoke-Test. Das ist ein kurzer Check, ob das Wichtigste noch geht. Wie bei einer Maschine: Man schaltet sie an und schaut, ob Rauch kommt. Auf Stage laufen alle Tests, die prüfen, ob alte Funktionen noch gehen. Dort prüfen wir auch Aussehen, Barrierefreiheit, Tempo und die Cookie-Auswahl. Die Fachabteilungen machen ihre Abnahme auch auf Stage. Nach dem Start auf der echten Seite läuft der Smoke-Test noch einmal. Dann beobachten wir die Seite. Wenn etwas schiefgeht, gehen wir zur letzten guten Version zurück. Noch ein wichtiger Punkt bei den Testdaten: Bei Drupal-Seiten kopiert man oft die echte Datenbank auf Stage. Diese Kopie darf keine echten Kundendaten haben. Man muss sie unkenntlich machen.
+Hier sehen Sie den Weg von einer neuen Funktion bis zur echten Website. Bei Acquia nehme ich drei Umgebungen an: Dev, Stage und die echte Seite. Die Tests laufen, bevor etwas dort ankommt. Jedes Mal, wenn ein Entwickler Code hochlädt (Push), laufen automatisch die schnellen Tests. Das sind kleine Tests, Tests für die Schnittstellen und Code-Checks. Sie müssen klappen. Erst dann darf die Änderung in den Hauptcode. Der Hauptcode heißt master. Beim Merge Request bittet der Entwickler darum, seine Änderung in den Hauptcode zu übernehmen. Dort liest auch ein Kollege den Code. Auf Dev laufen die Tests für die Schnittstellen. Nach jedem Deployment läuft dazu ein Smoke-Test. Das ist ein kurzer Check, ob das Wichtigste noch geht. Wie bei einer Maschine: Man schaltet sie an und schaut, ob Rauch kommt. Auf Stage läuft nach jedem Deployment zuerst ein Smoke-Test. Dann laufen die Tests für den ganzen Ablauf. Dazu die Tests, die prüfen, ob alte Funktionen noch gehen. Dort prüfen wir auch Aussehen, Barrierefreiheit, Tempo und die Cookie-Auswahl. Die Fachabteilungen machen ihre Abnahme auch auf Stage. Dazu würde ich einen Lauf in der Nacht einrichten. Ein Zeitplan startet jede Nacht alle Tests. So finden wir Probleme, die tagsüber hineingekommen sind. Und morgens sehen wir, was kaputt ist. Wenn alles grün ist, geht das Release raus. Auch danach läuft ein Smoke-Test. Wenn etwas schiefgeht, gehen wir zur letzten guten Version zurück. Noch ein wichtiger Punkt bei den Testdaten: Bei Drupal-Seiten kopiert man oft die echte Datenbank auf Stage. Diese Kopie darf keine echten Kundendaten haben. Man muss sie unkenntlich machen.
 
 ---
 
@@ -376,8 +371,8 @@ Wenn ich anfange, ändere ich nicht am ersten Tag alles. Zuerst lerne ich, wie S
 - **Jeden Tag:** zu zweit arbeiten, Merge Requests anschauen, kurze Fragen
 - **Im Sprint:** neue Funktionen ausprobieren
 - **Vor dem Release:** alle Tests auf Stage, Abnahme mit dem Geschäft
-- **Release-Tag:** Smoke-Test, beobachten
+- **Release-Tag:** prüfen, dass alles grün ist, dann Release
 - **Nach dem Release:** schauen, was durchgerutscht ist, und einen Test dafür bauen
 
 **Notes**
-Ich zeige Ihnen eine normale Woche. So sehen Sie, dass das im Alltag funktioniert. Bei der Planung schauen wir neue Aufgaben zusammen an. Wir sprechen die Risiken ab. Jeden Tag arbeite ich mit Entwicklern zu zweit. Ich schaue mir Merge Requests an. Im Sprint probiere ich neue Funktionen aus. Vor dem Release laufen alle Tests auf Stage. Das Geschäft macht die Abnahme. Am Release-Tag gibt es einen Smoke-Test, und wir beobachten die Seite. Nach dem Release schaue ich, was durchgerutscht ist. Für jeden Fehler, der auf die echte Seite kam, bauen wir einen Test. So kommt er nicht wieder.
+Ich zeige Ihnen eine normale Woche. So sehen Sie, dass das im Alltag funktioniert. Bei der Planung schauen wir neue Aufgaben zusammen an. Wir sprechen die Risiken ab. Jeden Tag arbeite ich mit Entwicklern zu zweit. Ich schaue mir Merge Requests an. Im Sprint probiere ich neue Funktionen aus. Vor dem Release laufen alle Tests auf Stage. Das Geschäft macht die Abnahme. Am Release-Tag prüfen wir, dass alles grün ist. Dann geht das Release raus. Nach dem Release schaue ich, was durchgerutscht ist. Für jeden Fehler, der auf die echte Seite kam, bauen wir einen Test. So kommt er nicht wieder.

@@ -87,7 +87,7 @@ After exploring, I knew which areas matter most. I ranked them with one question
 **Slide**
 | Area | Main risk | My plan |
 |---|---|---|
-| Membership checkout | Wrong price, or a contract that never arrives | Price rule tests, end-to-end tests, a smoke test in production every 15 minutes |
+| Membership checkout | Wrong price, or a contract that never arrives | Price rule tests, end-to-end tests on staging, automatic run on every push and every night |
 | Cookie consent and tracking | Marketing trackers load after "decline" | Automatic check after "decline all", review with the data protection officer |
 | Pause, cancel, withdrawal | A legal flow stops working | End-to-end test on every release, texts checked by hand |
 | Trial training booking | Slot does not exist, booking never reaches the club | One end-to-end booking per phone type, check that it arrives |
@@ -96,7 +96,7 @@ After exploring, I knew which areas matter most. I ranked them with one question
 The other areas: lighter checks, mostly by hand.
 
 **Notes**
-For each area I make a plan for its main risk. I plan by risk, not by page. For the membership checkout the main risk is a wrong price or a contract that never arrives. So I test the price rules with many small tests, and I add end-to-end tests that click through the whole flow. After the release, a small script runs a smoke test every 15 minutes. A smoke test is a short check that the most important things still work. For cookie consent the risk is that marketing trackers still load after a visitor says no. So an automatic check clicks decline and looks at which services load. Cancel and pause are legal flows. They get an end-to-end test on every release, and I read the texts by hand. For the trial booking the risks are a slot that does not exist and a booking that never reaches the club. So I test one booking per phone type and check that it arrives. For offers, the risk is an old offer that still shows after it ended. So I test the dates, and I look at what the cache shows. The other areas get lighter checks, mostly by hand.
+For each area I make a plan for its main risk. I plan by risk, not by page. For the membership checkout the main risk is a wrong price or a contract that never arrives. So I test the price rules with many small tests, and I add end-to-end tests that click through the whole flow. These tests run automatically on every push, and again every night. For cookie consent the risk is that marketing trackers still load after a visitor says no. So an automatic check clicks decline and looks at which services load. Cancel and pause are legal flows. They get an end-to-end test on every release, and I read the texts by hand. For the trial booking the risks are a slot that does not exist and a booking that never reaches the club. So I test one booking per phone type and check that it arrives. For offers, the risk is an old offer that still shows after it ended. So I test the dates, and I look at what the cache shows. The other areas get lighter checks, mostly by hand.
 
 ---
 
@@ -168,15 +168,11 @@ Test pyramid: many small fast tests at the bottom, few slow ones at the top.
 - **API and integration:** plans, prices, contract, payment test mode. Expected: right data, contract arrives.
 - **Unit (many):** every price rule and campaign date. Expected: same input, same exact price.
 
-Plus in production: every 15 minutes a smoke test script opens steps 1 to 3. Expected: all load, or the team is told.
-
-Build order: priority 1 first in a desktop browser, then mobile view, then priority 2.
-
 **Animation**
 [pyramid] 
 
 **Notes**
-Here is what I would automate for the membership checkout, and what each test expects. Think of a pyramid. At the bottom are many small and fast tests. These are unit tests, meaning tests of one small piece of code. Every price rule gets its own test, and so does the campaign end date, because offers that switch on and off by date are a classic source of bugs. Expected: the same input always gives the exact price. In the middle are API and integration tests. They check that the systems talk to each other correctly. For this club, do we get the right plans and prices? Does the contract arrive in the member system? For outside systems like payment, I use their test mode. Expected: the right data comes back and the contract arrives. Then come the visual and accessibility checks. Expected: it looks right, the keyboard reaches every step, and errors are read out. At the top are only a few end-to-end tests. End-to-end means a script clicks through the real flow like a customer. I would do the main path on an iPhone and an Android phone, and the case where someone changes the club. Expected: every step opens, and the summary and price update. Above that is manual exploratory testing, for things that are new or need human judgement. After the release, the smoke test script checks the first steps every 15 minutes, so we notice a problem before customers call. I build the end-to-end tests by priority, using the ranking. Priority one is the membership checkout, the trial booking, pause and cancel, and the cookie consent check. I build these first in a desktop browser, because that is the fastest place to build and fix them. Then I run the same tests in the mobile browser view, on a phone-sized screen. After that comes priority two: campaigns and offers, club search and the member login. The rest gets lighter checks, mostly by hand.
+Here is what I would automate for the membership checkout, and what each test expects. Think of a pyramid. At the bottom are many small and fast tests. These are unit tests, meaning tests of one small piece of code. Every price rule gets its own test, and so does the campaign end date, because offers that switch on and off by date are a classic source of bugs. Expected: the same input always gives the exact price. In the middle are API and integration tests. They check that the systems talk to each other correctly. For this club, do we get the right plans and prices? Does the contract arrive in the member system? For outside systems like payment, I use their test mode. Expected: the right data comes back and the contract arrives. Then come the visual and accessibility checks. Expected: it looks right, the keyboard reaches every step, and errors are read out. At the top are only a few end-to-end tests. End-to-end means a script clicks through the real flow like a customer. I would do the main path on an iPhone and an Android phone, and the case where someone changes the club. Expected: every step opens, and the summary and price update. Above that is manual exploratory testing, for things that are new or need human judgement. These tests run on staging, never on the live site. I build the end-to-end tests by priority, using the ranking. Priority one is the membership checkout, the trial booking, pause and cancel, and the cookie consent check. I build these first in a desktop browser, because that is the fastest place to build and fix them. Then I run the same tests in the mobile browser view, on a phone-sized screen. After that comes priority two: campaigns and offers, club search and the member login. The rest gets lighter checks, mostly by hand.
 
 ---
 
@@ -243,14 +239,13 @@ I believe quality is the job of the whole team, not only of QA. If QA is the onl
 ## 13. From idea to live website (2 min)
 
 **Slide**
-Feature > Merge request > Dev > Stage > Production > After release
+Feature > Push and merge request > Dev > Stage > Release
 
 - **Feature:** acceptance criteria and risks agreed
-- **Merge request:** code review, unit tests, code checks
-- **Dev:** API and integration tests, smoke test
-- **Stage:** end-to-end regression, visual, accessibility, page speed, consent check, acceptance by business
-- **Production:** smoke test right after deploy
-- **After release:** monitoring and real-user page speed. Rollback ready.
+- **Push and merge request:** unit and API tests run on every push. They must pass before the code reaches master.
+- **Dev:** integration tests. Smoke test after each deployment.
+- **Stage:** smoke test after each deployment, then end-to-end regression, visual, accessibility, page speed, consent check, acceptance by business. Plus a full run every night.
+- **Release:** all green, then live, with a smoke test after the deployment. Rollback ready.
 
 Test data: no real customer data on Stage. Copied data is anonymised.
 
@@ -258,7 +253,7 @@ Test data: no real customer data on Stage. Copied data is anonymised.
 [pipe] A feature card moves from left to right. At each checkpoint a light turns green. In a second run, the light at Stage turns red and the card stops.
 
 **Notes**
-Here is the release path from a feature to the live website. On Acquia I assume three environments: development, staging and production. At each step there is a check. When a developer opens a merge request, which means a request to add their change to the main code, we have a code review and the fast tests. On development we run the API and integration tests and a smoke test. A smoke test is a short check that the most important things still work, like switching on a machine and seeing if smoke comes out. On staging we run the full regression. Regression tests check that old features still work after a change. We also check the look, accessibility, page speed and consent there. The business departments do their acceptance on staging too. After the deploy to production we run the smoke test again. Then monitoring takes over. If something goes wrong, we roll back to the last good version. One important point about test data: Drupal sites often copy the production database to staging. That copy must not contain real customer data. It has to be anonymised.
+Here is the release path from a feature to the live website. On Acquia I assume three environments: development, staging and production. The tests run before anything gets there. Every time a developer pushes code, the fast tests run automatically: unit tests, API tests and code checks. They must pass before the change is allowed into master. A merge request means a request to add their change to the main code, and there we also have a code review. On development we run the integration tests. After each deployment we also run a smoke test. A smoke test is a short check that the most important things still work, like switching on a machine and seeing if smoke comes out. On staging we run a smoke test after each deployment, then the end-to-end tests and the full regression. Regression tests check that old features still work after a change. We also check the look, accessibility, page speed and consent there. The business departments do their acceptance on staging too. On top of that I would set up a nightly run. A scheduler starts the whole test suite every night. So we find problems that slip in during the day, and in the morning we see what broke. When everything is green, we release, and a smoke test runs after that deployment too. If something goes wrong, we roll back to the last good version. One important point about test data: Drupal sites often copy the production database to staging. That copy must not contain real customer data. It has to be anonymised.
 
 ---
 
@@ -378,8 +373,8 @@ If I join, I would not change everything on day one. First I learn how you work 
 - **Every day:** pairing, merge request checks, quick questions
 - **During the sprint:** exploratory sessions on new features
 - **Before release:** regression on Stage, acceptance with business
-- **Release day:** smoke test, monitoring
+- **Release day:** check that all gates are green, then release
 - **After release:** look at what got through, add a test for it
 
 **Notes**
-To show that this works in real life, here is a normal week. At planning we look at new stories together and agree on the risks. Every day I pair with developers and look at merge requests. During the sprint I run exploratory sessions on the new features. Before the release we run the regression on staging and the business does acceptance. On release day, a smoke test and monitoring. And after the release I look at what got through. For every bug that reached production, we add a test, so it cannot come back.
+To show that this works in real life, here is a normal week. At planning we look at new stories together and agree on the risks. Every day I pair with developers and look at merge requests. During the sprint I run exploratory sessions on the new features. Before the release we run the regression on staging and the business does acceptance. On release day, we check that all gates are green, and then we release. And after the release I look at what got through. For every bug that reached production, we add a test, so it cannot come back.
