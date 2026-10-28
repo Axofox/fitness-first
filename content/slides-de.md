@@ -342,7 +342,7 @@ LCP heißt: Wie lange dauert es, bis der Hauptinhalt sichtbar ist. INP heißt: W
 **Notes**
 Bei den Testdaten gilt eine einfache Regel: keine echten Kundendaten außerhalb der Produktion. Wenn ein System schwer zu steuern ist, zum Beispiel ein Zahlungsanbieter, simuliere ich es in den meisten Tests. Das nennt man Mocking. Nur wenige End-to-End-Tests benutzen den echten Testmodus des Anbieters.
 
-## B3. Meine KI-Testagenten (entworfen, noch nicht auf einer Live-Seite benutzt)
+## B3. Meine KI-Testagenten (noch nicht live benutzt)
 
 - 4 Agenten: Explorer, Komponente, Ablauf, API
 - Regeln: nur erlaubte Testseiten, keine echten Käufe, Geheimnisse versteckt, Beweis für jedes Ergebnis

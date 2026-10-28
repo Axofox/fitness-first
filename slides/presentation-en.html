@@ -136,6 +136,7 @@ body.moving #nav,#nav:hover,#nav:focus-within{opacity:1;pointer-events:auto}
 /* print / PDF: one slide per page, final state, no notes */
 @page{size:1280px 720px;margin:0}
 @media print{
+ .ldot{display:none}
  html,body{height:auto;overflow:visible;background:#fff;display:block}
  #area{position:static;overflow:visible}
  #stage{position:static;transform:none!important;width:1280px;height:auto;box-shadow:none;overflow:visible}
