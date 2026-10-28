@@ -25,7 +25,7 @@ How I prepared:
 - Explored the website as a visitor to understand the flows
 - Checked if it feels slow as a user, or unusually slow (PageSpeed Insights, mobile)
 - Looked at whether the site is responsive and ready for mobile
-- Looked at accessibility (automatic scores only, no full audit)
+- Looked at accessibility: only a quick automatic scan (Google's tool), no manual check
 - Nothing submitted, no login, no tests on your live site
 
 What I assumed:
@@ -34,7 +34,7 @@ What I assumed:
 - Most users use a phone, not a laptop
 
 **Notes**
-Before I start, I want to be open about what I did and what I assumed. First I explored your website like a normal visitor, to understand the flows. I did not submit any form and I did not log in, because it is your live system. Then I asked myself: does the site feel slow for a user, or is it unusually slow? I measured it with Google's PageSpeed tool on mobile. I also looked at whether the site is responsive and ready for mobile. And I looked at accessibility, because the rules for accessible online services are getting more important. Here I only used the automatic scores. That is not a full audit. I also made three assumptions. First, you have test environments next to production. Second, payment providers are third parties, so we cannot test payments on the live system. Third, most of your users use a phone and not a laptop. If an assumption is wrong, please tell me. I am happy to adapt.
+Before I start, I want to be open about what I did and what I assumed. First I explored your website like a normal visitor, to understand the flows. I did not submit any form and I did not log in, because it is your live system. Then I asked myself: does the site feel slow for a user, or is it unusually slow? I measured it with Google's PageSpeed tool on mobile. I also looked at whether the site is responsive and ready for mobile. And I looked at accessibility, because the rules for accessible online services are getting more important. Here I only ran a quick automatic scan with Google's tool. That is not a check by hand. I also made three assumptions. First, you have test environments next to production. Second, payment providers are third parties, so we cannot test payments on the live system. Third, most of your users use a phone and not a laptop. If an assumption is wrong, please tell me. I am happy to adapt.
 
 ---
 
@@ -128,7 +128,7 @@ What can go wrong:
 - Booked slot does not exist at the club
 - Booking never reaches the club
 - Date mistakes: today, weekend, month change, holidays
-- Slow to react: 361 ms per tap for real users (good: 200 ms)
+- Slow to react when someone taps (real users, mobile)
 
 Automate: slot rules, booking arrives at the club, one end-to-end booking per phone type.
 
@@ -169,7 +169,7 @@ Test pyramid: many small fast tests at the bottom, few slow ones at the top.
 - **Unit (many):** every price rule and campaign date. Expected: same input, same exact price.
 
 **Animation**
-[pyramid] 
+[pyramid]
 
 **Notes**
 Here is what I would automate for the membership checkout, and what each test expects. Think of a pyramid. At the bottom are many small and fast tests. These are unit tests, meaning tests of one small piece of code. Every price rule gets its own test, and so does the campaign end date, because offers that switch on and off by date are a classic source of bugs. Expected: the same input always gives the exact price. In the middle are API and integration tests. They check that the systems talk to each other correctly. For this club, do we get the right plans and prices? Does the contract arrive in the member system? For outside systems like payment, I use their test mode. Expected: the right data comes back and the contract arrives. Then come the visual and accessibility checks. Expected: it looks right, the keyboard reaches every step, and errors are read out. At the top are only a few end-to-end tests. End-to-end means a script clicks through the real flow like a customer. I would do the main path on an iPhone and an Android phone, and the case where someone changes the club. Expected: every step opens, and the summary and price update. Above that is manual exploratory testing, for things that are new or need human judgement. These tests run on staging, never on the live site. I build the end-to-end tests by priority, using the ranking. Priority one is the membership checkout, the trial booking, pause and cancel, and the cookie consent check. I build these first in a desktop browser, because that is the fastest place to build and fix them. Then I run the same tests in the mobile browser view, on a phone-sized screen. After that comes priority two: campaigns and offers, club search and the member login. The rest gets lighter checks, mostly by hand.
@@ -280,19 +280,18 @@ When do we stop a release? Some things always stop it: a wrong price, a broken c
 
 ---
 
-## 15. Beyond "does it work" (2.5 min)
+## 15. Three more areas: accessibility, privacy, speed (2.5 min)
 
 **Slide**
 | Area | Automated | Manual | Limit (gate) |
 |---|---|---|---|
 | Accessibility | Accessibility scan on every merge request | Keyboard and screen reader on main flows every release, expert audit once a year | No critical issues on checkout and booking |
 | Data protection and consent | After "decline all", only allowed services load | Check banner texts with the data protection officer | Any marketing tracker after decline stops the release |
-| Page speed | Lighthouse in the pipeline, timing of booking steps | Look at real-user data every week | Real users: LCP 2.5 s, INP 200 ms, CLS 0.1. Pipeline: no page slower than today |
+| Page speed | Lighthouse in the pipeline, timing of booking steps | Look at real-user data every week | Real users: content in 2.5 s, reaction to a tap in 200 ms. Pipeline: no page slower than today |
 
-Today, real users, mobile: all 3 pages load fast, all 3 react too slowly.
 
 **Notes**
-Besides "does it work", I chose three areas. First, accessibility. You publish an accessibility statement, so it matters to you. An automatic scan finds only part of the problems. The rest needs a human: can I finish the checkout with only a keyboard? Does a screen reader read the error messages? My gate is simple: no critical problem on the checkout and the booking. Second, data protection and cookie consent. With about fifteen ad services on the page, this is a real risk. I would automate one simple check: a script clicks "decline all", and then we look at which services still load. If a marketing tracker loads after decline, the release stops. The legal rules themselves I would clarify with your data protection officer. Third, page speed. Google gives clear limits for real users. I measured your pages. They load fast for real users, which is great. But all three react too slowly when someone taps. On the trial page it is 361 milliseconds, and the limit is 200. Interesting detail: the lab test says the trial page is your fastest page. That's because the lab only loads the page and never clicks the calendar. So I would also measure the booking steps themselves. In the pipeline, my first rule would be: no page gets slower than today. Later we can make the limits stricter.
+Besides "does it work", I chose three areas. First, accessibility. You publish an accessibility statement, so it matters to you. An automatic scan finds only part of the problems. The rest needs a human: can I finish the checkout with only a keyboard? Does a screen reader read the error messages? My gate is simple: no critical problem on the checkout and the booking. Second, data protection and cookie consent. With about fifteen ad services on the page, this is a real risk. I would automate one simple check: a script clicks "decline all", and then we look at which services still load. If a marketing tracker loads after decline, the release stops. The legal rules themselves I would clarify with your data protection officer. Third, page speed. Google gives clear limits for real users. I measured your pages. They load fast for real users, which is great. But all three react too slowly when someone taps. On the trial page it is 361 milliseconds, and the limit is 200. A test that only loads the page misses this, because it never clicks the calendar. So I would also measure the booking steps themselves. In the pipeline, my first rule would be: no page gets slower than today. Later we can make the limits stricter.
 
 ---
 
@@ -323,16 +322,16 @@ Where does AI fit? I use it in three places. First, requirements. In my last job
 
 ## B1. Page speed details
 
-| Page (mobile) | Real users: LCP | Real users: INP | Real users: CLS | Lab score |
-|---|---|---|---|---|
-| Homepage | 2 s | 208 ms | 0.03 | 43 |
-| Membership | 1.1 s | 227 ms | 0.04 | 36 |
-| Trial training | 1.3 s | 361 ms | 0.05 | 69 |
+| Page (mobile) | Real users: LCP | Real users: INP | Real users: CLS |
+|---|---|---|---|
+| Homepage | 2 s | 208 ms | 0.03 |
+| Membership | 1.1 s | 227 ms | 0.04 |
+| Trial training | 1.3 s | 361 ms | 0.05 |
 
-Limits for good (75% of visits): LCP 2.5 s, INP 200 ms, CLS 0.1. Source: PageSpeed Insights, 27 October 2026. Lab numbers come from single runs and vary.
+Limits for good (75% of visits): LCP 2.5 s, INP 200 ms, CLS 0.1. Source: PageSpeed Insights, 27 October 2026.
 
 **Notes**
-LCP means: how long until the main content is visible. INP means: how fast the page reacts to a tap. CLS means: how much the page jumps while loading. The homepage lab test showed almost 29 seconds for the main content on a slow phone, while real users see it in 2 seconds. I don't know the exact reason. It could be caching for returning visitors, or simply the slow test network. I would look into it with your team.
+LCP means: how long until the main content is visible. INP means: how fast the page reacts to a tap. CLS means: how much the page jumps while loading.
 
 ## B2. Test data and environments
 
@@ -351,7 +350,7 @@ For test data I follow a simple rule: no real customer data outside production. 
 - Rules: only allowed test sites, no real purchases, secrets hidden, evidence for every result
 - Results: pass, fail with priority, or "suspicious" with a reason
 - Several runs are merged, because AI results vary from run to run
-- A P1 failure can block the pipeline. Humans decide on the rest.
+- A top-priority failure (P1), like a broken checkout, can stop the pipeline. Humans decide on the rest.
 
 **Notes**
 This is the system I mentioned. I want to be clear: it is built and tested on sample data, but not yet on a real website. What I'm proud of is the rule set, because it answers the questions you asked about control: evidence, honesty about gaps, and people making the final decisions.

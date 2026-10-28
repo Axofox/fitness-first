@@ -23,7 +23,7 @@ So habe ich mich vorbereitet:
 - Die Website als Besucherin erkundet, um die Abläufe zu verstehen
 - Geprüft, ob sie sich für Nutzer langsam anfühlt oder ungewöhnlich langsam ist (PageSpeed Insights, mobil)
 - Geprüft, ob die Seite sich anpasst und für Handys geeignet ist
-- Barrierefreiheit angeschaut (nur automatische Werte, kein vollständiger Test)
+- Barrierefreiheit angeschaut: nur ein schneller automatischer Scan (Google-Werkzeug), keine Prüfung von Hand
 - Nichts abgeschickt, kein Login, keine Tests auf Ihrer Live-Seite
 
 Das habe ich angenommen:
@@ -32,7 +32,7 @@ Das habe ich angenommen:
 - Die meisten Nutzer haben ein Handy, keinen Laptop
 
 **Notes**
-Bevor ich anfange, möchte ich offen sagen, was ich gemacht und was ich angenommen habe. Zuerst habe ich Ihre Website wie eine normale Besucherin angeschaut, um die Abläufe zu verstehen. Ich habe kein Formular abgeschickt und mich nicht eingeloggt, weil es Ihr Live-System ist. Dann habe ich mich gefragt: Fühlt sich die Seite für Nutzer langsam an, oder ist sie ungewöhnlich langsam? Ich habe das mit dem PageSpeed-Werkzeug von Google auf dem Handy gemessen. Ich habe auch geschaut, ob die Seite sich anpasst und für Handys geeignet ist. Und ich habe die Barrierefreiheit angeschaut, denn die Regeln für barrierefreie Online-Angebote werden wichtiger. Dabei habe ich nur die automatischen Werte benutzt. Das ist kein vollständiger Test. Außerdem habe ich drei Annahmen gemacht. Erstens: Sie haben Testumgebungen neben der Produktion. Zweitens: Zahlungsanbieter sind Dritte, darum können wir Zahlungen nicht auf dem Live-System testen. Drittens: Die meisten Ihrer Nutzer haben ein Handy und keinen Laptop. Wenn eine Annahme falsch ist, sagen Sie es mir bitte. Ich passe mich gerne an.
+Bevor ich anfange, möchte ich offen sagen, was ich gemacht und was ich angenommen habe. Zuerst habe ich Ihre Website wie eine normale Besucherin angeschaut, um die Abläufe zu verstehen. Ich habe kein Formular abgeschickt und mich nicht eingeloggt, weil es Ihr Live-System ist. Dann habe ich mich gefragt: Fühlt sich die Seite für Nutzer langsam an, oder ist sie ungewöhnlich langsam? Ich habe das mit dem PageSpeed-Werkzeug von Google auf dem Handy gemessen. Ich habe auch geschaut, ob die Seite sich anpasst und für Handys geeignet ist. Und ich habe die Barrierefreiheit angeschaut, denn die Regeln für barrierefreie Online-Angebote werden wichtiger. Dabei habe ich nur einen schnellen automatischen Scan mit dem Google-Werkzeug gemacht. Das ist keine Prüfung von Hand. Außerdem habe ich drei Annahmen gemacht. Erstens: Sie haben Testumgebungen neben der Produktion. Zweitens: Zahlungsanbieter sind Dritte, darum können wir Zahlungen nicht auf dem Live-System testen. Drittens: Die meisten Ihrer Nutzer haben ein Handy und keinen Laptop. Wenn eine Annahme falsch ist, sagen Sie es mir bitte. Ich passe mich gerne an.
 
 ---
 
@@ -126,7 +126,7 @@ Was schiefgehen kann:
 - Der gebuchte Termin existiert im Club nicht
 - Die Buchung erreicht den Club nie
 - Datumsfehler: heute, Wochenende, Monatswechsel, Feiertage
-- Langsame Reaktion: 361 ms pro Tippen bei echten Nutzern (gut: 200 ms)
+- Langsame Reaktion beim Antippen (echte Nutzer, mobil)
 
 Automatisieren: Regeln für Termine, Buchung kommt im Club an, eine End-to-End-Buchung pro Handytyp.
 
@@ -167,7 +167,7 @@ Testpyramide: unten viele kleine, schnelle Tests, oben wenige langsame.
 - **Unit (viele):** jede Preisregel und jedes Aktionsdatum. Erwartet: gleiche Eingabe, genau gleicher Preis.
 
 **Animation**
-[pyramid] 
+[pyramid]
 
 **Notes**
 Das würde ich beim Abschluss der Mitgliedschaft automatisieren, und das erwartet jeder Test. Stellen Sie sich eine Pyramide vor. Unten sind viele kleine und schnelle Tests. Das sind Unit-Tests, also Tests für ein kleines Stück Code. Jede Preisregel bekommt einen eigenen Test, auch das Enddatum einer Aktion. Denn Angebote, die nach Datum ein- und ausgeschaltet werden, sind eine klassische Fehlerquelle. Erwartet: Dieselbe Eingabe ergibt immer genau denselben Preis. In der Mitte sind API- und Integrationstests. Sie prüfen, dass die Systeme richtig miteinander sprechen. Bekommen wir für diesen Club die richtigen Tarife und Preise? Kommt der Vertrag im Mitgliedersystem an? Bei fremden Systemen wie der Zahlung benutze ich deren Testmodus. Erwartet: Die richtigen Daten kommen zurück, und der Vertrag kommt an. Dann kommen die Prüfungen von Optik und Barrierefreiheit. Erwartet: Es sieht richtig aus, die Tastatur erreicht jeden Schritt, und Fehler werden vorgelesen. Oben sind nur wenige End-to-End-Tests. End-to-End heißt: Ein Skript klickt wie ein Kunde durch den echten Ablauf. Ich würde den Hauptweg auf einem iPhone und einem Android-Handy testen, und den Fall, dass jemand den Club wechselt. Erwartet: Jeder Schritt öffnet sich, und Zusammenfassung und Preis ändern sich. Darüber kommt das Ausprobieren von Hand, für Dinge, die neu sind oder menschliches Urteil brauchen. Diese Tests laufen auf Stage, nie auf der Live-Seite. Die End-to-End-Tests baue ich nach Priorität, aus der Reihenfolge von vorhin. Priorität eins sind der Abschluss der Mitgliedschaft, die Probetraining-Buchung, Pausieren und Kündigen und die Prüfung der Cookie-Einwilligung. Die baue ich zuerst im Desktop-Browser, weil man dort am schnellsten bauen und reparieren kann. Dann lasse ich dieselben Tests in der mobilen Ansicht laufen, auf einem Bildschirm in Handygröße. Danach kommt Priorität zwei: Aktionen und Angebote, Clubsuche und Login. Der Rest bekommt leichtere Prüfungen, meistens von Hand.
@@ -278,19 +278,18 @@ Wann stoppen wir ein Release? Manche Dinge stoppen es immer: ein falscher Preis,
 
 ---
 
-## 15. Mehr als "es funktioniert" (2.5 min)
+## 15. Weitere Bereiche: Barrierefreiheit, Datenschutz, Tempo (2.5 min)
 
 **Slide**
 | Bereich | Automatisch | Von Hand | Grenze (Gate) |
 |---|---|---|---|
 | Barrierefreiheit | Barrierefreiheits-Scan bei jedem Merge Request | Tastatur und Screenreader in den Hauptabläufen bei jedem Release, Experten-Prüfung einmal im Jahr | Keine kritischen Probleme im Checkout und bei der Buchung |
 | Datenschutz und Einwilligung | Nach "Alle ablehnen" laden nur erlaubte Dienste | Texte im Banner mit dem Datenschutzbeauftragten prüfen | Jeder Marketing-Tracker nach dem Ablehnen stoppt das Release |
-| Seitengeschwindigkeit | Lighthouse in der Pipeline, Messung der Buchungsschritte | Jede Woche die Daten echter Nutzer ansehen | Echte Nutzer: LCP 2,5 s, INP 200 ms, CLS 0,1. Pipeline: keine Seite langsamer als heute |
+| Seitengeschwindigkeit | Lighthouse in der Pipeline, Messung der Buchungsschritte | Jede Woche die Daten echter Nutzer ansehen | Echte Nutzer: Inhalt in 2,5 s, Reaktion auf Antippen in 200 ms. Pipeline: keine Seite langsamer als heute |
 
-Heute, echte Nutzer, mobil: alle 3 Seiten laden schnell, alle 3 reagieren zu langsam.
 
 **Notes**
-Neben "es funktioniert" habe ich drei Bereiche gewählt. Erstens die Barrierefreiheit. Sie veröffentlichen eine Erklärung zur Barrierefreiheit, also ist sie Ihnen wichtig. Ein automatischer Scan findet nur einen Teil der Probleme. Den Rest muss ein Mensch prüfen: Kann ich den Checkout nur mit der Tastatur beenden? Liest ein Screenreader die Fehlermeldungen vor? Mein Gate ist einfach: kein kritisches Problem im Checkout und bei der Buchung. Zweitens Datenschutz und Cookie-Einwilligung. Mit etwa fünfzehn Werbediensten auf der Seite ist das ein echtes Risiko. Ich würde eine einfache Prüfung automatisieren: Ein Skript klickt auf "Alle ablehnen", und dann schauen wir, welche Dienste trotzdem laden. Wenn ein Marketing-Tracker nach dem Ablehnen lädt, stoppt das Release. Die rechtlichen Regeln selbst würde ich mit Ihrem Datenschutzbeauftragten klären. Drittens die Seitengeschwindigkeit. Google gibt klare Grenzen für echte Nutzer vor. Ich habe Ihre Seiten gemessen. Sie laden für echte Nutzer schnell, das ist toll. Aber alle drei reagieren zu langsam, wenn jemand etwas antippt. Auf der Probetraining-Seite sind es 361 Millisekunden, und die Grenze ist 200. Ein interessantes Detail: Der Labortest sagt, die Probetraining-Seite sei Ihre schnellste Seite. Das liegt daran, dass der Labortest die Seite nur lädt und nie den Kalender anklickt. Darum würde ich auch die Buchungsschritte selbst messen. In der Pipeline wäre meine erste Regel: Keine Seite wird langsamer als heute. Später können wir die Grenzen strenger machen.
+Neben "es funktioniert" habe ich drei Bereiche gewählt. Erstens die Barrierefreiheit. Sie veröffentlichen eine Erklärung zur Barrierefreiheit, also ist sie Ihnen wichtig. Ein automatischer Scan findet nur einen Teil der Probleme. Den Rest muss ein Mensch prüfen: Kann ich den Checkout nur mit der Tastatur beenden? Liest ein Screenreader die Fehlermeldungen vor? Mein Gate ist einfach: kein kritisches Problem im Checkout und bei der Buchung. Zweitens Datenschutz und Cookie-Einwilligung. Mit etwa fünfzehn Werbediensten auf der Seite ist das ein echtes Risiko. Ich würde eine einfache Prüfung automatisieren: Ein Skript klickt auf "Alle ablehnen", und dann schauen wir, welche Dienste trotzdem laden. Wenn ein Marketing-Tracker nach dem Ablehnen lädt, stoppt das Release. Die rechtlichen Regeln selbst würde ich mit Ihrem Datenschutzbeauftragten klären. Drittens die Seitengeschwindigkeit. Google gibt klare Grenzen für echte Nutzer vor. Ich habe Ihre Seiten gemessen. Sie laden für echte Nutzer schnell, das ist toll. Aber alle drei reagieren zu langsam, wenn jemand etwas antippt. Auf der Probetraining-Seite sind es 361 Millisekunden, und die Grenze ist 200. Ein Test, der nur die Seite lädt, sieht das nicht, weil er nie den Kalender anklickt. Darum würde ich auch die Buchungsschritte selbst messen. In der Pipeline wäre meine erste Regel: Keine Seite wird langsamer als heute. Später können wir die Grenzen strenger machen.
 
 ---
 
@@ -321,16 +320,16 @@ Wo passt KI hin? Ich benutze sie an drei Stellen. Erstens bei den Anforderungen.
 
 ## B1. Details zur Seitengeschwindigkeit
 
-| Seite (mobil) | Echte Nutzer: LCP | Echte Nutzer: INP | Echte Nutzer: CLS | Laborwert |
-|---|---|---|---|---|
-| Startseite | 2 s | 208 ms | 0,03 | 43 |
-| Mitgliedschaft | 1,1 s | 227 ms | 0,04 | 36 |
-| Probetraining | 1,3 s | 361 ms | 0,05 | 69 |
+| Seite (mobil) | Echte Nutzer: LCP | Echte Nutzer: INP | Echte Nutzer: CLS |
+|---|---|---|---|
+| Startseite | 2 s | 208 ms | 0,03 |
+| Mitgliedschaft | 1,1 s | 227 ms | 0,04 |
+| Probetraining | 1,3 s | 361 ms | 0,05 |
 
-Grenzen für "gut" (75 % der Besuche): LCP 2,5 s, INP 200 ms, CLS 0,1. Quelle: PageSpeed Insights, 27. Oktober 2026. Die Laborwerte stammen aus Einzelmessungen und schwanken.
+Grenzen für "gut" (75 % der Besuche): LCP 2,5 s, INP 200 ms, CLS 0,1. Quelle: PageSpeed Insights, 27. Oktober 2026.
 
 **Notes**
-LCP heißt: Wie lange dauert es, bis der Hauptinhalt sichtbar ist. INP heißt: Wie schnell reagiert die Seite auf ein Antippen. CLS heißt: Wie stark springt die Seite beim Laden. Der Labortest der Startseite zeigte fast 29 Sekunden bis zum Hauptinhalt auf einem langsamen Handy, während echte Nutzer ihn nach 2 Sekunden sehen. Ich kenne den genauen Grund nicht. Es könnte der Cache für wiederkehrende Besucher sein oder einfach das langsame Testnetz. Ich würde das mit Ihrem Team genauer anschauen.
+LCP heißt: Wie lange dauert es, bis der Hauptinhalt sichtbar ist. INP heißt: Wie schnell reagiert die Seite auf ein Antippen. CLS heißt: Wie stark springt die Seite beim Laden.
 
 ## B2. Testdaten und Umgebungen
 
@@ -349,7 +348,7 @@ Bei den Testdaten gilt eine einfache Regel: keine echten Kundendaten außerhalb 
 - Regeln: nur erlaubte Testseiten, keine echten Käufe, Geheimnisse versteckt, Beweis für jedes Ergebnis
 - Ergebnisse: bestanden, durchgefallen mit Priorität, oder "verdächtig" mit Begründung
 - Mehrere Läufe werden zusammengeführt, weil KI-Ergebnisse von Lauf zu Lauf schwanken
-- Ein P1-Fehler kann die Pipeline stoppen. Den Rest entscheiden Menschen.
+- Ein Fehler mit höchster Priorität (P1), zum Beispiel ein kaputter Checkout, kann die Pipeline stoppen. Den Rest entscheiden Menschen.
 
 **Notes**
 Das ist das System, das ich erwähnt habe. Ich möchte klar sagen: Es ist gebaut und mit Beispieldaten getestet, aber noch nicht auf einer echten Website. Worauf ich stolz bin, sind die Regeln, denn sie beantworten Ihre Fragen zur Kontrolle: Beweise, Ehrlichkeit über Lücken, und Menschen, die die endgültigen Entscheidungen treffen.
