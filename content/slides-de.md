@@ -342,18 +342,7 @@ LCP heißt: Wie lange dauert es, bis der Hauptinhalt sichtbar ist. INP heißt: W
 **Notes**
 Bei den Testdaten gilt eine einfache Regel: keine echten Kundendaten außerhalb der Produktion. Wenn ein System schwer zu steuern ist, zum Beispiel ein Zahlungsanbieter, simuliere ich es in den meisten Tests. Das nennt man Mocking. Nur wenige End-to-End-Tests benutzen den echten Testmodus des Anbieters.
 
-## B3. Meine KI-Testagenten
-
-- 4 Agenten: Explorer, Komponente, Ablauf, API
-- Regeln: nur erlaubte Testseiten, keine echten Käufe, Geheimnisse versteckt, Beweis für jedes Ergebnis
-- Ergebnisse: bestanden, durchgefallen mit Priorität, oder "verdächtig" mit Begründung
-- Mehrere Läufe werden zusammengeführt, weil KI-Ergebnisse von Lauf zu Lauf schwanken
-- Ein Fehler mit höchster Priorität (P1), zum Beispiel ein kaputter Checkout, kann die Pipeline stoppen. Den Rest entscheiden Menschen.
-
-**Notes**
-Das ist das System, das ich erwähnt habe. Ich möchte klar sagen: Es ist gebaut und mit Beispieldaten getestet, aber noch nicht auf einer echten Website. Worauf ich stolz bin, sind die Regeln, denn sie beantworten Ihre Fragen zur Kontrolle: Beweise, Ehrlichkeit über Lücken, und Menschen, die die endgültigen Entscheidungen treffen.
-
-## B4. Meine ersten Wochen
+## B3. Meine ersten Wochen
 
 - Woche 1 bis 2: das Produkt, das Team und den Release-Prozess kennenlernen. Die Fehlerhistorie lesen.
 - Woche 3 bis 4: Risikokarte mit dem Team, erste schnelle Erfolge (Prüfung der Einwilligung, Smoke-Tests)
@@ -362,7 +351,7 @@ Das ist das System, das ich erwähnt habe. Ich möchte klar sagen: Es ist gebaut
 **Notes**
 Wenn ich anfange, würde ich nicht am ersten Tag alles ändern. Zuerst lerne ich, wie Sie arbeiten und woher die Fehler in der Vergangenheit kamen. Dann vereinbaren wir gemeinsam eine Risikokarte. Die ersten schnellen Erfolge wären die Prüfung der Einwilligung und die Smoke-Tests, weil sie klein sind und viel schützen.
 
-## B5. Eine normale Woche
+## B4. Eine normale Woche
 
 **Slide**
 - **Planung:** Three Amigos bei neuen Aufgaben, Risiken vereinbart

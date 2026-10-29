@@ -344,18 +344,7 @@ LCP means: how long until the main content is visible. INP means: how fast the p
 **Notes**
 For test data I follow a simple rule: no real customer data outside production. When a system is hard to control, like a payment provider, I simulate it in most tests. That is called mocking. Only a few end-to-end tests use the real test mode of the provider.
 
-## B3. My AI testing agents
-
-- 4 agents: explorer, component, flow, API
-- Rules: only allowed test sites, no real purchases, secrets hidden, evidence for every result
-- Results: pass, fail with priority, or "suspicious" with a reason
-- Several runs are merged, because AI results vary from run to run
-- A top-priority failure (P1), like a broken checkout, can stop the pipeline. Humans decide on the rest.
-
-**Notes**
-This is the system I mentioned. I want to be clear: it is built and tested on sample data, but not yet on a real website. What I'm proud of is the rule set, because it answers the questions you asked about control: evidence, honesty about gaps, and people making the final decisions.
-
-## B4. My first weeks
+## B3. My first weeks
 
 - Weeks 1 to 2: learn the product, the team and the release process. Read the bug history.
 - Weeks 3 to 4: risk map with the team, first quick wins (consent check, smoke tests)
@@ -364,7 +353,7 @@ This is the system I mentioned. I want to be clear: it is built and tested on sa
 **Notes**
 If I join, I would not change everything on day one. First I learn how you work and where bugs came from in the past. Then we agree on a risk map together. The first quick wins would be the consent check and smoke tests, because they are small and protect a lot.
 
-## B5. One normal week
+## B4. One normal week
 
 **Slide**
 - **Planning:** Three Amigos on new stories, risks agreed

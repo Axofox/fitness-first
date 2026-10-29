@@ -342,18 +342,7 @@ LCP heißt: Wie lange dauert es, bis man den Hauptinhalt sieht? INP heißt: Wie 
 **Notes**
 Bei Testdaten gilt eine einfache Regel: Keine echten Kundendaten außerhalb der echten Seite. Manche Systeme kann man schlecht steuern, zum Beispiel einen Zahlungsanbieter. Die baue ich in den meisten Tests nach. Das nennt man Mocking. Nur wenige Tests nutzen den echten Test-Modus der Firma.
 
-## B3. Meine KI-Helfer
-
-- 4 Helfer: Entdecker, Bauteile, Ablauf, Schnittstellen
-- Regeln: nur erlaubte Test-Seiten, keine echten Käufe, Passwörter versteckt, Beweis für jedes Ergebnis
-- Ergebnisse: bestanden, durchgefallen mit Wichtigkeit, oder "verdächtig" mit Grund
-- Mehrere Läufe werden zusammengelegt, weil KI-Ergebnisse jedes Mal etwas anders sind
-- Ein Fehler mit höchster Wichtigkeit (P1), zum Beispiel ein kaputter Checkout, kann die automatische Strecke stoppen. Den Rest entscheiden Menschen.
-
-**Notes**
-Das ist das System, das ich erwähnt habe. Ich sage es klar: Es ist gebaut und mit Beispieldaten getestet. Aber noch nicht auf einer echten Website. Ich bin stolz auf die Regeln. Sie beantworten Ihre Fragen zur Kontrolle. Es gibt Beweise. Das System sagt ehrlich, wo es Lücken gibt. Und Menschen treffen die letzte Entscheidung.
-
-## B4. Meine ersten Wochen
+## B3. Meine ersten Wochen
 
 - Woche 1 bis 2: Produkt, Team und Release-Ablauf kennenlernen. Alte Fehler lesen.
 - Woche 3 bis 4: Risiko-Karte mit dem Team, erste schnelle Erfolge (Cookie-Check, Smoke-Tests)
@@ -362,7 +351,7 @@ Das ist das System, das ich erwähnt habe. Ich sage es klar: Es ist gebaut und m
 **Notes**
 Wenn ich anfange, ändere ich nicht am ersten Tag alles. Zuerst lerne ich, wie Sie arbeiten. Und woher die Fehler früher kamen. Dann machen wir zusammen eine Risiko-Karte. Die ersten schnellen Erfolge wären der Cookie-Check und die Smoke-Tests. Sie sind klein und schützen viel.
 
-## B5. Eine normale Woche
+## B4. Eine normale Woche
 
 **Slide**
 - **Planung:** Three Amigos bei neuen Aufgaben, Risiken absprechen
