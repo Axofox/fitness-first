@@ -331,18 +331,7 @@ Grenzen für "gut" (75 % der Besuche): LCP 2,5 s, INP 200 ms, CLS 0,1. Quelle: P
 **Notes**
 LCP heißt: Wie lange dauert es, bis der Hauptinhalt sichtbar ist. INP heißt: Wie schnell reagiert die Seite auf ein Antippen. CLS heißt: Wie stark springt die Seite beim Laden.
 
-## B2. Testdaten und Umgebungen
-
-- Stage: anonymisierte Kopie der Produktion, oder erzeugte Testdaten
-- Feste Testkonten und Testclubs, regelmäßig zurückgesetzt
-- Zahlungsanbieter im Testmodus, nie echte Zahlungen
-- Fremde Systeme, die wir nicht steuern können: in API-Tests simuliert (Mock), echt nur in wenigen End-to-End-Tests auf Stage
-- Test-E-Mails nur an reservierte Testdomains
-
-**Notes**
-Bei den Testdaten gilt eine einfache Regel: keine echten Kundendaten außerhalb der Produktion. Wenn ein System schwer zu steuern ist, zum Beispiel ein Zahlungsanbieter, simuliere ich es in den meisten Tests. Das nennt man Mocking. Nur wenige End-to-End-Tests benutzen den echten Testmodus des Anbieters.
-
-## B3. Eine normale Woche
+## B2. Eine normale Woche
 
 **Slide**
 - **Planung:** Three Amigos bei neuen Aufgaben, Risiken vereinbart

@@ -333,18 +333,7 @@ Limits for good (75% of visits): LCP 2.5 s, INP 200 ms, CLS 0.1. Source: PageSpe
 **Notes**
 LCP means: how long until the main content is visible. INP means: how fast the page reacts to a tap. CLS means: how much the page jumps while loading.
 
-## B2. Test data and environments
-
-- Stage: anonymised copy of production, or generated test data
-- Fixed test accounts and test clubs, reset regularly
-- Payment provider in test mode, never real payments
-- Outside systems we cannot control: simulated (mocked) in API tests, real only in a few end-to-end tests on Stage
-- Test emails only on reserved test domains
-
-**Notes**
-For test data I follow a simple rule: no real customer data outside production. When a system is hard to control, like a payment provider, I simulate it in most tests. That is called mocking. Only a few end-to-end tests use the real test mode of the provider.
-
-## B3. One normal week
+## B2. One normal week
 
 **Slide**
 - **Planning:** Three Amigos on new stories, risks agreed
