@@ -342,16 +342,7 @@ LCP heißt: Wie lange dauert es, bis der Hauptinhalt sichtbar ist. INP heißt: W
 **Notes**
 Bei den Testdaten gilt eine einfache Regel: keine echten Kundendaten außerhalb der Produktion. Wenn ein System schwer zu steuern ist, zum Beispiel ein Zahlungsanbieter, simuliere ich es in den meisten Tests. Das nennt man Mocking. Nur wenige End-to-End-Tests benutzen den echten Testmodus des Anbieters.
 
-## B3. Meine ersten Wochen
-
-- Woche 1 bis 2: das Produkt, das Team und den Release-Prozess kennenlernen. Die Fehlerhistorie lesen.
-- Woche 3 bis 4: Risikokarte mit dem Team, erste schnelle Erfolge (Prüfung der Einwilligung, Smoke-Tests)
-- Monat 2 bis 3: Regressionstests für Checkout und Buchung, Quality Gates in der Pipeline
-
-**Notes**
-Wenn ich anfange, würde ich nicht am ersten Tag alles ändern. Zuerst lerne ich, wie Sie arbeiten und woher die Fehler in der Vergangenheit kamen. Dann vereinbaren wir gemeinsam eine Risikokarte. Die ersten schnellen Erfolge wären die Prüfung der Einwilligung und die Smoke-Tests, weil sie klein sind und viel schützen.
-
-## B4. Eine normale Woche
+## B3. Eine normale Woche
 
 **Slide**
 - **Planung:** Three Amigos bei neuen Aufgaben, Risiken vereinbart

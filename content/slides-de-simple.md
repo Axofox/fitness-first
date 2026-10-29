@@ -342,16 +342,7 @@ LCP heißt: Wie lange dauert es, bis man den Hauptinhalt sieht? INP heißt: Wie 
 **Notes**
 Bei Testdaten gilt eine einfache Regel: Keine echten Kundendaten außerhalb der echten Seite. Manche Systeme kann man schlecht steuern, zum Beispiel einen Zahlungsanbieter. Die baue ich in den meisten Tests nach. Das nennt man Mocking. Nur wenige Tests nutzen den echten Test-Modus der Firma.
 
-## B3. Meine ersten Wochen
-
-- Woche 1 bis 2: Produkt, Team und Release-Ablauf kennenlernen. Alte Fehler lesen.
-- Woche 3 bis 4: Risiko-Karte mit dem Team, erste schnelle Erfolge (Cookie-Check, Smoke-Tests)
-- Monat 2 bis 3: Tests für Checkout und Buchung, feste Regeln für die automatische Strecke
-
-**Notes**
-Wenn ich anfange, ändere ich nicht am ersten Tag alles. Zuerst lerne ich, wie Sie arbeiten. Und woher die Fehler früher kamen. Dann machen wir zusammen eine Risiko-Karte. Die ersten schnellen Erfolge wären der Cookie-Check und die Smoke-Tests. Sie sind klein und schützen viel.
-
-## B4. Eine normale Woche
+## B3. Eine normale Woche
 
 **Slide**
 - **Planung:** Three Amigos bei neuen Aufgaben, Risiken absprechen
