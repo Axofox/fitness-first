@@ -344,7 +344,7 @@ LCP means: how long until the main content is visible. INP means: how fast the p
 **Notes**
 For test data I follow a simple rule: no real customer data outside production. When a system is hard to control, like a payment provider, I simulate it in most tests. That is called mocking. Only a few end-to-end tests use the real test mode of the provider.
 
-## B3. My AI testing agents (designed, not yet run on a live site)
+## B3. My AI testing agents
 
 - 4 agents: explorer, component, flow, API
 - Rules: only allowed test sites, no real purchases, secrets hidden, evidence for every result

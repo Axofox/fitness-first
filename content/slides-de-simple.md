@@ -342,7 +342,7 @@ LCP heißt: Wie lange dauert es, bis man den Hauptinhalt sieht? INP heißt: Wie 
 **Notes**
 Bei Testdaten gilt eine einfache Regel: Keine echten Kundendaten außerhalb der echten Seite. Manche Systeme kann man schlecht steuern, zum Beispiel einen Zahlungsanbieter. Die baue ich in den meisten Tests nach. Das nennt man Mocking. Nur wenige Tests nutzen den echten Test-Modus der Firma.
 
-## B3. Meine KI-Helfer (noch nicht live benutzt)
+## B3. Meine KI-Helfer
 
 - 4 Helfer: Entdecker, Bauteile, Ablauf, Schnittstellen
 - Regeln: nur erlaubte Test-Seiten, keine echten Käufe, Passwörter versteckt, Beweis für jedes Ergebnis
